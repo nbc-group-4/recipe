@@ -8,6 +8,8 @@ const val RECIPE_API_KEY = BuildConfig.RECIPE_API_KEY
 const val SPECIALTY_API_BASE = BuildConfig.SPECIALTY_API_BASE
 const val RECIPE_API_BASE = BuildConfig.RECIPE_API_BASE
 
+const val KAKAO_MAP_KEY = BuildConfig.KAKAO_MAP_KEY
+
 const val AGRICULTURE_API = ""
 
 const val RECIPE_API = "Grid_20150827000000000226_1/1/5"

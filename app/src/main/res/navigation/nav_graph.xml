@@ -10,4 +10,9 @@
         android:name="nbc.group.recipes.presentation.fragment.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/bookmarkFragment"
+        android:name="nbc.group.recipes.presentation.fragment.BookmarkFragment"
+        android:label="fragment_bookmark"
+        tools:layout="@layout/fragment_bookmark" />
 </navigation>
