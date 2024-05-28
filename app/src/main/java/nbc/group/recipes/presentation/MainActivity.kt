@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv) as NavHostFragment
-        val navController = navHostFragment.findNavController()
+        val navHostFragment = binding.fcv.getFragment<NavHostFragment>()
+        val navController = navHostFragment.navController
         binding.bottomNavBar.setupWithNavController(navController)
     }
 }
