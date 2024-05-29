@@ -28,7 +28,6 @@ android {
         buildConfigField("String", "SPECIALTY_API_BASE", properties.getProperty("SPECIALTY_API_BASE"))
         buildConfigField("String", "RECIPE_API_BASE", properties.getProperty("RECIPE_API_BASE"))
         buildConfigField("String", "SPECIALTY_API_KEY", properties.getProperty("SPECIALTY_API_KEY"))
-        buildConfigField("String", "SPECIALTY_API_SECRET", properties.getProperty("SPECIALTY_API_SECRET"))
         buildConfigField("String", "RECIPE_API_KEY", properties.getProperty("RECIPE_API_KEY"))
     }
 
