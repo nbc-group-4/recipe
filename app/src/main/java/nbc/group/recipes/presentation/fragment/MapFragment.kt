@@ -63,6 +63,11 @@ class MapFragment : Fragment() {
                     // 정상적으로 인증이 완료되었을 때 호출
                     kakaoMap = kakaomap
                 }
+
+            override fun getZoomLevel(): Int {
+                // 지도 시작 시 확대/축소 줌 레벨 설정 (8~10사이가 적당)
+                return 9
+            }
         })
     }
 
