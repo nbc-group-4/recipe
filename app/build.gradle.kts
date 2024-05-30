@@ -85,6 +85,9 @@ dependencies {
     kapt ("com.tickaroo.tikxml:processor:0.8.13")
     //
 
+    // kakao map sdk
+    implementation ("com.kakao.maps.open:android:2.9.5")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
