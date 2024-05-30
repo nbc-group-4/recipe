@@ -8,16 +8,8 @@ class SpecialtyDataSource @Inject constructor(
     @Named("SpecialtyService") private val service: SpecialtyService
 ) {
     suspend fun getSpecialty(
-        sText: String,
         sAreaNm: String,
-        sAreaCode: String,
-        pageNo: Int,
-        numOfRows: Int
     ) = service.getSpecialty(
-        sText = sText,
         sAreaNm = sAreaNm,
-        sAreaCode = sAreaCode,
-        pageNo = pageNo,
-        numOfRows = numOfRows
     )
 }

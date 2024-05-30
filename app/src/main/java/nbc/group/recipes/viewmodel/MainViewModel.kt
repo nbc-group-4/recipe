@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nbc.group.recipes.data.model.dto.Recipe
+import nbc.group.recipes.data.model.dto.SpecialtyResponse
 import nbc.group.recipes.data.repository.RecipeSpecialtyRepository
 import javax.inject.Inject
 
@@ -23,5 +24,15 @@ class MainViewModel @Inject constructor(
      *
      * */
 
+    private val _specialties = MutableStateFlow<SpecialtyResponse?>(null)
+    val specialties = _specialties.asStateFlow()
+
+    fun doTest() {
+        viewModelScope.launch {
+            _specialties.emit(
+                repository.getSpecialty("양구")
+            )
+        }
+    }
 
 }

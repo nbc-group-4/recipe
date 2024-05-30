@@ -13,5 +13,5 @@ class RecipeSpecialtyRepository @Inject constructor(
     private val recipeDao: RecipeDao
 ) {
     suspend fun getRecipe() = recipeDataSource.getRecipe()
-    suspend fun getSpecialty() = specialtyDataSource.getSpecialty("검색어", "시도", "시군구", 1, 10)
+    suspend fun getSpecialty(areaName: String) = specialtyDataSource.getSpecialty(areaName)
 }
