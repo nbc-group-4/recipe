@@ -7,9 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import nbc.group.recipes.R
+import nbc.group.recipes.convertToOfficial
 import nbc.group.recipes.databinding.ActivityMainBinding
 import nbc.group.recipes.viewmodel.MainViewModel
 
@@ -19,12 +25,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
-    private val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initNavigation()
 
 
     }
@@ -32,5 +37,11 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         navController = findNavController(R.id.fcv)
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    private fun initNavigation() {
+        val navHostFragment = binding.fcv.getFragment<NavHostFragment>()
+        val navController = navHostFragment.navController
+        binding.bottomNavBar.setupWithNavController(navController)
     }
 }
