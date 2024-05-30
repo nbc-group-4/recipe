@@ -8,6 +8,8 @@ import nbc.group.recipes.data.network.SPECIALTY_API_BASE
 import nbc.group.recipes.data.network.RECIPE_API_BASE
 import nbc.group.recipes.data.network.SpecialtyService
 import nbc.group.recipes.data.network.RecipeService
+import nbc.group.recipes.data.network.SEARCH_API_BASE
+import nbc.group.recipes.data.network.SearchService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -36,7 +38,7 @@ object RetrofitModule {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
-            .baseUrl(SPECIALTY_API_BASE)
+            .baseUrl(SPECIALTY_API_BASE.toString())
             .build()
     }
 
@@ -47,9 +49,21 @@ object RetrofitModule {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
-            .baseUrl(RECIPE_API_BASE)
+            .baseUrl(RECIPE_API_BASE.toString())
             .build()
     }
+
+    @Singleton
+    @Provides
+    @Named("SearchRegion")
+    fun provideRetrofitSearchRegion(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(SEARCH_API_BASE)
+            .build()
+    }
+
 
     @Singleton
     @Provides
@@ -67,5 +81,14 @@ object RetrofitModule {
         @Named("Recipe") retrofit: Retrofit
     ): RecipeService {
         return retrofit.create(RecipeService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    @Named("SearchService")
+    fun provideApiServiceSearch(
+        @Named("SearchRegion") retrofit: Retrofit
+    ): SearchService {
+        return retrofit.create(SearchService::class.java)
     }
 }

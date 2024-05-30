@@ -29,6 +29,9 @@ android {
         buildConfigField("String", "RECIPE_API_BASE", properties.getProperty("RECIPE_API_BASE"))
         buildConfigField("String", "SPECIALTY_API_KEY", properties.getProperty("SPECIALTY_API_KEY"))
         buildConfigField("String", "RECIPE_API_KEY", properties.getProperty("RECIPE_API_KEY"))
+        buildConfigField("String", "KAKAO_MAP_KEY", properties.getProperty("KAKAO_MAP_KEY"))
+        buildConfigField("String", "SEARCH_API_BASE", properties.getProperty("SEARCH_API_BASE"))
+        buildConfigField("String", "SEARCH_REST_API_KEY", properties.getProperty("SEARCH_REST_API_KEY"))
     }
 
     buildTypes {
@@ -73,6 +76,9 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.1.0")
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+
+    // kakao map sdk
+    implementation ("com.kakao.maps.open:android:2.9.5")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -8,20 +8,20 @@ class RecipeDataSource @Inject constructor(
     @Named("RecipeService") private val service: RecipeService
 ) {
     suspend fun getRecipe(
-//        startIndex: Int = 1,
-//        endIndex: Int = 5,
-//        recipeName: String,
-//        recipeId: Int,
+        startIndex: Int = 1,
+        endIndex: Int = 20,
+        recipeName: String,
+        recipeId: Int,
     ) = service.getRecipe(
-//        startIndex = startIndex,
-//        endIndex = endIndex,
-//        recipeName = recipeName,
-//        recipeId = recipeId
+        startIndex = startIndex,
+        endIndex = endIndex,
+        recipeName = recipeName,
+        recipeId = recipeId
     )
 
     suspend fun getRecipeIngredient(
         startIndex: Int = 1,
-        endIndex: Int = 5,
+        endIndex: Int = 20,
         ingredientName: String,
         recipeId: Int,
     ) = service.getRecipeIngredient(
@@ -33,7 +33,7 @@ class RecipeDataSource @Inject constructor(
 
     suspend fun getRecipeProcedure(
         startIndex: Int = 1,
-        endIndex: Int = 5,
+        endIndex: Int = 20,
         recipeId: Int,
     ) = service.getRecipeProcedure(
         startIndex = startIndex,
