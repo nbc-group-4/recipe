@@ -8,7 +8,7 @@ const val RECIPE_API_KEY = BuildConfig.RECIPE_API_KEY
 const val SPECIALTY_API_BASE = BuildConfig.SPECIALTY_API_BASE
 const val RECIPE_API_BASE = BuildConfig.RECIPE_API_BASE
 
-const val SPECIALTY_API = "food/natList"
+const val SPECIALTY_API = "localSpcprd/localSpcprdLst"
 
 const val RECIPE_API = "Grid_20150827000000000226_1/1/5"
 const val RECIPE_INGREDIENT_API = "Grid_20150827000000000227_1/1/5"
