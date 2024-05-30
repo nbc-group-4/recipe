@@ -38,7 +38,7 @@ object RetrofitModule {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
-            .baseUrl(SPECIALTY_API_BASE)
+            .baseUrl(SPECIALTY_API_BASE.toString())
             .build()
     }
 
@@ -49,7 +49,7 @@ object RetrofitModule {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
-            .baseUrl(RECIPE_API_BASE)
+            .baseUrl(RECIPE_API_BASE.toString())
             .build()
     }
 
