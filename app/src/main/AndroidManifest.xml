@@ -23,6 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.kakao.vectormap.KAKAO_MAP_KEY"
+            android:value="KAKAO_MAP_KEY"/>
+
     </application>
 
 </manifest>
