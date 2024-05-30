@@ -6,23 +6,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.KakaoMapSdk
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
+import dagger.hilt.android.AndroidEntryPoint
 import nbc.group.recipes.BuildConfig.KAKAO_MAP_KEY
 import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentMapBinding
+import nbc.group.recipes.viewmodel.MapViewModel
 import java.lang.Exception
 
+@AndroidEntryPoint
 class MapFragment : Fragment() {
     private val binding get() = _binding!!
     private var _binding : FragmentMapBinding? = null
 
     private lateinit var mapView : MapView
     private var kakaoMap : KakaoMap? = null
+
+    private val mapViewModel: MapViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +44,7 @@ class MapFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         showMapView()
+        searchApiData()
     }
 
 
@@ -66,11 +75,29 @@ class MapFragment : Fragment() {
 
             override fun getZoomLevel(): Int {
                 // 지도 시작 시 확대/축소 줌 레벨 설정 (8~10사이가 적당)
-                return 9
+                return 8
             }
         })
     }
 
+
+    private fun searchApiData(){
+
+        binding.searchButton.setOnClickListener {
+            val searchText = binding.searchEt.text.toString()
+
+            // 뷰모델에 내가 입력한 텍스트값 전달
+            if (searchText.isNotEmpty()){
+                mapViewModel.getregionSearch(searchText)
+            }else{
+                Snackbar.make(binding.searchEt, "검색어를 입력해주세요", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+
+        mapViewModel.regionSearch.observe(viewLifecycleOwner){
+            Log.d("it_searchData", it.toString())    // 전체데이터(검색버튼 눌렀을때 가져오는 전체데이터)
+        }
+    }
 
 
 

@@ -30,6 +30,8 @@ android {
         buildConfigField("String", "SPECIALTY_API_KEY", properties.getProperty("SPECIALTY_API_KEY"))
         buildConfigField("String", "RECIPE_API_KEY", properties.getProperty("RECIPE_API_KEY"))
         buildConfigField("String", "KAKAO_MAP_KEY", properties.getProperty("KAKAO_MAP_KEY"))
+        buildConfigField("String", "SEARCH_API_BASE", properties.getProperty("SEARCH_API_BASE"))
+        buildConfigField("String", "SEARCH_REST_API_KEY", properties.getProperty("SEARCH_REST_API_KEY"))
     }
 
     buildTypes {
