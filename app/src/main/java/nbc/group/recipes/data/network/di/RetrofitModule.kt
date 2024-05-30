@@ -32,7 +32,7 @@ object RetrofitModule {
     @Singleton
     @Provides
     @Named("Specialty")
-    fun provideRetrofitAgriculture(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofitSpecialty(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
@@ -54,7 +54,7 @@ object RetrofitModule {
     @Singleton
     @Provides
     @Named("SpecialtyService")
-    fun provideApiServiceAgriculture(
+    fun provideApiServiceSpecialty(
         @Named("Specialty") retrofit: Retrofit
     ): SpecialtyService {
         return retrofit.create(SpecialtyService::class.java)
