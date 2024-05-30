@@ -7,6 +7,7 @@ const val RECIPE_API_KEY = BuildConfig.RECIPE_API_KEY
 
 const val SPECIALTY_API_BASE = BuildConfig.SPECIALTY_API_BASE
 const val RECIPE_API_BASE = BuildConfig.RECIPE_API_BASE
+
 const val SEARCH_API_BASE = BuildConfig.SEARCH_API_BASE
 const val SEARCH_REST_API_KEY = BuildConfig.SEARCH_REST_API_KEY
 
