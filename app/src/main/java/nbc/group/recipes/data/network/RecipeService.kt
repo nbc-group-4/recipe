@@ -11,13 +11,13 @@ interface RecipeService {
 
     @GET(RECIPE_API)
     suspend fun getRecipe(
-//        @Query("API_KEY") apiKey: String = RECIPE_API_KEY,
-//        @Query("TYPE") type: String = "json",
-//        @Query("API_URL") apiUrl: String = RECIPE_API,
-//        @Query("START_INDEX") startIndex: Int,
-//        @Query("END_INDEX") endIndex: Int,
-//        @Query("RECIPE_NM_KO") recipeName: String,
-//        @Query("RECIPE_ID") recipeId: Int,
+        @Query("API_KEY") apiKey: String = RECIPE_API_KEY,
+        @Query("TYPE") type: String = "json",
+        @Query("API_URL") apiUrl: String = RECIPE_API,
+        @Query("START_INDEX") startIndex: Int,
+        @Query("END_INDEX") endIndex: Int,
+        @Query("RECIPE_NM_KO") recipeName: String,
+        @Query("RECIPE_ID") recipeId: Int,
     ): RecipeResponse<Recipe>
 
     // TODO: URL 확인 필요
