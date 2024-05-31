@@ -25,25 +25,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
-    private val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initNavigation()
-
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
         navController = findNavController(R.id.fcv)
         return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
-    private fun initNavigation() {
-        val navHostFragment = binding.fcv.getFragment<NavHostFragment>()
-        val navController = navHostFragment.navController
-        binding.bottomNavBar.setupWithNavController(navController)
     }
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/signInFragment3">
+    app:startDestination="@id/homeFragment">
 
 
     <fragment
@@ -26,10 +26,5 @@
         android:name="nbc.group.recipes.presentation.fragment.MypageFragment"
         android:label="fragment_mypage"
         tools:layout="@layout/fragment_mypage" />
-    <fragment
-        android:id="@+id/signInFragment3"
-        android:name="nbc.group.recipes.presentation.fragment.SignInFragment"
-        android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" />
 
 </navigation>
