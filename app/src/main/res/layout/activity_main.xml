@@ -37,6 +37,4 @@
         app:layout_constraintTop_toBottomOf="@id/fcv"/>
 
 
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

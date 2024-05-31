@@ -1,20 +1,22 @@
 package nbc.group.recipes.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.model.dto.SpecialtyResponse
+import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.data.repository.AuthRepository
 import nbc.group.recipes.data.repository.RecipeSpecialtyRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: RecipeSpecialtyRepository
+    private val repository: RecipeSpecialtyRepository,
+    private val authRepository: AuthRepository
 ): ViewModel() {
 
     /**
@@ -23,6 +25,40 @@ class MainViewModel @Inject constructor(
      * val recipes = _recipes.asStateFlow()
      *
      * */
+
+    private val _signInFlow = MutableStateFlow<FirebaseResult<FirebaseUser>?>(null)
+    val signInFlow = _signInFlow.asStateFlow()
+
+    private val _signUpFlow = MutableStateFlow<FirebaseResult<FirebaseUser>?>(null)
+    val signUpFlow = _signUpFlow.asStateFlow()
+
+    val currentUser: FirebaseUser?
+        get() = authRepository.currentUser
+
+    init {
+        if(authRepository.currentUser != null) {
+            viewModelScope.launch {
+                _signInFlow.emit(FirebaseResult.Success(authRepository.currentUser!!))
+            }
+        }
+    }
+
+    fun signIn(id: String, pw: String) = viewModelScope.launch {
+        val result = authRepository.signIn(id, pw)
+        _signInFlow.emit(result)
+    }
+
+    fun signUp(name: String, id: String, pw: String) = viewModelScope.launch {
+        val result = authRepository.signUp(name, id, pw)
+        _signUpFlow.emit(result)
+    }
+
+    fun logout() = viewModelScope.launch {
+        _signInFlow.emit(null)
+        _signUpFlow.emit(null)
+    }
+
+
 
     private val _specialties = MutableStateFlow<SpecialtyResponse?>(null)
     val specialties = _specialties.asStateFlow()
@@ -34,5 +70,4 @@ class MainViewModel @Inject constructor(
             )
         }
     }
-
 }

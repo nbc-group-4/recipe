@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/homeFragment"
+        android:id="@+id/signInFragment3"
         android:icon="@drawable/ic_home"
         android:title="home"/>
 
@@ -20,5 +20,7 @@
         android:id="@+id/mypageFragment"
         android:icon="@drawable/ic_mypage"
         android:title="mypage"/>
+
+
 
 </menu>

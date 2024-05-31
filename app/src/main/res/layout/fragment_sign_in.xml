@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.fragment.SignInFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/tv_top_banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_fragment_top_banner_text"
+        style="@style/top_banner_text_style"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/top_banner_margin_top"/>
 
-</FrameLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_id_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_top_banner">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/sign_in_fragment_id_hint"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_pw_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/et_id_layout"
+        app:layout_constraintEnd_toEndOf="@id/et_id_layout"
+        app:layout_constraintTop_toBottomOf="@+id/et_id_layout">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_pw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/sign_in_fragment_pw_hint"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/ib_easy_sign_in"
+        android:layout_width="@dimen/small_button_size"
+        android:layout_height="@dimen/small_button_size"
+        app:layout_constraintStart_toStartOf="@+id/et_id_layout"
+        app:layout_constraintTop_toBottomOf="@+id/et_pw_layout"
+        android:src="@drawable/ic_launcher_background"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_fragment_easy_sign_in_indic_text"
+        app:layout_constraintTop_toTopOf="@id/ib_easy_sign_in"
+        app:layout_constraintBottom_toBottomOf="@id/ib_easy_sign_in"
+        app:layout_constraintStart_toEndOf="@id/ib_easy_sign_in"/>
+
+    <Button
+        android:id="@+id/bt_sign_in"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_fragment_sign_in_button_text"
+        app:layout_constraintTop_toBottomOf="@+id/ib_easy_sign_in"
+        app:layout_constraintStart_toStartOf="@id/et_id_layout"
+        app:layout_constraintEnd_toEndOf="@id/et_id_layout"/>
+
+    <TextView
+        android:id="@+id/tv_sign_up_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_fragment_sign_up_button_text"
+        app:layout_constraintStart_toStartOf="@id/et_id_layout"
+        app:layout_constraintTop_toBottomOf="@id/bt_sign_in"/>
+
+    <TextView
+        android:id="@+id/tv_search_pw_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_fragment_search_pw_button_text"
+        app:layout_constraintEnd_toEndOf="@id/et_id_layout"
+        app:layout_constraintTop_toBottomOf="@id/bt_sign_in"/>
+
+    <TextView
+        android:id="@+id/tv_other_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_fragment_sign_in_other_way_text"
+        app:layout_constraintStart_toStartOf="@id/et_id_layout"
+        app:layout_constraintEnd_toEndOf="@id/et_id_layout"
+        app:layout_constraintTop_toBottomOf="@id/tv_search_pw_button"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
