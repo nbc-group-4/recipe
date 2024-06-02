@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.ktx.Firebase
 import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentSignInBinding
@@ -30,7 +32,6 @@ class SignInFragment : Fragment() {
     private var _binding: FragmentSignInBinding? = null
     val binding get() = _binding!!
 
-
     private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -45,9 +46,9 @@ class SignInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            btSignIn.setOnClickListener {
-                viewModel.signIn("treeralph@gmail.com", "qlqjs940")
-            }
+            btSignIn.setOnClickListener(signInButtonClickListener)
+            tvSignUpButton.setOnClickListener(signUpButtonClickListener)
+            tvSearchPwButton.setOnClickListener(searchPwButtonClickListener)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -55,7 +56,7 @@ class SignInFragment : Fragment() {
                 nullable?.let { nonNull ->
                     when(nonNull) {
                         is FirebaseResult.Success -> {
-                            Log.e(TAG, "onViewCreated: Success: ${nonNull.result.metadata}", )
+                            findNavController().popBackStack()
                         }
                         is FirebaseResult.Failure -> {
                             Log.e(TAG, "onViewCreated: Failure", )
@@ -72,5 +73,22 @@ class SignInFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private val signInButtonClickListener: (View) -> Unit = {
+        with(binding) {
+            viewModel.signIn(
+                etId.text.toString(),
+                etPw.text.toString()
+            )
+        }
+    }
+
+    private val signUpButtonClickListener: (View) -> Unit = {
+        findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+    }
+
+    private val searchPwButtonClickListener: (View) -> Unit = {
+
     }
 }

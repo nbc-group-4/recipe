@@ -32,6 +32,8 @@ class MainViewModel @Inject constructor(
     private val _signUpFlow = MutableStateFlow<FirebaseResult<FirebaseUser>?>(null)
     val signUpFlow = _signUpFlow.asStateFlow()
 
+    private val _user = MutableStateFlow<FirebaseUser?>(null)
+    val user = _user.asStateFlow()
     val currentUser: FirebaseUser?
         get() = authRepository.currentUser
 
@@ -46,17 +48,23 @@ class MainViewModel @Inject constructor(
     fun signIn(id: String, pw: String) = viewModelScope.launch {
         val result = authRepository.signIn(id, pw)
         _signInFlow.emit(result)
+        _user.emit(authRepository.currentUser)
     }
 
     fun signUp(name: String, id: String, pw: String) = viewModelScope.launch {
         val result = authRepository.signUp(name, id, pw)
         _signUpFlow.emit(result)
+        _user.emit(authRepository.currentUser)
     }
 
     fun logout() = viewModelScope.launch {
+        authRepository.logout()
         _signInFlow.emit(null)
         _signUpFlow.emit(null)
+        _user.emit(null)
     }
+
+
 
 
 
