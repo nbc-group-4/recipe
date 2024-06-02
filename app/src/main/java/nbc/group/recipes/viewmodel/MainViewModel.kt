@@ -7,16 +7,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.model.dto.SpecialtyResponse
 import nbc.group.recipes.data.network.FirebaseResult
 import nbc.group.recipes.data.repository.AuthRepository
+import nbc.group.recipes.data.repository.FirestoreRepository
 import nbc.group.recipes.data.repository.RecipeSpecialtyRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: RecipeSpecialtyRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val firestoreRepository: FirestoreRepository
 ): ViewModel() {
 
     /**
@@ -36,6 +39,12 @@ class MainViewModel @Inject constructor(
     val user = _user.asStateFlow()
     val currentUser: FirebaseUser?
         get() = authRepository.currentUser
+
+    private val _recipes = MutableStateFlow<FirebaseResult<List<Recipe>>?>(null)
+    val recipes = _recipes.asStateFlow()
+
+    private val _putRecipeFlow = MutableStateFlow<FirebaseResult<Boolean>?>(null)
+    val putRecipeFlow = _putRecipeFlow.asStateFlow()
 
     init {
         if(authRepository.currentUser != null) {
@@ -62,6 +71,16 @@ class MainViewModel @Inject constructor(
         _signInFlow.emit(null)
         _signUpFlow.emit(null)
         _user.emit(null)
+    }
+
+    fun putRecipe(recipe: Recipe) = viewModelScope.launch {
+        val result = firestoreRepository.putRecipe(recipe)
+        _putRecipeFlow.emit(result)
+    }
+
+    fun getRecipe() = viewModelScope.launch {
+        val result = firestoreRepository.getRecipes()
+        _recipes.emit(result)
     }
 
 
