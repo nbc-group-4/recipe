@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle.State.*
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
@@ -19,7 +22,12 @@ import com.kakao.vectormap.camera.CameraUpdateFactory
 import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelStyle
 import com.kakao.vectormap.label.LabelStyles
+import com.kakao.vectormap.label.LabelTransition
+import com.kakao.vectormap.label.Transition
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import nbc.group.recipes.BaseMapData
 import nbc.group.recipes.BuildConfig.KAKAO_MAP_KEY
 import nbc.group.recipes.R
 import nbc.group.recipes.data.model.dto.SearchDocumentsResponse
@@ -77,6 +85,7 @@ class MapFragment : Fragment() {
             override fun onMapReady(kakaomap: KakaoMap) {
                 // 정상적으로 인증이 완료되었을 때 호출
                 kakaoMap = kakaomap
+                baseSettingMap()
             }
 
             override fun getZoomLevel(): Int {
@@ -95,7 +104,7 @@ class MapFragment : Fragment() {
 
             // 뷰모델에 내가 입력한 텍스트값 전달
             if (searchText.isNotEmpty()) {
-                mapViewModel.getregionSearch(searchText)
+                mapViewModel.getRegionSearch(searchText)
             } else {
                 Snackbar.make(binding.searchEt, "검색어를 입력해주세요", Snackbar.LENGTH_SHORT).show()
             }
@@ -122,19 +131,17 @@ class MapFragment : Fragment() {
 
         // 커스텀으로 라벨 생성 및 가져옴
         // 1. LabelStyles 생성 - Icon 이미지 하나만 있는 스타일
-        val styles = kakaoMap?.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.ic_map_red)))
+        val styles = kakaoMap?.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.ic_map_red)
+            .setIconTransition(LabelTransition.from(Transition.Scale,Transition.Scale)) ))
 
         // styles가 null이 아닐때만, LabelOptions 생성하고 라벨추가
         if(styles != null){
-            // 2. LabelOptions 생성
+            // LabelOptions 생성
             val options = LabelOptions.from(LatLng.from(latitude_formatter, longitude_formatter)).setStyles(styles)
-
-            // 3. LabelLayer 가져옴 (또는 커스텀 Layer 생성)
+            // LabelLayer 가져옴
             val layer = kakaoMap?.labelManager?.getLayer()
-
-            // 4.options 을 넣어 Label 생성
+            // Label 생성
             layer?.addLabel(options)
-
         }else{
             Log.e("kakaoMap", "LabelStyles null값 에러")
         }
@@ -142,15 +149,45 @@ class MapFragment : Fragment() {
     }
 
 
-    private fun observeViewModel() {
-        mapViewModel.regionSearch.observe(viewLifecycleOwner) {
-            Log.d("it_data", it.toString()) // it -> SearchResponse 전체가져옴
+    private fun observeViewModel(){
+        viewLifecycleOwner.lifecycleScope.launch{
 
-            // 검색결과에 documents가 포함되어있으면(무조건 포함함), 그 documents값중 첫번쨰값을 가져옴
-            it?.documents?.firstOrNull()?.let { document ->
-                Log.d("documents__",document.toString()) // document -> SearchDocumentsResponse의 첫번째값 가져옴
+            mapViewModel.regionSearch.flowWithLifecycle(viewLifecycleOwner.lifecycle, STARTED).collectLatest{
+                Log.d("it_data", it.toString()) // SearchResponse 전체가져옴
+
+                // 검색결과에 documents가 포함되어있으면(무조건 포함함), 그 documents값중 첫번째값을 가져옴
+                it?.documents?.firstOrNull()?.let { document ->
+                    Log.d("documents__",document.toString()) // SearchDocumentsResponse의 첫번째값 가져옴
                     setMapData(document)
+                }
             }
+        }
+    }
+
+
+    // 시작하자마자 기본으로 보여지는 라벨(라벨 여러개 표시)
+    private fun baseSettingMap(){
+
+        val baseMapDataList = listOf(
+            BaseMapData(id = 1, regionName = "천안", x_longitude = 127.113911, y_latitude = 36.815067),
+            BaseMapData(id = 2, regionName = "이천", x_longitude = 127.435089, y_latitude = 37.272267),
+            BaseMapData(id = 3, regionName = "동해", x_longitude = 129.114299, y_latitude = 37.524741),
+            BaseMapData(id = 4, regionName = "서울", x_longitude = 126.978652, y_latitude = 37.566826),
+            BaseMapData(id = 5, regionName = "파주", x_longitude = 126.779881, y_latitude = 37.760044),
+        )
+
+        val styles = kakaoMap?.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.ic_map_blue)))
+
+        if(styles != null){
+            styles.let {
+                baseMapDataList.forEach{ baseMapData ->
+                    val options = LabelOptions.from(LatLng.from(baseMapData.y_latitude, baseMapData.x_longitude)).setStyles(styles)
+                    val layer = kakaoMap?.labelManager?.getLodLayer()   // LodLabelLayer 가져오기
+                    layer?.addLodLabel(options)
+                }
+            }
+        }else{
+            Log.e("kakaoMap", "LabelStyles null값 에러")
         }
     }
 
