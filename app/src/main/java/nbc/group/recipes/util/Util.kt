@@ -1,4 +1,4 @@
-package nbc.group.recipes
+package nbc.group.recipes.util
 
 val specialties = listOf(
     "취나물", "미나리", "잎들깨", "오이", "부추", "깻잎", "대파", "배추", "미나리", "고추", "쑥", "상추", "고사리",

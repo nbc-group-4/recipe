@@ -23,8 +23,8 @@
 
             <ImageView
                 android:id="@+id/ivTitle"
-                android:layout_width="60dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
                 app:layout_constraintEnd_toStartOf="@+id/tvTitle"
@@ -47,14 +47,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/ivMap"
+                android:id="@+id/ivSearch"
                 android:layout_width="@dimen/small_button_size"
                 android:layout_height="@dimen/small_button_size"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_map" />
+                app:srcCompat="@drawable/ic_search" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
