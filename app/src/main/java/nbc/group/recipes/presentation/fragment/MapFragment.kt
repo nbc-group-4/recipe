@@ -35,6 +35,7 @@ import nbc.group.recipes.BottomSheetAdapter
 import nbc.group.recipes.BottomSheetFragment
 import nbc.group.recipes.data.model.dto.BaseMapResponse
 import nbc.group.recipes.BuildConfig.KAKAO_MAP_KEY
+import nbc.group.recipes.ChipType
 import nbc.group.recipes.R
 import nbc.group.recipes.TestData
 import nbc.group.recipes.data.model.dto.SearchDocumentsResponse
@@ -66,6 +67,7 @@ class MapFragment : Fragment() {
         showMapView()
         setSearch()
         observeViewModel()
+        chipGroup()
     }
 
 
@@ -219,6 +221,49 @@ class MapFragment : Fragment() {
             }
         }else{
             Log.e("kakaoMap", "LabelStyles null값 에러")
+        }
+    }
+
+
+    private fun chipGroup(){
+        binding.chipGroup.setOnCheckedStateChangeListener { chipGroup, checkedId ->
+
+            Log.d("Chip",checkedId.toString())
+            val selectChip = chipGroup.checkedChipId
+
+            when(selectChip){
+                R.id.fist_type -> chipType(ChipType.FIRST)
+                R.id.second_type -> chipType(ChipType.SECOND)
+                R.id.three_type -> chipType(ChipType.THIRD)
+                R.id.four_type -> chipType(ChipType.FOURTH)
+                R.id.five_type -> chipType(ChipType.FIFTH)
+                R.id.six_type -> chipType(ChipType.SIXTH)
+                else -> Log.d("chipGroup", "Unknown chip selected")
+            }
+        }
+    }
+
+    private fun chipType(type: ChipType){
+        when(type){
+            ChipType.FIRST -> {
+                Log.d("type__",type.toString())
+                mapViewModel.getRegionSearch(query = "인천")
+            }
+            ChipType.SECOND -> {
+                mapViewModel.getRegionSearch(query = "대전")
+            }
+            ChipType.THIRD -> {
+                mapViewModel.getRegionSearch(query = "논산")
+            }
+            ChipType.FOURTH -> {
+                mapViewModel.getRegionSearch(query = "강릉")
+            }
+            ChipType.FIFTH -> {
+                mapViewModel.getRegionSearch(query = "수원")
+            }
+            ChipType.SIXTH -> {
+                mapViewModel.getRegionSearch(query = "세종")
+            }
         }
     }
 
