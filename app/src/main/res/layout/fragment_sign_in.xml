@@ -82,18 +82,21 @@
     <Button
         android:id="@+id/bt_sign_in"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/default_button_height"
         android:text="@string/sign_in_fragment_sign_in_button_text"
         android:layout_marginTop="@dimen/default_margin_20"
         app:layout_constraintTop_toBottomOf="@+id/et_pw_layout"
         app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintEnd_toEndOf="@id/gl_end"/>
+        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        android:background="@drawable/button_shape"/>
 
     <TextView
         android:id="@+id/tv_sign_up_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_in_fragment_sign_up_button_text"
+        style="@style/content_text_style"
+        android:layout_marginTop="@dimen/default_margin_20"
         app:layout_constraintStart_toStartOf="@id/et_id_layout"
         app:layout_constraintTop_toBottomOf="@id/bt_sign_in"/>
 
@@ -102,16 +105,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_in_fragment_search_pw_button_text"
+        style="@style/content_text_style"
+        android:layout_marginTop="@dimen/default_margin_20"
         app:layout_constraintEnd_toEndOf="@id/et_id_layout"
         app:layout_constraintTop_toBottomOf="@id/bt_sign_in"/>
 
-    <TextView
-        android:id="@+id/tv_other_sign_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_in_fragment_sign_in_other_way_text"
-        app:layout_constraintStart_toStartOf="@id/et_id_layout"
-        app:layout_constraintEnd_toEndOf="@id/et_id_layout"
-        app:layout_constraintTop_toBottomOf="@id/tv_search_pw_button"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

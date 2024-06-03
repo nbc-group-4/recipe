@@ -9,8 +9,5 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="grey_button_style" parent="ThemeOverlay.AppCompat">
-        <item name="colorAccent">@color/grey</item>
-        <item name="background">@drawable/button_shape</item>
-    </style>
+
 </resources>
