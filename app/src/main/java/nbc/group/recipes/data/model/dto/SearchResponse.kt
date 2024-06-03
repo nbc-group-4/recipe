@@ -17,8 +17,8 @@ data class SearchDocumentsResponse(
     @SerializedName("address") val address : Address?,
     @SerializedName("address_name") val addressName : String,
     @SerializedName("address_type") val addressType : String,
-    @SerializedName("x") val x : String,
-    @SerializedName("y") val y : String,
+    @SerializedName("x") val x : Double,    // x=128.601805491072
+    @SerializedName("y") val y : Double,    // y=35.8713802646197
 )
 
 data class Address(
@@ -27,6 +27,6 @@ data class Address(
     @SerializedName("region_2depth_name") val regionDepthName2 : String?,
     @SerializedName("region_3depth_h_name") val regionDepthHName3 : String?,
     @SerializedName("region_3depth_name") val regionDepthName3 : String?,
-    @SerializedName("x") val x : String?,
-    @SerializedName("y") val y : String?,
+    @SerializedName("x") val x : Double?,
+    @SerializedName("y") val y : Double?,
 )

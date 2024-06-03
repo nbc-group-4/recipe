@@ -1,5 +1,14 @@
 package nbc.group.recipes.util
 
+import android.content.Context
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Registry
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
+import com.firebase.ui.storage.images.FirebaseImageLoader
+import com.google.firebase.storage.StorageReference
+import java.io.InputStream
+
 val specialties = listOf(
     "취나물", "미나리", "잎들깨", "오이", "부추", "깻잎", "대파", "배추", "미나리", "고추", "쑥", "상추", "고사리",
     "잣", "오디", "두릅", "가시오가피", "곰취", "삼백초", "녹차", "눈개승마", "어성초", "피망", "곤드레",
@@ -29,4 +38,16 @@ fun convertToOfficial(target: String): String {
     }
     if (length == 0) throw Exception("There is no matching ingredient error!")
     return result
+}
+
+@GlideModule
+class StorageGlideModule: AppGlideModule() {
+    override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
+        super.registerComponents(context, glide, registry)
+        registry.append(
+            StorageReference::class.java,
+            InputStream::class.java,
+            FirebaseImageLoader.Factory()
+        )
+    }
 }
