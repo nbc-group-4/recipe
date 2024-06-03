@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nbc.group.recipes.data.model.dto.Recipe
@@ -99,11 +100,10 @@ class MainViewModel @Inject constructor(
     private val _specialties = MutableStateFlow<SpecialtyResponse?>(null)
     val specialties = _specialties.asStateFlow()
 
-    fun doTest() {
+    fun doTest(specialtyType: String) {
         viewModelScope.launch {
-            _specialties.emit(
-                repository.getSpecialty("양구")
-            )
+            val items = repository.getSpecialty("포항").body.items.item
+            _specialties.emit(items)
         }
     }
 }

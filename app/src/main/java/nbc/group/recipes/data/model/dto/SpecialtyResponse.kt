@@ -1,6 +1,5 @@
 package nbc.group.recipes.data.model.dto
 
-import com.google.gson.annotations.SerializedName
 import com.tickaroo.tikxml.annotation.Element
 import com.tickaroo.tikxml.annotation.PropertyElement
 import com.tickaroo.tikxml.annotation.Xml

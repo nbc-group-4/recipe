@@ -8,9 +8,17 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="nbc.group.recipes.presentation.fragment.HomeFragment"
+        android:name="nbc.group.recipes.presentation.fragment.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+
+<!--    specialtyFragment 추가-->
+    <fragment
+        android:id="@+id/specialtyFragment"
+        android:name="nbc.group.recipes.presentation.fragment.specialty.SpecialtyFragment"
+        android:label="fragment_specialty"
+        tools:layout="@layout/fragment_specialty" />
+
     <fragment
         android:id="@+id/mapFragment"
         android:name="nbc.group.recipes.presentation.fragment.MapFragment"

@@ -1,4 +1,4 @@
-package nbc.group.recipes
+package nbc.group.recipes.util
 
 import android.content.Context
 import com.bumptech.glide.Glide
