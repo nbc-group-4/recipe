@@ -13,13 +13,17 @@ import nbc.group.recipes.data.network.FirebaseResult
 import nbc.group.recipes.data.repository.AuthRepository
 import nbc.group.recipes.data.repository.FirestoreRepository
 import nbc.group.recipes.data.repository.RecipeSpecialtyRepository
+import nbc.group.recipes.data.repository.StorageRepository
+import nbc.group.recipes.data.utils.getUserProfileStoragePath
+import java.io.InputStream
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: RecipeSpecialtyRepository,
     private val authRepository: AuthRepository,
-    private val firestoreRepository: FirestoreRepository
+    private val firestoreRepository: FirestoreRepository,
+    private val storageRepository: StorageRepository
 ): ViewModel() {
 
     /**
@@ -83,9 +87,14 @@ class MainViewModel @Inject constructor(
         _recipes.emit(result)
     }
 
-
-
-
+    fun putImage(inputStream: InputStream) = viewModelScope.launch {
+        currentUser?.let {
+            storageRepository.putImage(
+                getUserProfileStoragePath(it.uid),
+                inputStream
+            )
+        }
+    }
 
     private val _specialties = MutableStateFlow<SpecialtyResponse?>(null)
     val specialties = _specialties.asStateFlow()

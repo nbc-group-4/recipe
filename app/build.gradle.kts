@@ -65,6 +65,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("com.google.firebase:firebase-firestore")
+    // implementation("com.google.firebase:firebase-storage")
+    implementation("com.firebaseui:firebase-ui-storage:8.0.2")
 
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
@@ -76,6 +78,8 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
 
     implementation("io.coil-kt:coil:2.6.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
 
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")

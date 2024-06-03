@@ -15,3 +15,7 @@ import kotlin.coroutines.resumeWithException
 //        }
 //    }
 //}
+
+fun getUserProfileStoragePath(uid: String): String {
+    return "userProfile/$uid/profile.jpg"
+}
