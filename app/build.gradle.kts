@@ -95,10 +95,12 @@ dependencies {
     implementation ("com.tickaroo.tikxml:retrofit-converter:0.8.13")
 
     kapt ("com.tickaroo.tikxml:processor:0.8.13")
-    //
-
     // kakao map sdk
     implementation ("com.kakao.maps.open:android:2.9.5")
+    // Glid
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    // bottomSheet
+    implementation ("com.google.android.material:material:1.12.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
