@@ -33,15 +33,6 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initNavigation()
-
-        binding.testButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_signInFragment)
-        }
-
-        binding.testButtonLogout.setOnClickListener {
-            viewModel.logout()
-            Log.e("TAG", "onViewCreated: ${viewModel.currentUser}", )
-        }
     }
 
     private fun initNavigation() {
