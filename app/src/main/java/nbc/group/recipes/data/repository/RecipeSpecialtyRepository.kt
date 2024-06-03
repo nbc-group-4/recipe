@@ -12,6 +12,6 @@ class RecipeSpecialtyRepository @Inject constructor(
     private val recipeDataSource: RecipeDataSource,
     private val recipeDao: RecipeDao
 ) {
-    suspend fun getRecipe() = recipeDataSource.getRecipe()
+    suspend fun getRecipe(recipeName: String) = recipeDataSource.getRecipe(1,2,"",3)
     suspend fun getSpecialty(areaName: String) = specialtyDataSource.getSpecialty(areaName)
 }

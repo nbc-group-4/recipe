@@ -39,7 +39,7 @@ class SpecialtyFragment : Fragment() {
 
         setRecyclerView()
 
-        // 특산품 종류별로 구분 - 작업 중
+        // 특산품 종류별 구분 작업 중
         val specialtyType = arguments?.getString("specialtyType") ?: ""
         mainViewModel.getSpecialties(specialtyType)
         observeViewModel()
@@ -55,8 +55,16 @@ class SpecialtyFragment : Fragment() {
     // 각 특산품 리사이클러뷰
     private fun setRecyclerView() {
         binding.recyclerViewSpecialtyDetail.apply {
-            binding.recyclerViewSpecialtyDetail.adapter = adapter
+            adapter = specialtyAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
+            // 아이템 데코레이션
+            addItemDecoration(
+                GridSpacingItemDecoration(
+                    2,
+                    (16 * resources.displayMetrics.density + 0.5f).toInt(),
+                    false
+                )
+            )
         }
     }
 
@@ -71,7 +79,6 @@ class SpecialtyFragment : Fragment() {
         }
     }
 
-    // API 테스트
     private fun fetchSpecialtyData(specialtyType: String) {
         mainViewModel.doTest(specialtyType)
     }

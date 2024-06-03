@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentHomeBinding
+import nbc.group.recipes.presentation.fragment.specialty.GridSpacingItemDecoration
 import nbc.group.recipes.util.KindItem
 import nbc.group.recipes.util.dummyRecipe
 import nbc.group.recipes.util.specialtyKind
@@ -68,6 +69,14 @@ class HomeFragment : Fragment() {
             adapter = homeQuizAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            // 아이템 데코레이션
+            addItemDecoration(
+                GridSpacingItemDecoration(
+                    2,
+                    (16 * resources.displayMetrics.density + 0.5f).toInt(),
+                    false
+                )
+            )
         }
         homeQuizAdapter?.submitList(dummyRecipe)
     }
@@ -77,6 +86,14 @@ class HomeFragment : Fragment() {
             adapter = homeKindAdapter
             layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
+            // 아이템 데코레이션
+//            addItemDecoration(
+//                GridSpacingItemDecoration(
+//                    2,
+//                    (16 * resources.displayMetrics.density + 0.5f).toInt(),
+//                    false
+//                )
+//            )
         }
         homeKindAdapter?.submitList(specialtyKind)
     }

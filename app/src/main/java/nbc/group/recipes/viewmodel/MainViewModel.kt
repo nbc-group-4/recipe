@@ -1,21 +1,21 @@
 package nbc.group.recipes.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import nbc.group.recipes.data.model.dto.Recipe
-import nbc.group.recipes.data.model.dto.SpecialtyResponse
+import nbc.group.recipes.data.model.dto.Item
+import nbc.group.recipes.data.network.SpecialtyService
 import nbc.group.recipes.data.repository.RecipeSpecialtyRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: RecipeSpecialtyRepository
-): ViewModel() {
+) : ViewModel() {
 
     /**
      * <Sample code>
@@ -24,15 +24,20 @@ class MainViewModel @Inject constructor(
      *
      * */
 
-    private val _specialties = MutableStateFlow<SpecialtyResponse?>(null)
+    private val _specialties = MutableStateFlow<List<Item>?>(null)
     val specialties = _specialties.asStateFlow()
 
-    fun doTest() {
+    fun doTest(specialtyType: String) {
         viewModelScope.launch {
-            _specialties.emit(
-                repository.getSpecialty("양구")
-            )
+            val items = repository.getSpecialty("부산").body.items.item
+            _specialties.emit(items)
         }
     }
 
+    fun getSpecialties(type: String) {
+        viewModelScope.launch {
+//            val response = repository.getSpecialty(type)
+//            _specialties.emit(response)
+        }
+    }
 }
