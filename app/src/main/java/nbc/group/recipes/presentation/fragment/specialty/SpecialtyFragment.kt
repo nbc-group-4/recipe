@@ -21,7 +21,7 @@ class SpecialtyFragment : Fragment() {
     private var _binding: FragmentSpecialtyBinding? = null
     private val binding: FragmentSpecialtyBinding
         get() = _binding!!
-    private lateinit var specialtyAdapter: SpecialtyAdapter // 수정 예정
+    private var specialtyAdapter: SpecialtyAdapter? = null
     private val mainViewModel: MainViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
@@ -45,7 +45,7 @@ class SpecialtyFragment : Fragment() {
         observeViewModel()
 
         // API 테스트
-        binding.ivSpecialtyKind.setOnClickListener {
+        binding.tvSpecialtyKind.setOnClickListener {
             fetchSpecialtyData("부산")
         }
 
@@ -65,7 +65,7 @@ class SpecialtyFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             mainViewModel.specialties.collect { list ->
                 list?.let {
-                    specialtyAdapter.submitList(it)
+                    specialtyAdapter?.submitList(it)
                 }
             }
         }
@@ -81,7 +81,6 @@ class SpecialtyFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             sharedViewModel.selectedKindItem.collect { item ->
                 item?.let {
-                    // binding.ivSpecialtyKind.setImageResource(it.imageResourceId)
                     binding.tvSpecialtyKind.text = it.item
                 }
             }
@@ -91,5 +90,6 @@ class SpecialtyFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        specialtyAdapter = null
     }
 }

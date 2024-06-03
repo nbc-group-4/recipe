@@ -7,40 +7,37 @@
     android:layout_height="match_parent"
     tools:context=".presentation.fragment.specialty.SpecialtyFragment">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvSpecialtyKind"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="15dp"
-        app:cardCornerRadius="180dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:id="@+id/cvSpecialtyKind"-->
+    <!--        android:layout_width="150dp"-->
+    <!--        android:layout_height="150dp"-->
+    <!--        app:cardCornerRadius="180dp">-->
 
-        <ImageView
-            android:id="@+id/ivSpecialtyKind"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_specialty_sample7"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <!--        <ImageView-->
+    <!--            android:id="@+id/ivSpecialtyKind"-->
+    <!--            android:layout_width="150dp"-->
+    <!--            android:layout_height="150dp"-->
+    <!--            android:scaleType="centerCrop"-->
+    <!--            android:src="@drawable/img_specialty_sample7"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-    </androidx.cardview.widget.CardView>
+    <!--    </androidx.cardview.widget.CardView>-->
 
     <TextView
         android:id="@+id/tvSpecialtyKind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="280dp"
         android:text="곡물류"
-        android:textSize="21dp"
+        android:textSize="30dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/cvSpecialtyKind"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cvSpecialtyKind"
-        app:layout_constraintTop_toTopOf="@+id/cvSpecialtyKind" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/recyclerContainer"
@@ -50,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cvSpecialtyKind">
+        app:layout_constraintTop_toBottomOf="@id/tvSpecialtyKind">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewSpecialtyDetail"
