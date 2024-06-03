@@ -102,7 +102,7 @@ class MainViewModel @Inject constructor(
 
     fun doTest(specialtyType: String) {
         viewModelScope.launch {
-            val items = repository.getSpecialty("부산").body.items.item
+            val items = repository.getSpecialty("포항").body.items.item
             _specialties.emit(items)
         }
     }
