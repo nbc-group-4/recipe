@@ -16,12 +16,4 @@ class MainViewModel @Inject constructor(
     private val repository: RecipeSpecialtyRepository
 ): ViewModel() {
 
-    /**
-     * <Sample code>
-     * private val _recipes = MutableStateFlow(listOf<Recipe>())
-     * val recipes = _recipes.asStateFlow()
-     *
-     * */
-
-
 }

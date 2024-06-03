@@ -21,35 +21,35 @@
 
     <TextView
         android:id="@+id/tv_recipe_name"
+        style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        style="@style/top_banner_text_style"
         android:text="레시피명"
         app:layout_constraintStart_toStartOf="@+id/iv_recipe_img"
         app:layout_constraintTop_toBottomOf="@+id/iv_recipe_img" />
 
     <TextView
         android:id="@+id/tv_recipe_difficulty"
+        style="@style/content_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="#초보"
-        style="@style/content_text_style"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/iv_recipe_img"
         app:layout_constraintTop_toBottomOf="@+id/tv_recipe_name" />
 
     <TextView
         android:id="@+id/tv_recipe_time"
+        style="@style/content_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
+        android:layout_marginEnd="8dp"
         android:text="# 30분"
-        style="@style/content_text_style"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/iv_recipe_img"
-        app:layout_constraintTop_toBottomOf="@+id/iv_recipe_img" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_recipe_difficulty" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

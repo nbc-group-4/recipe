@@ -6,47 +6,61 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import nbc.group.recipes.R
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import kotlinx.coroutines.launch
 import nbc.group.recipes.databinding.FragmentRecipeBinding
-import nbc.group.recipes.viewmodel.MainViewModel
-import nbc.group.recipes.viewmodel.MainViewModel_Factory
-
+import nbc.group.recipes.viewmodel.RecipeViewModel
 
 class RecipeFragment : Fragment() {
     private var _binding: FragmentRecipeBinding? = null
-
     private val binding: FragmentRecipeBinding
         get() = _binding!!
 
-    private val viewModel by viewModels<MainViewModel> {
-        MainViewModel()
-    }
+    private val viewModel by viewModels<RecipeViewModel>()
+    private lateinit var recipeAdapter: RecipeAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recipe, container, false)
+        _binding = FragmentRecipeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RecipeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RecipeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        observeViewModel()
+        fetchRecipes()
+    }
+
+    private fun setupRecyclerView() {
+        recipeAdapter = RecipeAdapter {recipe ->
+            // 아이템 클릭 시 로직
+        }
+        binding.rvRecipe.apply {
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = recipeAdapter
+            setHasFixedSize(true)
+        }
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            viewModel.recipes.collect {recipes->
+                recipes?.let {
+                    recipeAdapter.submitList(it)
                 }
             }
+        }
+    }
+
+    private fun fetchRecipes() {
+        viewModel.getRecipes(startIndex = 1, endIndex = 15, recipeName = "", recipeId = 0)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
