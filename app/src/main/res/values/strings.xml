@@ -3,4 +3,27 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_text">검색어를 입력해주세요</string>
+
+
+    <!-- SignInFragment -->
+    <string name="sign_in_fragment_top_banner_text">로그인</string>
+    <string name="sign_in_fragment_id_hint">이메일 주소</string>
+    <string name="sign_in_fragment_pw_hint">비밀번호</string>
+    <string name="sign_in_fragment_easy_sign_in_indic_text">간편 로그인정보 저장</string>
+    <string name="sign_in_fragment_sign_in_button_text">로그인</string>
+    <string name="sign_in_fragment_sign_up_button_text">회원가입</string>
+    <string name="sign_in_fragment_search_pw_button_text">비밀번호 찾기</string>
+    <string name="sign_in_fragment_sign_in_other_way_text">다른 계정으로 로그인</string>
+
+    <!-- SignUpFragment -->
+    <string name="sign_up_fragment_top_banner_text">회원가입</string>
+    <string name="sign_up_fragment_id_hint">이메일 주소</string>
+    <string name="sign_up_fragment_pw_hint">비밀번호</string>
+    <string name="sign_up_fragment_pw_check_hint">비밀번호 확인</string>
+    <string name="sign_up_fragment_nickname_hint">닉네임</string>
+    <string name="sign_up_fragment_id_duplication_check_indic_text">중복확인</string>
+    <string name="sign_up_fragment_confirm_button_text">회원가입</string>
+
+    <!-- MypageFragment -->
+    <string name="mypage_fragment_sign_in_button_text">로그인</string>
 </resources>

@@ -29,17 +29,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initNavigation()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         navController = findNavController(R.id.fcv)
         return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
-    private fun initNavigation() {
-        val navHostFragment = binding.fcv.getFragment<NavHostFragment>()
-        val navController = navHostFragment.navController
-        binding.bottomNavBar.setupWithNavController(navController)
     }
 }

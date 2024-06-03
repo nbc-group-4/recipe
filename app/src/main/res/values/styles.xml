@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="top_banner_text_style" parent="Widget.AppCompat.TextView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="content_text_style" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
+</resources>
