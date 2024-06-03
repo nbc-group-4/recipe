@@ -1,11 +1,14 @@
 package nbc.group.recipes.presentation.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State.*
 import androidx.lifecycle.flowWithLifecycle
@@ -61,7 +64,7 @@ class MapFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         showMapView()
-        setSearchButton()
+        setSearch()
         observeViewModel()
     }
 
@@ -112,18 +115,30 @@ class MapFragment : Fragment() {
     }
 
 
-    private fun setSearchButton() {
+    private fun setSearch() = with(binding){
 
-        binding.searchButton.setOnClickListener {
+        searchEt.setOnEditorActionListener { v, actionId, event ->
+            if(actionId == EditorInfo.IME_ACTION_SEARCH){
 
-            val searchText = binding.searchEt.text.toString()
+                val searchText = searchEt.text.toString()
 
-            // 뷰모델에 내가 입력한 텍스트값 전달
-            if (searchText.isNotEmpty()) {
-                mapViewModel.getRegionSearch(searchText)
-            } else {
-                Snackbar.make(binding.searchEt, "검색어를 입력해주세요", Snackbar.LENGTH_SHORT).show()
+                // 뷰모델에 내가 입력한 텍스트값 전달
+                if (searchText.isNotEmpty()) {
+                    mapViewModel.getRegionSearch(searchText)
+                } else {
+                    Snackbar.make(searchEt, "검색어를 입력해주세요", Snackbar.LENGTH_SHORT).show()
+                }
+
+                // 키보드 내리기
+                val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(requireActivity().window.decorView.applicationWindowToken, 0)
+
+                // 텍스트값 제거
+                searchEt.setText("")
+
+                return@setOnEditorActionListener true
             }
+            return@setOnEditorActionListener false
         }
     }
 
