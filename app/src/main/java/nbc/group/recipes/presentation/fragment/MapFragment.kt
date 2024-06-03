@@ -19,6 +19,7 @@ import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
 import com.kakao.vectormap.camera.CameraAnimation
 import com.kakao.vectormap.camera.CameraUpdateFactory
+import com.kakao.vectormap.label.LabelLayerOptions
 import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelStyle
 import com.kakao.vectormap.label.LabelStyles
@@ -27,9 +28,12 @@ import com.kakao.vectormap.label.Transition
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import nbc.group.recipes.BaseMapData
+import nbc.group.recipes.BottomSheetAdapter
+import nbc.group.recipes.BottomSheetFragment
+import nbc.group.recipes.data.model.dto.BaseMapResponse
 import nbc.group.recipes.BuildConfig.KAKAO_MAP_KEY
 import nbc.group.recipes.R
+import nbc.group.recipes.TestData
 import nbc.group.recipes.data.model.dto.SearchDocumentsResponse
 import nbc.group.recipes.databinding.FragmentMapBinding
 import nbc.group.recipes.viewmodel.MapViewModel
@@ -48,7 +52,7 @@ class MapFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -86,6 +90,18 @@ class MapFragment : Fragment() {
                 // 정상적으로 인증이 완료되었을 때 호출
                 kakaoMap = kakaomap
                 baseSettingMap()
+
+                // Label 클릭리스너
+                kakaomap.setOnLabelClickListener { kakaoMap, labelLayer, label ->
+                    val bottomSheetFragment = BottomSheetFragment()
+                    bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
+                }
+
+                // LodLabel 클릭리스너
+                kakaoMap?.setOnLodLabelClickListener{ kakaoMap, labelLayer, label ->
+                    val bottomSheetFragment = BottomSheetFragment()
+                    bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
+                }
             }
 
             override fun getZoomLevel(): Int {
@@ -132,14 +148,15 @@ class MapFragment : Fragment() {
         // 커스텀으로 라벨 생성 및 가져옴
         // 1. LabelStyles 생성 - Icon 이미지 하나만 있는 스타일
         val styles = kakaoMap?.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.ic_map_red)
-            .setIconTransition(LabelTransition.from(Transition.Scale,Transition.Scale)) ))
+            .setIconTransition(LabelTransition.from(Transition.Scale,Transition.Scale))))
 
         // styles가 null이 아닐때만, LabelOptions 생성하고 라벨추가
         if(styles != null){
             // LabelOptions 생성
             val options = LabelOptions.from(LatLng.from(latitude_formatter, longitude_formatter)).setStyles(styles)
             // LabelLayer 가져옴
-            val layer = kakaoMap?.labelManager?.getLayer()
+            val layerOptions = LabelLayerOptions.from().setZOrder(2)     // setZOrder -> 우선순위 지정
+            val layer = kakaoMap?.labelManager?.addLayer(layerOptions)  //  val layer = kakaoMap?.labelManager?.getLayer()
             // Label 생성
             layer?.addLabel(options)
         }else{
@@ -168,29 +185,27 @@ class MapFragment : Fragment() {
     // 시작하자마자 기본으로 보여지는 라벨(라벨 여러개 표시)
     private fun baseSettingMap(){
 
-        val baseMapDataList = listOf(
-            BaseMapData(id = 1, regionName = "천안", x_longitude = 127.113911, y_latitude = 36.815067),
-            BaseMapData(id = 2, regionName = "이천", x_longitude = 127.435089, y_latitude = 37.272267),
-            BaseMapData(id = 3, regionName = "동해", x_longitude = 129.114299, y_latitude = 37.524741),
-            BaseMapData(id = 4, regionName = "서울", x_longitude = 126.978652, y_latitude = 37.566826),
-            BaseMapData(id = 5, regionName = "파주", x_longitude = 126.779881, y_latitude = 37.760044),
+        val baseMapResponseLists = listOf(
+            BaseMapResponse(id = 1, regionName = "천안", x_longitude = 127.113911, y_latitude = 36.815067),
+            BaseMapResponse(id = 2, regionName = "이천", x_longitude = 127.435089, y_latitude = 37.272267),
+            BaseMapResponse(id = 3, regionName = "동해", x_longitude = 129.114299, y_latitude = 37.524741),
+            BaseMapResponse(id = 4, regionName = "서울", x_longitude = 126.978652, y_latitude = 37.566826),
+            BaseMapResponse(id = 5, regionName = "파주", x_longitude = 126.779881, y_latitude = 37.760044),
         )
 
         val styles = kakaoMap?.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.ic_map_blue)))
 
         if(styles != null){
-            styles.let {
-                baseMapDataList.forEach{ baseMapData ->
-                    val options = LabelOptions.from(LatLng.from(baseMapData.y_latitude, baseMapData.x_longitude)).setStyles(styles)
-                    val layer = kakaoMap?.labelManager?.getLodLayer()   // LodLabelLayer 가져오기
-                    layer?.addLodLabel(options)
-                }
+            baseMapResponseLists.forEach{
+                val options = LabelOptions.from(LatLng.from(it.y_latitude, it.x_longitude)).setStyles(styles)
+                val layerOptions = LabelLayerOptions.from().setZOrder(1)
+                val layer = kakaoMap?.labelManager?.addLodLayer(layerOptions)   // val layer = kakaoMap?.labelManager?.getLodLayer()
+                layer?.addLodLabel(options)
             }
         }else{
             Log.e("kakaoMap", "LabelStyles null값 에러")
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
