@@ -11,6 +11,7 @@ activity = "1.8.0"
 activityKtx = "1.1.0"
 constraintlayout = "2.1.4"
 
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
