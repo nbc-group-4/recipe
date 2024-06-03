@@ -1,6 +1,7 @@
 package nbc.group.recipes
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private var _binding: ActivityBottomsheetBinding? = null
 
     private val bottomSheetAdapter : BottomSheetAdapter by lazy {
-        BottomSheetAdapter(recipeData = ArrayList()){ data, position ->
+        BottomSheetAdapter{ data, position ->
             // 클릭시 실행할 동작
         }
     }
@@ -63,7 +64,8 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             TestData(12,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz5JQWrFmc7emFhAXlVIKsjZmTaromlosdyA&s", "title8", "description8"),
         )
 
-        bottomSheetAdapter.updateData(testDatas)
+        bottomSheetAdapter.submitList(testDatas)
+        Log.d("testData",testDatas.toString())
     }
 
 
