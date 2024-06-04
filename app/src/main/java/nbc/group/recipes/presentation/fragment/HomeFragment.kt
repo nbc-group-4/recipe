@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentHomeBinding
-import nbc.group.recipes.presentation.HomeKindAdapter
-import nbc.group.recipes.presentation.HomeQuizAdapter
 import nbc.group.recipes.KindItem
 import nbc.group.recipes.dummyRecipe
 import nbc.group.recipes.specialtyKind

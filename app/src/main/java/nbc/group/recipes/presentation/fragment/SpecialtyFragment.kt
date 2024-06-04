@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.databinding.FragmentSpecialtyBinding
-import nbc.group.recipes.presentation.SpecialtyAdapter
 import nbc.group.recipes.viewmodel.MainViewModel
 import nbc.group.recipes.viewmodel.SharedViewModel
 
@@ -41,7 +40,6 @@ class SpecialtyFragment : Fragment() {
         setRecyclerView()
 
         observeViewModel()
-
         fetchSpecialtyData()
 
         observeSelectedItem()
@@ -73,7 +71,7 @@ class SpecialtyFragment : Fragment() {
     }
 
     private fun fetchSpecialtyData() {
-        mainViewModel.doTest("부산")
+        mainViewModel.getItem("")
     }
 
     // 홈 프래그먼트에서 클릭시 특산품 종류 수신
