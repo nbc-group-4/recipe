@@ -7,7 +7,7 @@ import javax.inject.Named
 class RecipeDataSource @Inject constructor(
     @Named("RecipeService") private val service: RecipeService
 ) {
-    suspend fun getRecipe(
+    suspend fun getRecipe (
         startIndex: Int = 1,
         endIndex: Int = 20,
         recipeName: String,
@@ -40,4 +40,5 @@ class RecipeDataSource @Inject constructor(
         endIndex = endIndex,
         recipeId = recipeId
     )
+
 }
