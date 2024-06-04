@@ -34,11 +34,11 @@ import kotlinx.coroutines.launch
 import nbc.group.recipes.BottomSheetAdapter
 import nbc.group.recipes.BottomSheetFragment
 import nbc.group.recipes.data.model.dto.BaseMapResponse
-import nbc.group.recipes.BuildConfig.KAKAO_MAP_KEY
 import nbc.group.recipes.ChipType
 import nbc.group.recipes.R
 import nbc.group.recipes.TestData
 import nbc.group.recipes.data.model.dto.SearchDocumentsResponse
+import nbc.group.recipes.data.network.KAKAO_MAP_KEY
 import nbc.group.recipes.databinding.FragmentMapBinding
 import nbc.group.recipes.viewmodel.MapViewModel
 import java.lang.Exception
