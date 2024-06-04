@@ -99,7 +99,7 @@ class MainViewModel @Inject constructor(
     private val _specialties = MutableStateFlow<SpecialtyResponse?>(null)
     val specialties = _specialties.asStateFlow()
 
-    fun doTest() {
+    fun doTest(string: String) {
         viewModelScope.launch {
             _specialties.emit(
                 repository.getSpecialty("양구")
