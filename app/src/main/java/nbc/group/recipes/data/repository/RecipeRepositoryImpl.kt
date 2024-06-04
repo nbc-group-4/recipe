@@ -6,9 +6,10 @@ import nbc.group.recipes.data.model.dto.RecipeProcedure
 import nbc.group.recipes.data.model.dto.RecipeResponse
 import nbc.group.recipes.data.network.RecipeService
 import javax.inject.Inject
+import javax.inject.Named
 
 class RecipeRepositoryImpl @Inject constructor(
-    private val recipeService: RecipeService
+    @Named("RecipeService") private val recipeService: RecipeService
 ) : RecipeRepository {
     override suspend fun getRecipes(
         startIndex: Int,
