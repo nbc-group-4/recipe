@@ -45,4 +45,10 @@ object AuthModule {
     fun provideStorageRepository(
         storageRepositoryImpl: StorageRepositoryImpl
     ): StorageRepository = storageRepositoryImpl
+
+    @Singleton
+    @Provides
+    fun provideRecipeRepository(
+        recipeRepositoryImpl: RecipeRepositoryImpl
+    ): RecipeRepository = recipeRepositoryImpl
 }
