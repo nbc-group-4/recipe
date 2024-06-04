@@ -1,0 +1,78 @@
+package nbc.group.recipes.presentation.fragment
+
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import nbc.group.recipes.R
+import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.databinding.FragmentSignUpBinding
+import nbc.group.recipes.viewmodel.MainViewModel
+
+@AndroidEntryPoint
+class SignUpFragment : Fragment() {
+
+    private var _binding: FragmentSignUpBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: MainViewModel by activityViewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        with(binding) {
+            btSignUp.setOnClickListener(signUpButtonClickListener)
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.signUpFlow.collect { nullable ->
+                nullable?.let { nonNull ->
+                    when (nonNull) {
+                        is FirebaseResult.Success -> {
+                            findNavController().popBackStack()
+                        }
+
+                        is FirebaseResult.Failure -> {
+                            Log.e(SignInFragment.TAG,
+                                "onViewCreated: Failure: ${nonNull.exception.message}")
+                            binding.tvErrorIndic.text = nonNull.exception.message
+                        }
+
+                        is FirebaseResult.Loading -> {
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private val signUpButtonClickListener: (View) -> Unit = {
+        with(binding) {
+            viewModel.signUp(
+                name = etNickname.text?.toString()?: "",
+                id = etId.text?.toString()?: "",
+                pw = etPw.text?.toString()?: ""
+            )
+        }
+    }
+}

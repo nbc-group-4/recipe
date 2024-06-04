@@ -13,9 +13,6 @@ import nbc.group.recipes.data.network.FirebaseResult
 import nbc.group.recipes.data.repository.AuthRepository
 import nbc.group.recipes.data.repository.FirestoreRepository
 import nbc.group.recipes.data.repository.RecipeSpecialtyRepository
-import nbc.group.recipes.data.repository.StorageRepository
-import nbc.group.recipes.data.utils.getUserProfileStoragePath
-import java.io.InputStream
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,6 +22,7 @@ class MainViewModel @Inject constructor(
     private val firestoreRepository: FirestoreRepository,
     private val storageRepository: StorageRepository
 ): ViewModel() {
+
     /**
      * <Sample code>
      * private val _recipes = MutableStateFlow(listOf<Recipe>())
@@ -98,7 +96,7 @@ class MainViewModel @Inject constructor(
     private val _specialties = MutableStateFlow<SpecialtyResponse?>(null)
     val specialties = _specialties.asStateFlow()
 
-    fun doTest() {
+    fun doTest(string: String) {
         viewModelScope.launch {
             _specialties.emit(
                 repository.getSpecialty("양구")

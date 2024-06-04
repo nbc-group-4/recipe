@@ -17,4 +17,9 @@ data class Recipe(
     @SerializedName("LEVEL_NM") val levelName: String,
     @SerializedName("IRDNT_CODE") val ingredientCode: String,
     @SerializedName("PC_NM") val price: String,
-)
+) {
+    constructor(): this(
+        1, 1, "a", "b", "c", "d",
+        "e", "f", "g", "h", "i", "j",
+        "k", "l")
+}
