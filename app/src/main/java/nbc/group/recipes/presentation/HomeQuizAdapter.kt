@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import nbc.group.recipes.RecipeItem
 import nbc.group.recipes.databinding.ItemHomeQuizBinding
 
 // RecipeItem 더미 데이터 테스트

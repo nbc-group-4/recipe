@@ -20,4 +20,7 @@ class RecipeSpecialtyRepository @Inject constructor(
     )
 
     suspend fun getSpecialty(areaName: String) = specialtyDataSource.getSpecialty(areaName)
+
+//    suspend fun fetchSpecialtiesByType(specialties: Unit) =
+//        specialtyDataSource.getSpecialty(type)
 }

@@ -1,12 +1,14 @@
 package nbc.group.recipes
 
 import android.content.Context
+import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
 import com.firebase.ui.storage.images.FirebaseImageLoader
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.launch
 import java.io.InputStream
 
 val specialties = listOf(
@@ -25,20 +27,37 @@ val specialties = listOf(
     "노루궁뎅이", "상황", "양송이", "팽이버섯", "새송이버섯",
 )
 
-fun convertToOfficial(target: String): String {
-    var result = ""
-    var length = 0
-    specialties.forEach { specialty ->
-        if(target.contains(specialty)) {
-            if(length < specialty.length) {
-                result = specialty
-                length = specialty.length
-            }
-        }
-    }
-    if (length == 0) throw Exception("There is no matching ingredient error!")
-    return result
-}
+//fun convertToOfficial(target: String): String {
+//    var result = ""
+//    var length = 0
+//    specialties.forEach { specialty ->
+//        if(target.contains(specialty)) {
+//            if(length < specialty.length) {
+//                result = specialty
+//                length = specialty.length
+//            }
+//        }
+//    }
+//    if (length == 0) throw Exception("There is no matching ingredient error!")
+//    return result
+//}
+
+
+//private fun convertToOfficial(target: String, categorySpecialties: List<String>): String {
+//    var result = ""
+//    var length = 0
+//    categorySpecialties.forEach { specialty ->
+//        if (target.contains(specialty)) {
+//            if (length < specialty.length) {
+//                result = specialty
+//                length = specialty.length
+//            }
+//        }
+//    }
+//    if (length == 0) throw Exception("There is no matching ingredient error!")
+//    return result
+//}
+
 
 @GlideModule
 class StorageGlideModule: AppGlideModule() {

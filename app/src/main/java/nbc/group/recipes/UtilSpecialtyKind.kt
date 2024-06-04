@@ -1,37 +1,29 @@
-package nbc.group.recipes.presentation
-
-import nbc.group.recipes.R
+package nbc.group.recipes
 
 val specialtyKind = listOf(
     KindItem(
         item = "곡물류",
-        imageResourceId = R.drawable.img_specialty_sample7
-        // img_specialties1
+        imageResourceId = R.drawable.img_specialty_sample1
     ),
     KindItem(
         item = "채소류",
-        imageResourceId = R.drawable.img_specialty_sample7
-        // img_specialties2
+        imageResourceId = R.drawable.img_specialty_sample2
     ),
     KindItem(
         item = "과일류",
-        imageResourceId = R.drawable.img_specialty_sample7
-        // img_specialties3
+        imageResourceId = R.drawable.img_specialty_sample3
     ),
     KindItem(
         item = "어류",
-        imageResourceId = R.drawable.img_specialty_sample7
-        // img_specialties4
+        imageResourceId = R.drawable.img_specialty_sample4
     ),
     KindItem(
         item = "해조류",
-        imageResourceId = R.drawable.img_specialty_sample7
-        // img_specialties5
+        imageResourceId = R.drawable.img_specialty_sample5
     ),
     KindItem(
         item = "고기류",
-        imageResourceId = R.drawable.img_specialty_sample7
-        // img_specialties6
+        imageResourceId = R.drawable.img_specialty_sample6
     ),
 )
 
@@ -40,12 +32,10 @@ val specialtyKindMore = listOf(
     KindItem(
         item = "쌀",
         imageResourceId = R.drawable.img_specialty_sample7
-        // img_specialties7
     ),
     KindItem(
         item = "기타",
-        imageResourceId = R.drawable.img_specialty_sample7
-        // img_specialties8
+        imageResourceId = R.drawable.img_specialty_sample8
     )
 )
 

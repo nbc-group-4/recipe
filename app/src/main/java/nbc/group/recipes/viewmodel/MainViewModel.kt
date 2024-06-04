@@ -102,7 +102,7 @@ class MainViewModel @Inject constructor(
     fun doTest(string: String) {
         viewModelScope.launch {
             _specialties.emit(
-                repository.getSpecialty("양구")
+                repository.getSpecialty("부산")
             )
         }
     }

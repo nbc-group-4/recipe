@@ -15,11 +15,10 @@ import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentHomeBinding
 import nbc.group.recipes.presentation.HomeKindAdapter
 import nbc.group.recipes.presentation.HomeQuizAdapter
-import nbc.group.recipes.presentation.KindItem
-import nbc.group.recipes.presentation.dummyRecipe
-import nbc.group.recipes.presentation.specialtyKind
-import nbc.group.recipes.presentation.specialtyKindMore
-//import nbc.group.recipes.presentation.fragment.specialty.GridSpacingItemDecoration
+import nbc.group.recipes.KindItem
+import nbc.group.recipes.dummyRecipe
+import nbc.group.recipes.specialtyKind
+import nbc.group.recipes.specialtyKindMore
 
 import nbc.group.recipes.viewmodel.MainViewModel
 import nbc.group.recipes.viewmodel.SharedViewModel

@@ -40,20 +40,15 @@ class SpecialtyFragment : Fragment() {
 
         setRecyclerView()
 
-        // 특산품 종류별 구분 작업 중
+        // 특산품 종류별 구분 작업
 //        val specialtyType = arguments?.getString("specialtyType") ?: ""
 //        mainViewModel.getSpecialties(specialtyType)
-//        observeViewModel()
-
-        // API 테스트
-        binding.tvSpecialtyKind.setOnClickListener {
-            fetchSpecialtyData("부산")
-        }
+        observeViewModel()
+        fetchSpecialtyData()
 
         observeSelectedItem()
     }
 
-    // 각 특산품 리사이클러뷰
     private fun setRecyclerView() {
         binding.recyclerViewSpecialtyDetail.apply {
             adapter = specialtyAdapter
@@ -80,8 +75,8 @@ class SpecialtyFragment : Fragment() {
         }
     }
 
-    private fun fetchSpecialtyData(specialtyType: String) {
-        mainViewModel.doTest(specialtyType)
+    private fun fetchSpecialtyData() {
+        mainViewModel.doTest("부산")
     }
 
     // 홈 프래그먼트에서 클릭시 특산품 종류 수신

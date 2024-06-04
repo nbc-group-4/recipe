@@ -5,7 +5,7 @@
     android:id="@+id/specialtyFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.fragment.specialty.SpecialtyFragment">
+    tools:context=".presentation.fragment.SpecialtyFragment">
 
     <!--    <androidx.cardview.widget.CardView-->
     <!--        android:id="@+id/cvSpecialtyKind"-->
