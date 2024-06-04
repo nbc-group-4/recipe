@@ -40,10 +40,8 @@ class SpecialtyFragment : Fragment() {
 
         setRecyclerView()
 
-        // 특산품 종류별 구분 작업
-//        val specialtyType = arguments?.getString("specialtyType") ?: ""
-//        mainViewModel.getSpecialties(specialtyType)
         observeViewModel()
+
         fetchSpecialtyData()
 
         observeSelectedItem()
@@ -64,7 +62,6 @@ class SpecialtyFragment : Fragment() {
         }
     }
 
-    // 특산품 API 뷰모델
     private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             mainViewModel.specialties.collect { list ->

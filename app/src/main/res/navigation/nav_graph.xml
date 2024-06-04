@@ -12,10 +12,10 @@
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
     <fragment
-        android:id="@+id/bookmarkFragment"
-        android:name="nbc.group.recipes.presentation.fragment.BookmarkFragment"
-        android:label="fragment_bookmark"
-        tools:layout="@layout/fragment_bookmark" />
+        android:id="@+id/specialtyFragment"
+        android:name="nbc.group.recipes.presentation.fragment.SpecialtyFragment"
+        android:label="fragment_specialty"
+        tools:layout="@layout/fragment_specialty" />
     <fragment
         android:id="@+id/mypageFragment"
         android:name="nbc.group.recipes.presentation.fragment.MypageFragment"
