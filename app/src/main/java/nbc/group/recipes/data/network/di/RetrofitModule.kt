@@ -1,5 +1,7 @@
 package nbc.group.recipes.data.network.di
 
+import com.tickaroo.tikxml.TikXml
+import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,9 +36,12 @@ object RetrofitModule {
     @Singleton
     @Provides
     @Named("Specialty")
-    fun provideRetrofitAgriculture(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofitSpecialty(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(
+                TikXmlConverterFactory
+                    .create(TikXml.Builder().exceptionOnUnreadXml(false).build())
+            )
             .client(okHttpClient)
             .baseUrl(SPECIALTY_API_BASE.toString())
             .build()
@@ -68,7 +73,7 @@ object RetrofitModule {
     @Singleton
     @Provides
     @Named("SpecialtyService")
-    fun provideApiServiceAgriculture(
+    fun provideApiServiceSpecialty(
         @Named("Specialty") retrofit: Retrofit
     ): SpecialtyService {
         return retrofit.create(SpecialtyService::class.java)

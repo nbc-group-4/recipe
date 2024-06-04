@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 val properties = Properties().apply {
@@ -58,8 +59,16 @@ android {
 
 dependencies {
 
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation ("com.google.android.material:material:1.4.0")
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+    implementation("com.google.firebase:firebase-analytics")
+
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("com.google.firebase:firebase-firestore")
+    // implementation("com.google.firebase:firebase-storage")
+    implementation("com.firebaseui:firebase-ui-storage:8.0.2")
+
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
@@ -70,6 +79,8 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
 
     implementation("io.coil-kt:coil:2.6.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
 
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
@@ -79,8 +90,18 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
+    // To convert xml -> data class
+    implementation ("com.tickaroo.tikxml:annotation:0.8.13")
+    implementation ("com.tickaroo.tikxml:core:0.8.13")
+    implementation ("com.tickaroo.tikxml:retrofit-converter:0.8.13")
+
+    kapt ("com.tickaroo.tikxml:processor:0.8.13")
     // kakao map sdk
     implementation ("com.kakao.maps.open:android:2.9.5")
+    // Glid
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    // bottomSheet
+    implementation ("com.google.android.material:material:1.12.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

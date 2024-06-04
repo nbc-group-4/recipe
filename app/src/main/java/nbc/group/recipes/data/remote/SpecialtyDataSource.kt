@@ -7,5 +7,9 @@ import javax.inject.Named
 class SpecialtyDataSource @Inject constructor(
     @Named("SpecialtyService") private val service: SpecialtyService
 ) {
-    suspend fun getData() = service.getData()
+    suspend fun getSpecialty(
+        sAreaNm: String,
+    ) = service.getSpecialty(
+        sAreaNm = sAreaNm,
+    )
 }
