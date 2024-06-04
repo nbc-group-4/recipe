@@ -24,6 +24,7 @@ import nbc.group.recipes.StorageGlideModule
 import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.network.FirebaseResult
 import nbc.group.recipes.databinding.FragmentMypageBinding
+import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.viewmodel.MainViewModel
 import java.io.File
 
@@ -84,15 +85,16 @@ class MypageFragment : Fragment() {
                     Recipe()
                 )
             }
-
             testButton2.setOnClickListener {
                 viewModel.getRecipe()
             }
-
             testImageView.setOnClickListener {
                 pickMedia.launch(
                     PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                 )
+            }
+            fab.setOnClickListener {
+                (activity as MainActivity).moveToSignInFragment()
             }
         }
 

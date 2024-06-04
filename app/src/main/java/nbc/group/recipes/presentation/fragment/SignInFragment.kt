@@ -20,6 +20,7 @@ import com.google.firebase.auth.ktx.auth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.viewmodel.MainViewModel
 
 @AndroidEntryPoint
@@ -85,7 +86,7 @@ class SignInFragment : Fragment() {
     }
 
     private val signUpButtonClickListener: (View) -> Unit = {
-        findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+        (activity as MainActivity).moveToSignUpFragment()
     }
 
     private val searchPwButtonClickListener: (View) -> Unit = {
