@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_mainFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_specialtyFragment"
+            app:destination="@id/specialtyFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -28,4 +34,13 @@
         android:name="nbc.group.recipes.presentation.fragment.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
+    <fragment
+        android:id="@+id/specialtyFragment"
+        android:name="nbc.group.recipes.presentation.fragment.SpecialtyFragment"
+        android:label="SpecialtyFragment" />
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="nbc.group.recipes.presentation.fragment.RecipeFragment"
+        android:label="fragment_recipe"
+        tools:layout="@layout/fragment_recipe" />
 </navigation>
