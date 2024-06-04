@@ -2,6 +2,7 @@ package nbc.group.recipes.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -12,6 +13,7 @@ import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.data.repository.RecipeRepository
 import javax.inject.Inject
 
+@HiltViewModel
 class RecipeViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository
 ): ViewModel() {
