@@ -5,7 +5,6 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
-
     <fragment
         android:id="@+id/mapFragment"
         android:name="nbc.group.recipes.presentation.fragment.MapFragment"
@@ -26,11 +25,5 @@
         android:name="nbc.group.recipes.presentation.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/recipeFragment"
-        android:name="nbc.group.recipes.presentation.fragment.RecipeFragment"
-        android:label="fragment_recipe"
-        tools:layout="@layout/fragment_recipe" />
 
 </navigation>
