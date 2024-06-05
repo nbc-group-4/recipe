@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.databinding.FragmentRecipeBinding
 import nbc.group.recipes.viewmodel.RecipeViewModel
 
+@AndroidEntryPoint
 class RecipeFragment : Fragment() {
     private var _binding: FragmentRecipeBinding? = null
     private val binding: FragmentRecipeBinding
