@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import nbc.group.recipes.R
 import nbc.group.recipes.data.network.FirebaseResult
 import nbc.group.recipes.databinding.FragmentSignUpBinding
+import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.viewmodel.MainViewModel
 
 @AndroidEntryPoint
@@ -36,6 +37,7 @@ class SignUpFragment : Fragment() {
 
         with(binding) {
             btSignUp.setOnClickListener(signUpButtonClickListener)
+            ivBackButton.setOnClickListener(backButtonClickListener)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -47,12 +49,12 @@ class SignUpFragment : Fragment() {
                         }
 
                         is FirebaseResult.Failure -> {
-                            Log.e(SignInFragment.TAG,
-                                "onViewCreated: Failure: ${nonNull.exception.message}")
+                            binding.clLoading.visibility = View.GONE
                             binding.tvErrorIndic.text = nonNull.exception.message
                         }
 
                         is FirebaseResult.Loading -> {
+                            binding.clLoading.visibility = View.VISIBLE
 
                         }
                     }
@@ -74,5 +76,9 @@ class SignUpFragment : Fragment() {
                 pw = etPw.text?.toString()?: ""
             )
         }
+    }
+
+    private val backButtonClickListener: (View) -> Unit = {
+        (activity as MainActivity).moveToBack()
     }
 }

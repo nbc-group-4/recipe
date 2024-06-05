@@ -34,5 +34,7 @@
 
     <!-- MypageFragment -->
     <string name="mypage_fragment_sign_in_button_text">로그인</string>
+    <string name="mypage_fragment_sign_in_indic_text">로그인이 필요한 서비스입니다.</string>
+
 
 </resources>

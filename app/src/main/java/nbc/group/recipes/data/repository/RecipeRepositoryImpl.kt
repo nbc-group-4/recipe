@@ -5,11 +5,12 @@ import nbc.group.recipes.data.model.dto.RecipeIngredient
 import nbc.group.recipes.data.model.dto.RecipeProcedure
 import nbc.group.recipes.data.model.dto.RecipeResponse
 import nbc.group.recipes.data.network.RecipeService
+import nbc.group.recipes.data.remote.RecipeDataSource
 import javax.inject.Inject
 import javax.inject.Named
 
 class RecipeRepositoryImpl @Inject constructor(
-    @Named("RecipeService") private val recipeService: RecipeService
+    private val recipeDataSource: RecipeDataSource
 ) : RecipeRepository {
     override suspend fun getRecipes(
         startIndex: Int,
@@ -17,7 +18,7 @@ class RecipeRepositoryImpl @Inject constructor(
         recipeName: String,
         recipeId: Int
     ): RecipeResponse<Recipe> {
-        return recipeService.getRecipe(
+        return recipeDataSource.getRecipe(
             startIndex = startIndex,
             endIndex = endIndex,
             recipeName = recipeName,
@@ -31,7 +32,7 @@ class RecipeRepositoryImpl @Inject constructor(
         ingredientName: String,
         recipeId: Int
     ): RecipeResponse<RecipeIngredient> {
-        return recipeService.getRecipeIngredient(
+        return recipeDataSource.getRecipeIngredient(
             startIndex = startIndex,
             endIndex = endIndex,
             ingredientName = ingredientName,
@@ -44,7 +45,7 @@ class RecipeRepositoryImpl @Inject constructor(
         endIndex: Int,
         recipeId: Int
     ): RecipeResponse<RecipeProcedure> {
-        return recipeService.getRecipeProcedure(
+        return recipeDataSource.getRecipeProcedure(
             startIndex = startIndex,
             endIndex = endIndex,
             recipeId = recipeId

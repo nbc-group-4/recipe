@@ -29,4 +29,5 @@ class MainActivity : AppCompatActivity() {
     fun moveToSignUpFragment() = navController.navigate(R.id.action_signInFragment_to_signUpFragment)
     fun moveToRecipeFragment() = navController.navigate(R.id.action_mainFragment_to_recipeFragment)
     fun moveToSpecialtyFragment() = navController.navigate(R.id.action_mainFragment_to_specialtyFragment)
+    fun moveToBack() = navController.popBackStack()
 }
