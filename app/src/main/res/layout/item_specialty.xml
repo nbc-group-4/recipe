@@ -1,6 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="190dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -11,28 +10,15 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            app:cardCornerRadius="15dp">
-
-            <ImageView
-                android:id="@+id/ivSpecialty"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_specialty_sample7" />
-        </androidx.cardview.widget.CardView>
-
         <TextView
             android:id="@+id/tvSpecialty"
             style="@style/content_text_style"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:maxLines="1"
-            android:text="쌀"
+            android:text="곡물류 아이템 목록 (잡곡 등)"
             android:textStyle="bold" />
 
     </LinearLayout>

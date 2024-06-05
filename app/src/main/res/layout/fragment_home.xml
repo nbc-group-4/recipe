@@ -46,15 +46,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/ivSearch"
-                android:layout_width="@dimen/small_button_size"
-                android:layout_height="@dimen/small_button_size"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/search" />
+<!--            <ImageView-->
+<!--                android:id="@+id/ivSearch"-->
+<!--                android:layout_width="@dimen/small_button_size"-->
+<!--                android:layout_height="@dimen/small_button_size"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:layout_marginEnd="32dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:srcCompat="@drawable/search" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_padding"
                 android:layout_marginEnd="175dp"
-                android:text="우리나라 특산품의 종류"
+                android:text="우리나라 특산물의 종류"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
