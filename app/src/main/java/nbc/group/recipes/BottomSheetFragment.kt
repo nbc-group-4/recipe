@@ -1,5 +1,6 @@
 package nbc.group.recipes
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import nbc.group.recipes.databinding.ActivityBottomsheetBinding
+import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.viewmodel.MapViewModel
 
 @AndroidEntryPoint
@@ -22,13 +24,19 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private val binding get() = _binding!!
     private var _binding: ActivityBottomsheetBinding? = null
 
+    private val sharedMapViewModel : MapViewModel by activityViewModels()
+
     private val bottomSheetAdapter : BottomSheetAdapter by lazy {
-        BottomSheetAdapter{ data, position ->
+        BottomSheetAdapter{ item, position ->
             // 클릭시 실행할 동작
+            // sharedMapViewModel을 통해서 클릭한 위치의 특산물 데이터를 전달!!
+            sharedMapViewModel.getSelectedSpecialty(item)
+            Log.d("click_specialtyData__",item.toString())
+
+            // RecipeFragment로 이동
+            (activity as MainActivity).moveToRecipeFragment()
         }
     }
-
-    private val sharedMapViewModel : MapViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -68,7 +76,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

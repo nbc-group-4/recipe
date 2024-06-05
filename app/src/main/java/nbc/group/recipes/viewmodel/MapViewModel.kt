@@ -2,11 +2,11 @@ package nbc.group.recipes.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kakao.vectormap.KakaoMap.OnLabelClickListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import nbc.group.recipes.data.model.dto.Item
 import nbc.group.recipes.data.model.dto.SearchResponse
 import nbc.group.recipes.data.model.dto.SpecialtyResponse
 import nbc.group.recipes.data.repository.RecipeSpecialtyRepository
@@ -36,5 +36,14 @@ class MapViewModel @Inject constructor(
     fun getSpecialtie(ariaName : String) = viewModelScope.launch {
             _specialtie.emit(repository.getSpecialty(ariaName))
         }
+
+
+    // 클릭한 특산물 데이터
+    private val _selectedSpecialty = MutableStateFlow<Item?>(null)
+    val selectedSpecialty: StateFlow<Item?> = _selectedSpecialty
+
+    fun getSelectedSpecialty(item: Item?) {
+        _selectedSpecialty.value = item
+    }
 
 }
