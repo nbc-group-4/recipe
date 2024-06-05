@@ -5,13 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import nbc.group.recipes.databinding.ActivityBottomsheetBinding
+import nbc.group.recipes.viewmodel.MapViewModel
 
-
+@AndroidEntryPoint
 class BottomSheetFragment : BottomSheetDialogFragment() {
-
     private val binding get() = _binding!!
     private var _binding: ActivityBottomsheetBinding? = null
 
@@ -20,6 +27,8 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             // 클릭시 실행할 동작
         }
     }
+
+    private val sharedMapViewModel : MapViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -34,7 +43,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setRecyclerView()
-        TestData()
+        observeSpecialtyData()
     }
 
 
@@ -48,26 +57,17 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     }
 
 
-    private fun TestData(){
-        val testDatas = listOf(
-            TestData(1,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOByQi_wqBIRiSI8ta4O05kp-awGDIlYVhHQ&s", "title1", "description1"),
-            TestData(2,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOByQi_wqBIRiSI8ta4O05kp-awGDIlYVhHQ&s", "title2", "description2"),
-            TestData(3,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOByQi_wqBIRiSI8ta4O05kp-awGDIlYVhHQ&s", "title3", "description3"),
-            TestData(4,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz5JQWrFmc7emFhAXlVIKsjZmTaromlosdyA&s", "title4", "description4"),
-            TestData(5,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz5JQWrFmc7emFhAXlVIKsjZmTaromlosdyA&s", "title5", "description5"),
-            TestData(6,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz5JQWrFmc7emFhAXlVIKsjZmTaromlosdyA&s", "title6", "description6"),
-            TestData(7,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz5JQWrFmc7emFhAXlVIKsjZmTaromlosdyA&s", "title7", "description7"),
-            TestData(8,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz5JQWrFmc7emFhAXlVIKsjZmTaromlosdyA&s", "title8", "description8"),
-            TestData(9,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz5JQWrFmc7emFhAXlVIKsjZmTaromlosdyA&s", "title8", "description8"),
-            TestData(10,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz5JQWrFmc7emFhAXlVIKsjZmTaromlosdyA&s", "title8", "description8"),
-            TestData(11,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz5JQWrFmc7emFhAXlVIKsjZmTaromlosdyA&s", "title8", "description8"),
-            TestData(12,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz5JQWrFmc7emFhAXlVIKsjZmTaromlosdyA&s", "title8", "description8"),
-        )
+    private fun observeSpecialtyData(){
+        viewLifecycleOwner.lifecycleScope.launch{
 
-        bottomSheetAdapter.submitList(testDatas)
-        Log.d("testData",testDatas.toString())
+            sharedMapViewModel.specialtie.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED).collectLatest{
+                Log.d("it_region_data__", it.toString())    // "검색한 지역의 특산물"값 받아옴
+
+                // 어뎁터 업데이트
+                bottomSheetAdapter.submitList(it?.body?.items?.item)
+            }
+        }
     }
-
 
 
     override fun onDestroyView() {

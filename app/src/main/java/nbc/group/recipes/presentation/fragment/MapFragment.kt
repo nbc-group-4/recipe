@@ -1,6 +1,7 @@
 package nbc.group.recipes.presentation.fragment
 
 import android.content.Context
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State.*
 import androidx.lifecycle.flowWithLifecycle
@@ -31,20 +33,20 @@ import com.kakao.vectormap.label.Transition
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import nbc.group.recipes.BottomSheetAdapter
 import nbc.group.recipes.BottomSheetFragment
 import nbc.group.recipes.data.model.dto.BaseMapResponse
 import nbc.group.recipes.BuildConfig.KAKAO_MAP_KEY
 import nbc.group.recipes.ChipType
 import nbc.group.recipes.R
-import nbc.group.recipes.TestData
 import nbc.group.recipes.data.model.dto.SearchDocumentsResponse
 import nbc.group.recipes.databinding.FragmentMapBinding
 import nbc.group.recipes.viewmodel.MapViewModel
 import java.lang.Exception
+import java.util.Locale
 
 @AndroidEntryPoint
 class MapFragment : Fragment() {
+
     private val binding get() = _binding!!
     private var _binding: FragmentMapBinding? = null
 
@@ -52,6 +54,7 @@ class MapFragment : Fragment() {
     private var kakaoMap : KakaoMap? = null
 
     private val mapViewModel: MapViewModel by viewModels()
+    private val sharedMapViewModel : MapViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +71,7 @@ class MapFragment : Fragment() {
         setSearch()
         observeViewModel()
         chipGroup()
+        deleteText()
     }
 
 
@@ -96,14 +100,34 @@ class MapFragment : Fragment() {
                 kakaoMap = kakaomap
                 baseSettingMap()
 
-                // Label 클릭리스너
+                // Label 클릭리스너 (검색시)
                 kakaomap.setOnLabelClickListener { kakaoMap, labelLayer, label ->
+
+                    // 라벨이 클릭될때, 지역명을 관찰
+                    sharedMapViewModel.getSpecialtie(binding.searchEt.text.toString())
+
                     val bottomSheetFragment = BottomSheetFragment()
                     bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
                 }
 
-                // LodLabel 클릭리스너
+                // LodLabel 클릭리스너 (기본세팅)
                 kakaoMap?.setOnLodLabelClickListener{ kakaoMap, labelLayer, label ->
+
+                    // 마커 클릭시, 클릭한 지역의 위도,경도 받아오기
+                    // 그 위도,경도에 맞는 지역이름을 가져옴
+                    // 그 지역이름을 search EditText에 표시
+
+                    val latitude = label.position.latitude
+                    val longitude = label.position.longitude
+
+                    val regionName = getRegionName(latitude, longitude)
+                    Log.d("regionName_si__", regionName)  // ##시
+
+                    binding.searchEt.setText(regionName)
+
+                    // 라벨이 클릭될때, 지역명을 관찰
+                    sharedMapViewModel.getSpecialtie(binding.searchEt.text.toString())
+
                     val bottomSheetFragment = BottomSheetFragment()
                     bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
                 }
@@ -134,9 +158,6 @@ class MapFragment : Fragment() {
                 // 키보드 내리기
                 val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(requireActivity().window.decorView.applicationWindowToken, 0)
-
-                // 텍스트값 제거
-                searchEt.setText("")
 
                 return@setOnEditorActionListener true
             }
@@ -203,11 +224,10 @@ class MapFragment : Fragment() {
     private fun baseSettingMap(){
 
         val baseMapResponseLists = listOf(
-            BaseMapResponse(id = 1, regionName = "천안", x_longitude = 127.113911, y_latitude = 36.815067),
-            BaseMapResponse(id = 2, regionName = "이천", x_longitude = 127.435089, y_latitude = 37.272267),
-            BaseMapResponse(id = 3, regionName = "동해", x_longitude = 129.114299, y_latitude = 37.524741),
-            BaseMapResponse(id = 4, regionName = "서울", x_longitude = 126.978652, y_latitude = 37.566826),
-            BaseMapResponse(id = 5, regionName = "파주", x_longitude = 126.779881, y_latitude = 37.760044),
+            BaseMapResponse(id = 1, regionName = "군산", x_longitude = 126.736840, y_latitude = 35.967466),
+            BaseMapResponse(id = 2, regionName = "김포", x_longitude = 126.715657, y_latitude = 37.615268),
+            BaseMapResponse(id = 3, regionName = "양주", x_longitude = 127.045786, y_latitude = 37.785313),
+            BaseMapResponse(id = 4, regionName = "논산", x_longitude = 127.098734, y_latitude = 36.187183),
         )
 
         val styles = kakaoMap?.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.ic_map_blue)))
@@ -246,26 +266,52 @@ class MapFragment : Fragment() {
     private fun chipType(type: ChipType){
         when(type){
             ChipType.FIRST -> {
-                Log.d("type__",type.toString())
-                mapViewModel.getRegionSearch(query = "인천")
+                mapViewModel.getRegionSearch(query = "통영")
+                binding.searchEt.setText("통영")
             }
             ChipType.SECOND -> {
                 mapViewModel.getRegionSearch(query = "대전")
+                binding.searchEt.setText("대전")
             }
             ChipType.THIRD -> {
-                mapViewModel.getRegionSearch(query = "논산")
+                mapViewModel.getRegionSearch(query = "안성")
+                binding.searchEt.setText("안성")
             }
             ChipType.FOURTH -> {
-                mapViewModel.getRegionSearch(query = "강릉")
+                mapViewModel.getRegionSearch(query = "파주")
+                binding.searchEt.setText("파주")
             }
             ChipType.FIFTH -> {
-                mapViewModel.getRegionSearch(query = "수원")
+                mapViewModel.getRegionSearch(query = "서산")
+                binding.searchEt.setText("서산")
             }
             ChipType.SIXTH -> {
                 mapViewModel.getRegionSearch(query = "세종")
+                binding.searchEt.setText("세종")
             }
         }
     }
+
+
+    // 위도,경도를 통해 지역명 가져오는 함수
+    private fun getRegionName(latitude: Double, longitude: Double) : String {
+        // Geocoder는 위,경도 좌표 이용해서 해당위치의 주소정보 가져올수있는 클래스
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        // 위도, 경도 정보로부터 주소정보 가져오기
+        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+        // 주소 정보에서 "시" 단위 지역명 추출
+        return addresses?.firstOrNull()?.locality ?: ""
+    }
+
+
+    private fun deleteText() = with(binding){
+        deleteIv.setOnClickListener {
+             // 텍스트값 제거
+            searchEt.setText("")
+            Snackbar.make(mapView, "검색어가 삭제되었습니다", Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
