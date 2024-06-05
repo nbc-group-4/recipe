@@ -36,7 +36,7 @@ class RecipeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeViewModel()
-        fetchRecipes()
+//        fetchRecipes()
         observeSharedViewModel()
     }
 
