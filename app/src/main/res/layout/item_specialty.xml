@@ -18,7 +18,7 @@
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:maxLines="1"
-            android:text="곡물류 아이템 목록 (잡곡 등)"
+            android:text="과일류 아이템 목록 (포도 등)"
             android:textStyle="bold" />
 
     </LinearLayout>

@@ -9,13 +9,11 @@
 
     <EditText
         android:id="@+id/etSpecialtySearch"
+        style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:hint="아래 특산물을 참조하여 검색하세요"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,21 +22,30 @@
         android:id="@+id/ivSearch"
         android:layout_width="@dimen/small_button_size"
         android:layout_height="@dimen/small_button_size"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/search" />
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/recyclerContainer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/default_padding"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/tvSpecialtyKind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="과일류"
+        android:textStyle="italic"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etSpecialtySearch">
+        app:layout_constraintTop_toBottomOf="@+id/etSpecialtySearch" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/recyclerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyKind">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewSpecialty"
