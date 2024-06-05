@@ -30,7 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_recipe_sample" />
+                    android:src="@drawable/img_recipe_sample1" />
             </androidx.cardview.widget.CardView>
 
         </FrameLayout>
