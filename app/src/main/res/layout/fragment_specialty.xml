@@ -30,10 +30,11 @@
 
     <TextView
         android:id="@+id/tvSpecialtyKind"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="과일류"
+        android:text="과일"
+        android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"

@@ -3,27 +3,27 @@ package nbc.group.recipes
 val specialtyKind = listOf(
     KindItem(
         item = "곡물",
-        imageResourceId = R.drawable.img_specialty_sample1
+        imageResourceId = R.drawable.img_specialty_kind1
     ),
     KindItem(
         item = "채소",
-        imageResourceId = R.drawable.img_specialty_sample2
+        imageResourceId = R.drawable.img_specialty_kind2
     ),
     KindItem(
         item = "과일",
-        imageResourceId = R.drawable.img_specialty_sample3
+        imageResourceId = R.drawable.img_specialty_kind3
     ),
     KindItem(
         item = "어류",
-        imageResourceId = R.drawable.img_specialty_sample4
+        imageResourceId = R.drawable.img_specialty_kind4
     ),
     KindItem(
         item = "해조류",
-        imageResourceId = R.drawable.img_specialty_sample5
+        imageResourceId = R.drawable.img_specialty_kind5
     ),
     KindItem(
         item = "고기",
-        imageResourceId = R.drawable.img_specialty_sample6
+        imageResourceId = R.drawable.img_specialty_kind6
     ),
 )
 
@@ -31,11 +31,11 @@ val specialtyKind = listOf(
 val specialtyKindMore = listOf(
     KindItem(
         item = "쌀",
-        imageResourceId = R.drawable.img_specialty_sample7
+        imageResourceId = R.drawable.img_specialty_kind7
     ),
     KindItem(
         item = "기타",
-        imageResourceId = R.drawable.img_specialty_sample8
+        imageResourceId = R.drawable.img_specialty_kind8
     )
 )
 

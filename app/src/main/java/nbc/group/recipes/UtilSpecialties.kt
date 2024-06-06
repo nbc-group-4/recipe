@@ -49,17 +49,3 @@ val specialties8 = listOf(
     "곤충", "꿀", "콩", "들깨", "호두", "잣", "녹차", "곰취", "삼백초",
     // "기타 전부"
 )
-
-//fun getSpecialties(category: String?): List<String> {
-//    return when (category) {
-//        "곡물" -> specialties1
-//        "채소" -> specialties2
-//        "과일" -> specialties3
-//        "어류" -> specialties4
-//        "해조류" -> specialties5
-//        "고기" -> specialties6
-//        "쌀" -> specialties7
-//        "기타" -> specialties8
-//        else -> specialties8
-//    }
-//}
