@@ -50,7 +50,7 @@ val specialties8 = listOf(
     // "기타 전부"
 )
 
-//val specialtiesAll = specialties1 + specialties2 + specialties3 + specialties4 + specialties5 + specialties6 + specialties7 + specialties8
+val specialtiesAll = specialties1 + specialties2 + specialties3 + specialties4 + specialties5 + specialties6 + specialties7 + specialties8
 fun getSpecialties(category: String?): List<String> {
     return when (category) {
         "곡물류" -> specialties1

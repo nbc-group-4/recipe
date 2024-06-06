@@ -46,23 +46,39 @@ data class KindItem(
 )
 
 
-// 홈퀴즈어댑터 테스트
+// 홈퀴즈 어댑터 더미 데이터
 val dummyRecipe = listOf(
     RecipeItem(
         item = "1",
-        imageResourceId = R.drawable.img_recipe_sample
+        imageResourceId = R.drawable.img_recipe_sample1
     ),
     RecipeItem(
         item = "2",
-        imageResourceId = R.drawable.img_recipe_sample
+        imageResourceId = R.drawable.img_recipe_sample2
     ),
     RecipeItem(
         item = "3",
-        imageResourceId = R.drawable.img_recipe_sample
+        imageResourceId = R.drawable.img_recipe_sample3
     ),
     RecipeItem(
         item = "4",
-        imageResourceId = R.drawable.img_recipe_sample
+        imageResourceId = R.drawable.img_recipe_sample4
+    ),
+    RecipeItem(
+        item = "5",
+        imageResourceId = R.drawable.img_recipe_sample5
+    ),
+    RecipeItem(
+        item = "6",
+        imageResourceId = R.drawable.img_recipe_sample6
+    ),
+    RecipeItem(
+        item = "7",
+        imageResourceId = R.drawable.img_recipe_sample7
+    ),
+    RecipeItem(
+        item = "8",
+        imageResourceId = R.drawable.img_recipe_sample8
     ),
 )
 
