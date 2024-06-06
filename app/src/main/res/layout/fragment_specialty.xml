@@ -34,8 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="과일류"
-        android:textStyle="italic"
         android:textSize="30sp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSpecialtySearch" />
