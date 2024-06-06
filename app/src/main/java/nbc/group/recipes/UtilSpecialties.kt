@@ -1,11 +1,11 @@
 package nbc.group.recipes
 
-// 곡물류
+// 곡물
 val specialties1 = listOf(
     "잡곡", "밀가루", "옥수수", "율무"
 )
 
-// 채소류
+// 채소
 val specialties2 = listOf(
     "취나물", "미나리", "잎들깨", "오이", "부추", "깻잎", "대파", "배추", "미나리", "고추", "쑥", "상추", "고사리",
     "파프리카", "시래기", "가지", "쪽파", "명이", "부지갱이", "미역취", "서덜취", "머위", "음나무", "차나무", "여주",
@@ -14,7 +14,7 @@ val specialties2 = listOf(
     "마", "천마", "토란", "인삼", "산삼", "산양삼", "눈개승마", "어성초", "피망", "곤드레"
 )
 
-// 과일류
+// 과일
 val specialties3 = listOf(
     "참외", "멜론", "체리", "복숭아", "포도", "사과", "수박", "단감", "블루베리", "토마토", "딸기", "감", "배", "복숭아",
     "다래", "구기자", "오미자", "대추", "복분자", "무화과", "한라봉", "유자", "대봉", "자두", "망고", "애플망고", "용과",
@@ -32,7 +32,7 @@ val specialties5 = listOf(
     "다시마", "미역", "김"
 )
 
-// 고기류
+// 고기
 val specialties6 = listOf(
     "한우", "닭", "오리", "양돈", "녹돈", "돼지", "유정란", "율란", "달걀", "닭", "오리", "노루궁뎅이"
 )
@@ -50,17 +50,16 @@ val specialties8 = listOf(
     // "기타 전부"
 )
 
-val specialtiesAll = specialties1 + specialties2 + specialties3 + specialties4 + specialties5 + specialties6 + specialties7 + specialties8
-fun getSpecialties(category: String?): List<String> {
-    return when (category) {
-        "곡물류" -> specialties1
-        "채소류" -> specialties2
-        "과일류" -> specialties3
-        "어류" -> specialties4
-        "해조류" -> specialties5
-        "고기류" -> specialties6
-        "쌀" -> specialties7
-        "기타" -> specialties8
-        else -> specialties8
-    }
-}
+//fun getSpecialties(category: String?): List<String> {
+//    return when (category) {
+//        "곡물" -> specialties1
+//        "채소" -> specialties2
+//        "과일" -> specialties3
+//        "어류" -> specialties4
+//        "해조류" -> specialties5
+//        "고기" -> specialties6
+//        "쌀" -> specialties7
+//        "기타" -> specialties8
+//        else -> specialties8
+//    }
+//}

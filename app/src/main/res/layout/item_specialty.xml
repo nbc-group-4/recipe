@@ -15,12 +15,12 @@
 
         <TextView
             android:id="@+id/tvSpecialty"
-            style="@style/content_text_style"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:maxLines="1"
-            android:text="과일류 아이템 목록 (포도 등)"
+            android:text="과일류 아이템 목록"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

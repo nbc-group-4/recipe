@@ -2,15 +2,15 @@ package nbc.group.recipes
 
 val specialtyKind = listOf(
     KindItem(
-        item = "곡물류",
+        item = "곡물",
         imageResourceId = R.drawable.img_specialty_sample1
     ),
     KindItem(
-        item = "채소류",
+        item = "채소",
         imageResourceId = R.drawable.img_specialty_sample2
     ),
     KindItem(
-        item = "과일류",
+        item = "과일",
         imageResourceId = R.drawable.img_specialty_sample3
     ),
     KindItem(
@@ -22,7 +22,7 @@ val specialtyKind = listOf(
         imageResourceId = R.drawable.img_specialty_sample5
     ),
     KindItem(
-        item = "고기류",
+        item = "고기",
         imageResourceId = R.drawable.img_specialty_sample6
     ),
 )
@@ -42,7 +42,7 @@ val specialtyKindMore = listOf(
 data class KindItem(
     val item: String,
     val imageResourceId: Int,
-    val isMore: Boolean = false // 더보기 여부를 나타내는 속성
+    val isMore: Boolean = false // 더보기 여부 속성
 )
 
 
