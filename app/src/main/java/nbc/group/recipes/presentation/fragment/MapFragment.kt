@@ -56,6 +56,9 @@ class MapFragment : Fragment() {
     private val mapViewModel: MapViewModel by viewModels()
     private val sharedMapViewModel : MapViewModel by activityViewModels()
 
+    private val searchDocumentsResponse : SearchDocumentsResponse ?= null
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -103,11 +106,20 @@ class MapFragment : Fragment() {
                 // Label 클릭리스너 (검색시)
                 kakaomap.setOnLabelClickListener { kakaoMap, labelLayer, label ->
 
-                    // 라벨이 클릭될때, 지역명을 관찰
-                    sharedMapViewModel.getSpecialtie(binding.searchEt.text.toString())
+                    val searchText = binding.searchEt.text.toString()
+                    // 특산품 데이터가 있는 지역이면
+                    if (containsRegoin(searchText)){
+                        // 라벨이 클릭될때, 지역명을 관찰해서 특산물데이터 받아옴
+                        sharedMapViewModel.getSpecialtie(searchText)
 
-                    val bottomSheetFragment = BottomSheetFragment()
-                    bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
+                        val bottomSheetFragment = BottomSheetFragment()
+                        bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
+
+                    }else{
+                        // NoDataBottomSheetFragment로 이동 (데이터없다는 바텀시트표현)
+
+                        Snackbar.make(binding.searchEt, "해당지역은 특산물 데이터가 없습니다", Snackbar.LENGTH_SHORT).show()
+                    }
                 }
 
                 // LodLabel 클릭리스너 (기본세팅)
@@ -153,6 +165,14 @@ class MapFragment : Fragment() {
                     mapViewModel.getRegionSearch(searchText)
                 } else {
                     Snackbar.make(searchEt, "검색어를 입력해주세요", Snackbar.LENGTH_SHORT).show()
+                }
+
+                // 검색할 수 있는 지역이 포함되어있으면
+                if (AllcontainsRegoin(searchText)){
+                    mapViewModel.getRegionSearch(searchText)
+                }else{
+                    // 지역이 아닌 다른것이 포함되어있으면 (영어,기호,외계어..)
+                    Snackbar.make(searchEt, "검색할수없는 지역입니다", Snackbar.LENGTH_SHORT).show()
                 }
 
                 // 키보드 내리기
@@ -312,6 +332,28 @@ class MapFragment : Fragment() {
         }
     }
 
+
+    // 특산품에 대한 데이터가 있는 지역리스트
+    fun containsRegoin(searchText: String): Boolean {
+        val Roigons =
+            listOf("통영","대전","군산","김포","양주","논산","통영","대전","안성","파주","세종","인천",
+                "원주","서산","함양","성주","영암","부산","봉화","정읍","횡성","삼척","평택","창녕"
+                ,"거제","진주","울릉","포항","영암","옹진","충주","상주","김천","대구","영천","경주",
+                "울산","김해","통영","여수","나주","전주","보령","제천","영주","완도")
+        return Roigons.any { searchText.contains(it) }
+    }
+
+
+    // 검색이 되는 모든 지역리스트 다 적기 (추후에 추가예정..)
+    fun AllcontainsRegoin(searchText: String): Boolean {
+        val Roigons =
+            listOf("통영","대전","군산","김포","양주","논산","통영","대전","안성","파주","세종","인천",
+                "원주","서산","함양","성주","영암","부산","봉화","정읍","횡성","삼척","평택","창녕"
+                ,"거제","진주","울릉","포항","영암","옹진","충주","상주","김천","대구","영천","경주",
+                "울산","김해","통영","여수","나주","전주","보령","제천","영주","완도","영종도","포천","수원","서울","과천"
+                ,"광주","포천","화성","오산","이천","춘천","속초","강릉","당진","서산",)
+        return Roigons.any { searchText.contains(it) }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
