@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide
 import nbc.group.recipes.RecipeItem
 import nbc.group.recipes.databinding.ItemHomeQuizBinding
 
-// RecipeItem 더미 데이터 테스트
 val diffCallbackHomeQuiz = object : DiffUtil.ItemCallback<RecipeItem>() {
     override fun areItemsTheSame(oldItem: RecipeItem, newItem: RecipeItem): Boolean {
         return oldItem.item == newItem.item
@@ -22,9 +21,6 @@ val diffCallbackHomeQuiz = object : DiffUtil.ItemCallback<RecipeItem>() {
 
 class HomeQuizAdapter :
     ListAdapter<RecipeItem, HomeQuizAdapter.ItemViewHolder>(diffCallbackHomeQuiz) {
-
-    // 이미지 데이터 소스?
-    // 퀴즈 로직?
 
     class ItemViewHolder(
         private val binding: ItemHomeQuizBinding,
