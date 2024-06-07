@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".presentation.fragment.SpecialtyDetailFragment">
 
-    <!--    애니메이션 효과?-->
     <TextView
         android:id="@+id/tvSpecialtyDetail"
         style="@style/top_banner_text_style"
