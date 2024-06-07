@@ -1,5 +1,6 @@
 package nbc.group.recipes.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
@@ -9,6 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.model.dto.SpecialtyResponse
+import nbc.group.recipes.data.model.firebase.UserMetaData
 import nbc.group.recipes.data.network.FirebaseResult
 import nbc.group.recipes.data.repository.AuthRepository
 import nbc.group.recipes.data.repository.FirestoreRepository
@@ -50,6 +52,9 @@ class MainViewModel @Inject constructor(
     private val _putRecipeFlow = MutableStateFlow<FirebaseResult<Boolean>?>(null)
     val putRecipeFlow = _putRecipeFlow.asStateFlow()
 
+    private val _userMetaData = MutableStateFlow<FirebaseResult<UserMetaData>?>(null)
+    val userMetaData = _userMetaData.asStateFlow()
+
     init {
         if(authRepository.currentUser != null) {
             viewModelScope.launch {
@@ -87,7 +92,29 @@ class MainViewModel @Inject constructor(
         _recipes.emit(result)
     }
 
-    fun putImage(inputStream: InputStream) = viewModelScope.launch {
+    fun putRecipeTransaction(recipe: Recipe) = viewModelScope.launch {
+        currentUser?.let {
+            firestoreRepository.putRecipeTransaction(it.uid, recipe)
+        }
+    }
+
+    fun putUserMeta(
+        userMetaData: UserMetaData
+    ) = viewModelScope.launch {
+        currentUser?.let {
+            Log.e("TAG", "putUserMeta: uid: ${it.uid}")
+            firestoreRepository.putUserMeta(it.uid, userMetaData)
+        }
+    }
+
+    fun getUserMeta(uid: String) = viewModelScope.launch {
+        val result = firestoreRepository.getUserMeta(uid)
+        _userMetaData.emit(result)
+    }
+
+    fun putImage(
+        inputStream: InputStream
+    ) = viewModelScope.launch {
         currentUser?.let {
             storageRepository.putImage(
                 getUserProfileStoragePath(it.uid),

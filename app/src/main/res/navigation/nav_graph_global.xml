@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_mainFragment_to_specialtyFragment"
             app:destination="@id/specialtyFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_makeRecipeFragment"
+            app:destination="@id/makeRecipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -43,4 +46,9 @@
         android:name="nbc.group.recipes.presentation.fragment.RecipeFragment"
         android:label="fragment_recipe"
         tools:layout="@layout/fragment_recipe" />
+    <fragment
+        android:id="@+id/makeRecipeFragment"
+        android:name="nbc.group.recipes.presentation.fragment.MakeRecipeFragment"
+        android:label="fragment_make_recipe"
+        tools:layout="@layout/fragment_make_recipe" />
 </navigation>
