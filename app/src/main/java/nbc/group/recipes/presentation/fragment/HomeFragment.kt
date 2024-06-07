@@ -17,8 +17,7 @@ import nbc.group.recipes.KindItem
 import nbc.group.recipes.dummyRecipe
 import nbc.group.recipes.specialtyKind
 import nbc.group.recipes.specialtyKindMore
-import nbc.group.recipes.viewmodel.MainViewModel
-//import nbc.group.recipes.viewmodel.SpecialtyViewModel
+import nbc.group.recipes.viewmodel.SpecialtyViewModel
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -28,8 +27,7 @@ class HomeFragment : Fragment() {
         get() = _binding!!
     private var homeQuizAdapter: HomeQuizAdapter? = null
     private var homeKindAdapter: HomeKindAdapter? = null
-//    private val sharedViewModel: SpecialtyViewModel by activityViewModels()
-    private val sharedViewModel: MainViewModel by activityViewModels()
+    private val sharedViewModel: SpecialtyViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

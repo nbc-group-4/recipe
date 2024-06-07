@@ -14,8 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentSpecialtyDetailBinding
-import nbc.group.recipes.viewmodel.MainViewModel
-//import nbc.group.recipes.viewmodel.SpecialtyViewModel
+import nbc.group.recipes.viewmodel.SpecialtyViewModel
+
 
 @AndroidEntryPoint
 class SpecialtyDetailFragment : Fragment() {
@@ -24,8 +24,7 @@ class SpecialtyDetailFragment : Fragment() {
     private val binding: FragmentSpecialtyDetailBinding
         get() = _binding!!
     private var specialtyDetailAdapter: SpecialtyDetailAdapter? = null
-//    private val sharedViewModel: SpecialtyViewModel by activityViewModels()
-    private val sharedViewModel: MainViewModel by activityViewModels()
+    private val sharedViewModel: SpecialtyViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

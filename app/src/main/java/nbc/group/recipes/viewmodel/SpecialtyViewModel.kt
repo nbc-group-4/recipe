@@ -13,8 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SpecialtyViewModel @Inject constructor(
-    private val repository: RecipeSpecialtyRepository,
-    private val sharedViewModel: SpecialtyViewModel?
+    private val repository: RecipeSpecialtyRepository
 ) : ViewModel() {
 
     private val _selectedKindItem = MutableStateFlow<KindItem?>(null)
@@ -37,7 +36,7 @@ class SpecialtyViewModel @Inject constructor(
             val filteredItems = specialtyResponse.body.items.item.filter { item ->
                 item.cntntsSj?.contains(searchQuery, ignoreCase = true) == true
             }
-            sharedViewModel?.setSearchResult(filteredItems)
+            setSearchResult(filteredItems)
         }
     }
 }
