@@ -11,7 +11,7 @@
     <string name="region_six">세종</string>
 
 
-    <string name="recipe_explain">를 활용한 레시피</string>
+    <string name="recipe_explain"> 활용 레시피</string>
 
     <!-- SignInFragment -->
     <string name="sign_in_fragment_top_banner_text">로그인</string>

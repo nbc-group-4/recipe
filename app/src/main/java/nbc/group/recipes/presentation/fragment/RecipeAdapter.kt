@@ -38,7 +38,6 @@ class RecipeAdapter (
             binding.tvRecipeDifficulty.text = recipeInfo.difficulty
             binding.tvRecipeTime.text = recipeInfo.time
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -63,5 +62,4 @@ class RecipeAdapter (
             }
         }
     }
-
 }
