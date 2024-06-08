@@ -24,7 +24,7 @@ class BookMarkViewModel @Inject constructor(
         viewModelScope.launch {
             recipeDao.getAllData().collect{
                 _recipeEntity.value = it
-                checkStorageEntities()
+                checkVisiblityView()
             }
         }
     }
@@ -34,8 +34,8 @@ class BookMarkViewModel @Inject constructor(
     private val _visibilityView = MutableStateFlow<VisibilityView>(VisibilityView.EMPTYVIEW)
     val visibilityView: StateFlow<VisibilityView> = _visibilityView.asStateFlow()
 
-    fun checkStorageEntities() {
-        if (recipeEntity.value.isNullOrEmpty()){
+    fun checkVisiblityView() {
+        if (recipeEntity.value.isEmpty()){
             _visibilityView.value = VisibilityView.EMPTYVIEW
         }else{
             _visibilityView.value = VisibilityView.RECYCLERVIEW
@@ -47,7 +47,6 @@ class BookMarkViewModel @Inject constructor(
     fun deleteData(recipeEntity: RecipeEntity) = viewModelScope.launch {
         recipeDao.deleteData(recipeEntity)
     }
-
 
 }
 
