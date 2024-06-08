@@ -1,4 +1,4 @@
-package nbc.group.recipes
+package nbc.group.recipes.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,10 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import nbc.group.recipes.R
 import nbc.group.recipes.data.model.dto.Item
 import nbc.group.recipes.databinding.BottomsheetItemBinding
 
-class BottomSheetAdapter(private val onClick : (Item, Int) -> Unit) : ListAdapter<Item, BottomSheetAdapter.BottomSheetViewHolder>(BottomSheetDiffUtil){
+class BottomSheetAdapter(private val onClick : (Item, Int) -> Unit) : ListAdapter<Item, BottomSheetAdapter.BottomSheetViewHolder>(
+    BottomSheetDiffUtil
+){
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

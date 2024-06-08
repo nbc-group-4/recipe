@@ -33,7 +33,6 @@ import com.kakao.vectormap.label.Transition
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import nbc.group.recipes.BottomSheetFragment
 import nbc.group.recipes.data.model.dto.BaseMapResponse
 import nbc.group.recipes.BuildConfig.KAKAO_MAP_KEY
 import nbc.group.recipes.ChipType
