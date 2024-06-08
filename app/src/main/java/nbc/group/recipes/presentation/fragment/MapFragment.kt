@@ -56,9 +56,6 @@ class MapFragment : Fragment() {
     private val mapViewModel: MapViewModel by viewModels()
     private val sharedMapViewModel : MapViewModel by activityViewModels()
 
-    private val searchDocumentsResponse : SearchDocumentsResponse ?= null
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -109,14 +106,33 @@ class MapFragment : Fragment() {
                     val searchText = binding.searchEt.text.toString()
                     // 특산품 데이터가 있는 지역이면
                     if (containsRegoin(searchText)){
-                        // 라벨이 클릭될때, 지역명을 관찰해서 특산물데이터 받아옴
-                        sharedMapViewModel.getSpecialtie(searchText)
 
-                        val bottomSheetFragment = BottomSheetFragment()
-                        bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
+                        val latitude = label.position.latitude
+                        val longitude = label.position.longitude
+
+                        val regionName = getRegionName(latitude, longitude)
+                        Log.d("regionName___", regionName)  // 통영
+
+                        binding.searchEt.setText(regionName)
+
+                        if (regionName.isNotEmpty()){
+                            // 라벨이 클릭될때, 지역명을 관찰해서 특산물데이터 받아옴
+                            sharedMapViewModel.getSpecialtie(regionName)
+
+                            val bottomSheetFragment = BottomSheetFragment()
+                            bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
+                        }else{
+                            Snackbar.make(binding.searchEt, "지역명을 입력해주세요", Snackbar.LENGTH_SHORT).show()
+                        }
+
 
                     }else{
-                        // NoDataBottomSheetFragment로 이동 (데이터없다는 바텀시트표현)
+                        // 특산품 데이터가 없는 지역일경우
+                        val latitude = label.position.latitude
+                        val longitude = label.position.longitude
+                        val regionName = AllgetRegionName(latitude, longitude)
+                        Log.d("regionNamessdsd___", regionName)
+                        binding.searchEt.setText(regionName)
 
                         Snackbar.make(binding.searchEt, "해당지역은 특산물 데이터가 없습니다", Snackbar.LENGTH_SHORT).show()
                     }
@@ -133,12 +149,12 @@ class MapFragment : Fragment() {
                     val longitude = label.position.longitude
 
                     val regionName = getRegionName(latitude, longitude)
-                    Log.d("regionName_si__", regionName)  // ##시
+                    Log.d("regionName_si__", regionName)  // 통영
 
                     binding.searchEt.setText(regionName)
 
                     // 라벨이 클릭될때, 지역명을 관찰
-                    sharedMapViewModel.getSpecialtie(binding.searchEt.text.toString())
+                    sharedMapViewModel.getSpecialtie(regionName)
 
                     val bottomSheetFragment = BottomSheetFragment()
                     bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
@@ -200,7 +216,7 @@ class MapFragment : Fragment() {
         val camera = CameraUpdateFactory.newCenterPosition(LatLng.from(latitude_formatter, longitude_formatter))
         // 해당위치로 지도 이동
 //        kakaoMap?.moveCamera(camera)
-         kakaoMap?.moveCamera(camera, CameraAnimation.from(500,true,true))     // 애니메이션 적용해서 이동
+        kakaoMap?.moveCamera(camera, CameraAnimation.from(500,true,true))     // 애니메이션 적용해서 이동
 
 
         // 커스텀으로 라벨 생성 및 가져옴
@@ -313,6 +329,22 @@ class MapFragment : Fragment() {
     }
 
 
+    // 특산품에 대한 데이터가 있는 지역리스트
+    private val regions = listOf("통영","대전","군산","김포","양주","논산","통영","안성","파주","세종","인천",
+        "원주","서산","함양","성주","영암","부산","봉화","정읍","횡성","삼척","평택","창녕"
+        ,"거제","진주","울릉","포항","영암","옹진","충주","상주","김천","대구","영천","경주",
+        "울산","김해","통영","여수","나주","전주","보령","제천","영주","완도")
+
+
+    // 모든 지역리스트 (추후에 더 추가예정..)
+    private val Allregions = listOf("통영","대전","군산","김포","양주","논산","통영","대전","안성","파주","세종","인천",
+        "원주","서산","함양","성주","영암","부산","봉화","정읍","횡성","삼척","평택","창녕"
+        ,"거제","진주","울릉","포항","영암","옹진","충주","상주","김천","대구","영천","경주",
+        "울산","김해","통영","여수","나주","전주","보령","제천","영주","완도","영종도","포천","수원","서울","과천"
+        ,"광주","포천","화성","오산","이천","춘천","속초","강릉","당진")
+
+
+
     // 위도,경도를 통해 지역명 가져오는 함수
     private fun getRegionName(latitude: Double, longitude: Double) : String {
         // Geocoder는 위,경도 좌표 이용해서 해당위치의 주소정보 가져올수있는 클래스
@@ -320,13 +352,30 @@ class MapFragment : Fragment() {
         // 위도, 경도 정보로부터 주소정보 가져오기
         val addresses = geocoder.getFromLocation(latitude, longitude, 1)
         // 주소 정보에서 "시" 단위 지역명 추출
-        return addresses?.firstOrNull()?.locality ?: ""
+        val locality = addresses?.firstOrNull()?.locality ?: "${addresses}"
+        Log.d("asda", locality)
+
+        // 지역명이 regions 리스트에 포함되어 있는지 확인하고 반환
+        return regions.firstOrNull { locality.contains(it) } ?: ""
     }
 
 
+    // 위도,경도를 통해 지역명 가져오는 함수(전체)
+    private fun AllgetRegionName(latitude: Double, longitude: Double) : String {
+        // Geocoder는 위,경도 좌표 이용해서 해당위치의 주소정보 가져올수있는 클래스
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        // 위도, 경도 정보로부터 주소정보 가져오기
+        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+        // 주소 정보에서 "시" 단위 지역명 추출
+        val locality = addresses?.firstOrNull()?.locality ?: "${addresses}"
+
+        // 지역명이 Allregions 리스트에 포함되어 있는지 확인하고 반환
+        return Allregions.firstOrNull { locality.contains(it) } ?: ""
+    }
+
     private fun deleteText() = with(binding){
         deleteIv.setOnClickListener {
-             // 텍스트값 제거
+            // 텍스트값 제거
             searchEt.setText("")
             Snackbar.make(mapView, "검색어가 삭제되었습니다", Snackbar.LENGTH_SHORT).show()
         }
@@ -335,24 +384,13 @@ class MapFragment : Fragment() {
 
     // 특산품에 대한 데이터가 있는 지역리스트
     fun containsRegoin(searchText: String): Boolean {
-        val Roigons =
-            listOf("통영","대전","군산","김포","양주","논산","통영","대전","안성","파주","세종","인천",
-                "원주","서산","함양","성주","영암","부산","봉화","정읍","횡성","삼척","평택","창녕"
-                ,"거제","진주","울릉","포항","영암","옹진","충주","상주","김천","대구","영천","경주",
-                "울산","김해","통영","여수","나주","전주","보령","제천","영주","완도")
-        return Roigons.any { searchText.contains(it) }
+        return regions.any { searchText.contains(it) }
     }
 
 
-    // 검색이 되는 모든 지역리스트 다 적기 (추후에 추가예정..)
+    // 검색이 되는 모든 지역리스트
     fun AllcontainsRegoin(searchText: String): Boolean {
-        val Roigons =
-            listOf("통영","대전","군산","김포","양주","논산","통영","대전","안성","파주","세종","인천",
-                "원주","서산","함양","성주","영암","부산","봉화","정읍","횡성","삼척","평택","창녕"
-                ,"거제","진주","울릉","포항","영암","옹진","충주","상주","김천","대구","영천","경주",
-                "울산","김해","통영","여수","나주","전주","보령","제천","영주","완도","영종도","포천","수원","서울","과천"
-                ,"광주","포천","화성","오산","이천","춘천","속초","강릉","당진","서산",)
-        return Roigons.any { searchText.contains(it) }
+        return Allregions.any { searchText.contains(it) }
     }
 
     override fun onDestroyView() {
@@ -362,3 +400,5 @@ class MapFragment : Fragment() {
     }
 
 }
+
+

@@ -31,9 +31,7 @@ class BottomSheetAdapter(private val onClick : (Item, Int) -> Unit) : ListAdapte
 
     class BottomSheetViewHolder(private var binding : BottomsheetItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        private var currentItem : Item?= null
         fun bind(item : Item){
-            currentItem = item
 
             Glide.with(itemView.context)
                 .load(item.imgUrl)

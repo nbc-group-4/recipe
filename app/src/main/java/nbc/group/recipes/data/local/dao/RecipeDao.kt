@@ -11,7 +11,7 @@ import nbc.group.recipes.data.model.entity.RecipeEntity
 @Dao
 interface RecipeDao {
     @Query("SELECT * FROM RecipeEntity")
-    fun getAllData(): Flow<RecipeEntity>
+    fun getAllData(): Flow<List<RecipeEntity>>
     @Insert
     fun insertData(recipeEntity: RecipeEntity): Long
     @Update

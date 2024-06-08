@@ -15,14 +15,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import nbc.group.recipes.databinding.ActivityBottomsheetBinding
+import nbc.group.recipes.databinding.FragmentBottomsheetBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.viewmodel.MapViewModel
 
 @AndroidEntryPoint
 class BottomSheetFragment : BottomSheetDialogFragment() {
     private val binding get() = _binding!!
-    private var _binding: ActivityBottomsheetBinding? = null
+    private var _binding: FragmentBottomsheetBinding? = null
 
     private val sharedMapViewModel : MapViewModel by activityViewModels()
 
@@ -43,7 +43,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = ActivityBottomsheetBinding.inflate(inflater, container, false)
+        _binding = FragmentBottomsheetBinding.inflate(inflater, container, false)
         return binding.root
     }
 
