@@ -10,6 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import nbc.group.recipes.BuildConfig
+import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentRecipeBinding
 import nbc.group.recipes.viewmodel.RecipeViewModel
 
@@ -37,19 +39,30 @@ class RecipeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        recipeAdapter = RecipeAdapter {recipe ->
-            // 아이템 클릭 시 로직
+        recipeAdapter = RecipeAdapter { recipe ->
+            val bundle = Bundle().apply {
+                putParcelable("recipeDetail", recipe)
+            }
+            val detailFragment = RecipeDetailFragment()
+            detailFragment.arguments = bundle
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(androidx.fragment.R.id.fragment_container_view_tag, detailFragment)
+                .addToBackStack(null)
+                .commit()
         }
         binding.rvRecipe.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = recipeAdapter
             setHasFixedSize(true)
         }
+        binding.btBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 
     private fun observeViewModel() {
         lifecycleScope.launch {
-            viewModel.recipes.collect {recipes->
+            viewModel.recipes.collect { recipes ->
                 recipes?.let {
                     recipeAdapter.submitList(it)
                 }
@@ -58,7 +71,14 @@ class RecipeFragment : Fragment() {
     }
 
     private fun fetchRecipes() {
-        viewModel.getRecipes(startIndex = 1, endIndex = 15, recipeName = "", recipeId = 0)
+        viewModel.getRecipeDetails(
+            startIndex = 1,
+            endIndex = 15,
+            recipeName = "",
+            recipeId = 0,
+            clientId = BuildConfig.NAVER_CLIENT_ID,
+            clientSecret = BuildConfig.NAVER_CLIENT_SECRET
+        )
     }
 
     override fun onDestroyView() {

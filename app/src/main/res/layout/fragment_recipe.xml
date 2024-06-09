@@ -23,6 +23,7 @@
         style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="152dp"
         android:text="@string/recipe_explain"
         app:layout_constraintBottom_toBottomOf="@+id/tv_spciality_name"

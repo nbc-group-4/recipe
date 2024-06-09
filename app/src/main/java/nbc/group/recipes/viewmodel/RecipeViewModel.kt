@@ -3,19 +3,24 @@ package nbc.group.recipes.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import nbc.group.recipes.data.model.dto.Recipe
+import nbc.group.recipes.convertToOfficial
 import nbc.group.recipes.data.model.dto.RecipeIngredient
 import nbc.group.recipes.data.model.dto.RecipeProcedure
 import nbc.group.recipes.data.model.entity.RecipeEntity
+import nbc.group.recipes.data.repository.NaverSearchRepository
 import nbc.group.recipes.data.repository.RecipeRepository
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import javax.inject.Inject
 
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
-    private val recipeRepository: RecipeRepository
+    private val recipeRepository: RecipeRepository,
+    private val naverSearchRepository: NaverSearchRepository,
 ): ViewModel() {
 
     private val _recipes = MutableStateFlow<List<RecipeEntity>?>(null)
@@ -27,20 +32,51 @@ class RecipeViewModel @Inject constructor(
     private val _recipeProcedures = MutableStateFlow<List<RecipeProcedure>?>(null)
     val recipeProcedures = _recipeProcedures.asStateFlow()
 
-    fun getRecipes(startIndex: Int, endIndex: Int, recipeName: String, recipeId: Int) = viewModelScope.launch {
-        val response = recipeRepository.getRecipes(startIndex, endIndex, recipeName, recipeId)
-        _recipes.emit(response.row.map { recipe: Recipe ->
-            RecipeEntity(
-                id = recipe.recipeId,
-                recipeImg = recipe.calorie, // 실제 레시피 이미지 필드로 변경해야 함
-                recipeName = recipe.recipeName,
-                explain = recipe.summary,
-                step = "",
-                ingredient = "",
-                difficulty = recipe.levelName,
-                time = recipe.cookingTime
-            )
-        })
+    private fun encodeToUtf8(query: String): String {
+        val convertQuery = convertToOfficial(query)
+        return URLEncoder.encode(convertQuery, StandardCharsets.UTF_8.toString())
+    }
+
+    fun getRecipeDetails(startIndex: Int, endIndex: Int, recipeName: String, recipeId: Int, clientId: String, clientSecret: String) = viewModelScope.launch{
+        try {
+            val ingredientName = "논살딸기" // 바텀 시트에서 클릭된 재료명
+            val encodedRecipeName = encodeToUtf8(ingredientName)
+
+            val ingredientResponse = recipeRepository.getRecipeIngredients(startIndex, endIndex, encodedRecipeName, recipeId)
+            val recipeIds = ingredientResponse.row.map { it.recipeId }
+
+            val recipes = mutableListOf<RecipeEntity>()
+
+            for (id in recipeIds) {
+                val recipeDeferred = async { recipeRepository.getRecipes(startIndex, endIndex, "", id) }
+                val recipeResponse = recipeDeferred.await()
+
+                val recipe = recipeResponse.row.first()
+                val recipeName = recipe.recipeName
+                val encodedRecipeName = encodeToUtf8(recipeName)
+                val imageDeferred = async { naverSearchRepository.searchEncyclopedia(encodedRecipeName, clientId, clientSecret) }
+                val imageResponse = imageDeferred.await()
+
+                val firstItem = imageResponse.items.firstOrNull()
+                val thumbnailUrl = firstItem?.thumbnail ?: ""
+
+                recipes.add(
+                    RecipeEntity(
+                        id = recipe.recipeId,
+                        recipeImg = thumbnailUrl,
+                        recipeName = recipe.recipeName,
+                        explain = recipe.summary,
+                        step = "",
+                        ingredient = "",
+                        difficulty = recipe.levelName,
+                        time = recipe.cookingTime
+                    )
+                )
+            }
+            _recipes.emit(recipes)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     fun getRecipeIngredients(startIndex: Int, endIndex: Int, ingredient: String, recipeId: Int) = viewModelScope.launch {

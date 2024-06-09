@@ -8,7 +8,12 @@ data class RecipeResponse<T> (
     val endRow: Int,
     val result: MetaResult,
     val row: List<T>
-)
+) {
+    fun <R> map(transform: (T) -> R): RecipeResponse<R> {
+        val mappedRows = row.map(transform)
+        return RecipeResponse(totalCnt, startRow, endRow, result, mappedRows)
+    }
+}
 
 data class MetaResult(
     val code: String,

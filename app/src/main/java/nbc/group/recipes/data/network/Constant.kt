@@ -11,6 +11,9 @@ const val RECIPE_API_BASE = BuildConfig.RECIPE_API_BASE
 const val SEARCH_API_BASE = BuildConfig.SEARCH_API_BASE
 const val SEARCH_REST_API_KEY = BuildConfig.SEARCH_REST_API_KEY
 
+const val NAVER_API_BASE = BuildConfig.NAVER_API_BASE
+
+
 const val SPECIALTY_API = "localSpcprd/localSpcprdLst"
 const val KAKAO_MAP_KEY = BuildConfig.KAKAO_MAP_KEY
 
