@@ -4,7 +4,7 @@ import nbc.group.recipes.data.local.dao.SpecialtyDao
 import nbc.group.recipes.data.remote.SpecialtyDataSource
 import javax.inject.Inject
 
-open class RecipeSpecialtyRepository @Inject constructor(
+class RecipeSpecialtyRepository @Inject constructor(
     private val specialtyDataSource: SpecialtyDataSource,
     private val specialtyDao: SpecialtyDao
 ) {
