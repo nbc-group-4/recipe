@@ -1,28 +1,23 @@
 package nbc.group.recipes.presentation.fragment
 
+import GridSpacingItemDecoration
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentHomeBinding
-import nbc.group.recipes.presentation.HomeKindAdapter
-import nbc.group.recipes.presentation.HomeQuizAdapter
-import nbc.group.recipes.presentation.KindItem
-import nbc.group.recipes.presentation.dummyRecipe
-import nbc.group.recipes.presentation.specialtyKind
-import nbc.group.recipes.presentation.specialtyKindMore
-//import nbc.group.recipes.presentation.fragment.specialty.GridSpacingItemDecoration
-
-import nbc.group.recipes.viewmodel.MainViewModel
-import nbc.group.recipes.viewmodel.SharedViewModel
+import nbc.group.recipes.KindItem
+import nbc.group.recipes.dummyRecipe
+import nbc.group.recipes.specialtyKind
+import nbc.group.recipes.specialtyKindMore
+import nbc.group.recipes.viewmodel.SpecialtyViewModel
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -32,8 +27,7 @@ class HomeFragment : Fragment() {
         get() = _binding!!
     private var homeQuizAdapter: HomeQuizAdapter? = null
     private var homeKindAdapter: HomeKindAdapter? = null
-    private val mainViewModel: MainViewModel by viewModels()
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val sharedViewModel: SpecialtyViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +44,7 @@ class HomeFragment : Fragment() {
         homeKindAdapter = HomeKindAdapter(object : HomeKindAdapter.OnItemClickListener {
             override fun onClick(data: KindItem) {
                 navigateToSpecialty(data)
+                sendSpecialtyKind(data)
             }
         })
 
@@ -60,11 +55,6 @@ class HomeFragment : Fragment() {
         binding.btnHomeKindMore.setOnClickListener {
             loadMoreItems()
         }
-
-        // 툴바의 검색 아이콘 클릭 - 특산물 검색?
-        binding.ivSearch.setOnClickListener {
-            findNavController().navigate(R.id.mapFragment) // 검색 결과 화면?
-        }
     }
 
     private fun setupRecyclerViewQuiz() {
@@ -72,14 +62,6 @@ class HomeFragment : Fragment() {
             adapter = homeQuizAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            // 아이템 데코레이션
-//            addItemDecoration(
-//                GridSpacingItemDecoration(
-//                    2,
-//                    (16 * resources.displayMetrics.density + 0.5f).toInt(),
-//                    false
-//                )
-//            )
         }
         homeQuizAdapter?.submitList(dummyRecipe)
     }
@@ -89,14 +71,7 @@ class HomeFragment : Fragment() {
             adapter = homeKindAdapter
             layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
-            // 아이템 데코레이션
-//            addItemDecoration(
-//                GridSpacingItemDecoration(
-//                    2,
-//                    (16 * resources.displayMetrics.density + 0.5f).toInt(),
-//                    false
-//                )
-//            )
+
         }
         homeKindAdapter?.submitList(specialtyKind)
     }
@@ -111,10 +86,14 @@ class HomeFragment : Fragment() {
         homeKindAdapter?.submitList(currentList)
     }
 
-    // 특산품 프래그먼트로 이동
     private fun navigateToSpecialty(item: KindItem) {
         sharedViewModel.setSelectedKindItem(item)
         findNavController().navigate(R.id.specialtyFragment)
+        // findNavController().navigate(R.id.action_mainFragment_to_specialtyFragment)
+    }
+
+    private fun sendSpecialtyKind(item: KindItem) {
+        sharedViewModel.setSelectedKindItem(item)
     }
 
     override fun onDestroyView() {

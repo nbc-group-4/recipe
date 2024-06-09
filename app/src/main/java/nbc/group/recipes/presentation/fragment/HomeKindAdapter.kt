@@ -1,4 +1,4 @@
-package nbc.group.recipes.presentation
+package nbc.group.recipes.presentation.fragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import nbc.group.recipes.KindItem
 import nbc.group.recipes.databinding.ItemHomeKindBinding
 
 val diffCallbackHomeKind = object : DiffUtil.ItemCallback<KindItem>() {
