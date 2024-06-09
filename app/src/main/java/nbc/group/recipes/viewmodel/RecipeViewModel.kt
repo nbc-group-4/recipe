@@ -11,18 +11,15 @@ import nbc.group.recipes.convertToOfficial
 import nbc.group.recipes.data.model.dto.RecipeIngredient
 import nbc.group.recipes.data.model.dto.RecipeProcedure
 import nbc.group.recipes.data.model.entity.RecipeEntity
-import nbc.group.recipes.data.network.NaverSearchService
 import nbc.group.recipes.data.repository.NaverSearchRepository
 import nbc.group.recipes.data.repository.RecipeRepository
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import javax.inject.Inject
-import kotlinx.coroutines.awaitAll
 
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
-    private val naverSearchService: NaverSearchService,
     private val naverSearchRepository: NaverSearchRepository,
 ): ViewModel() {
 

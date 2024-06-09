@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.BuildConfig
+import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentRecipeBinding
 import nbc.group.recipes.viewmodel.RecipeViewModel
 
@@ -39,12 +40,23 @@ class RecipeFragment : Fragment() {
 
     private fun setupRecyclerView() {
         recipeAdapter = RecipeAdapter { recipe ->
-            // 아이템 클릭 시 로직 (DetailFragment로 넘어감)
+            val bundle = Bundle().apply {
+                putParcelable("recipeDetail", recipe)
+            }
+            val detailFragment = RecipeDetailFragment()
+            detailFragment.arguments = bundle
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(androidx.fragment.R.id.fragment_container_view_tag, detailFragment)
+                .addToBackStack(null)
+                .commit()
         }
         binding.rvRecipe.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = recipeAdapter
             setHasFixedSize(true)
+        }
+        binding.btBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 

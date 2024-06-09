@@ -11,7 +11,15 @@
     <string name="region_six">세종</string>
 
 
+    <!-- RecipeFragment -->
     <string name="recipe_explain"> 활용 레시피</string>
+
+    <!-- RecipeDetailFragment -->
+    <string name="recipe_base_explain">레시피 기본 설명</string>
+    <string name="recipe_difficulty">난이도</string>
+    <string name="recipe_cooking_time">소요 시간</string>
+    <string name="recipe_ingredient_title">주요 재료</string>
+    <string name="recipe_steps">조리 방법</string>
 
     <!-- SignInFragment -->
     <string name="sign_in_fragment_top_banner_text">로그인</string>
