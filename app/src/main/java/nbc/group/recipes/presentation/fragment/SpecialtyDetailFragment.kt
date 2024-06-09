@@ -16,7 +16,6 @@ import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentSpecialtyDetailBinding
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
 
-
 @AndroidEntryPoint
 class SpecialtyDetailFragment : Fragment() {
 
@@ -50,13 +49,13 @@ class SpecialtyDetailFragment : Fragment() {
             adapter = specialtyDetailAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
             // 아이템 데코레이션
-//            addItemDecoration(
-//                GridSpacingItemDecoration(
-//                    2,
-//                    (16 * resources.displayMetrics.density + 0.5f).toInt(),
-//                    false
-//                )
-//            )
+            addItemDecoration(
+                GridSpacingItemDecoration(
+                    2,
+                    (16 * resources.displayMetrics.density + 0.5f).toInt(),
+                    false
+                )
+            )
         }
     }
 

@@ -11,10 +11,10 @@
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
     <fragment
-        android:id="@+id/specialtyFragment"
-        android:name="nbc.group.recipes.presentation.fragment.SpecialtyFragment"
-        android:label="fragment_specialty"
-        tools:layout="@layout/fragment_specialty" />
+        android:id="@+id/bookmarkFragment"
+        android:name="nbc.group.recipes.presentation.fragment.BookmarkFragment"
+        android:label="fragment_bookmark"
+        tools:layout="@layout/fragment_bookmark" />
     <fragment
         android:id="@+id/mypageFragment"
         android:name="nbc.group.recipes.presentation.fragment.MypageFragment"
@@ -25,5 +25,19 @@
         android:name="nbc.group.recipes.presentation.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+
+    <!--    임시-->
+    <fragment
+        android:id="@+id/specialtyFragment"
+        android:name="nbc.group.recipes.presentation.fragment.SpecialtyFragment"
+        android:label="fragment_specialty"
+        tools:layout="@layout/fragment_specialty" />
+
+    <!--    임시-->
+    <fragment
+        android:id="@+id/specialtyDetailFragment"
+        android:name="nbc.group.recipes.presentation.fragment.SpecialtyDetailFragment"
+        android:label="fragment_specialty_datail"
+        tools:layout="@layout/fragment_specialty_detail" />
 
 </navigation>

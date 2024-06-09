@@ -30,11 +30,11 @@ class SpecialtyViewModel @Inject constructor(
         _searchResult.value = result
     }
 
-    fun searchItem(searchQuery: String) {
+    fun searchItem(cntntsSj: String) {
         viewModelScope.launch {
-            val specialtyResponse = repository.getSpecialty("")
+            val specialtyResponse = repository.getSpecialty(cntntsSj)
             val filteredItems = specialtyResponse.body.items.item.filter { item ->
-                item.cntntsSj?.contains(searchQuery, ignoreCase = true) == true
+                item.cntntsSj?.contains(cntntsSj, ignoreCase = true) == true
             }
             setSearchResult(filteredItems)
         }

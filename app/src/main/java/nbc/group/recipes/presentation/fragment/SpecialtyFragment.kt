@@ -35,7 +35,6 @@ class SpecialtyFragment : Fragment() {
     private val binding: FragmentSpecialtyBinding
         get() = _binding!!
     private var specialtyAdapter: SpecialtyAdapter? = null
-    private val specialtyViewModel: SpecialtyViewModel by viewModels()
     private val sharedViewModel: SpecialtyViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -64,7 +63,7 @@ class SpecialtyFragment : Fragment() {
 
     private fun setUpListener() {
         binding.ivSearch.setOnClickListener {
-            performSearch()
+            // performSearch()
             hideKeyboard()
             findNavController().navigate(R.id.specialtyDetailFragment)
         }
@@ -72,7 +71,7 @@ class SpecialtyFragment : Fragment() {
 
     private fun performSearch() {
         val searchQuery = binding.etSpecialtySearch.text.toString()
-        specialtyViewModel.searchItem(searchQuery)
+        sharedViewModel.searchItem(searchQuery)
     }
 
     private fun hideKeyboard() {

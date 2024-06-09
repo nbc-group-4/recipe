@@ -71,14 +71,7 @@ class HomeFragment : Fragment() {
             adapter = homeKindAdapter
             layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
-            // 아이템 데코레이션
-//            addItemDecoration(
-//                GridSpacingItemDecoration(
-//                    2,
-//                    (16 * resources.displayMetrics.density + 0.5f).toInt(),
-//                    false
-//                )
-//            )
+
         }
         homeKindAdapter?.submitList(specialtyKind)
     }
@@ -96,7 +89,7 @@ class HomeFragment : Fragment() {
     private fun navigateToSpecialty(item: KindItem) {
         sharedViewModel.setSelectedKindItem(item)
         findNavController().navigate(R.id.specialtyFragment)
-//        findNavController().navigate(R.id.action_mainFragment_to_specialtyFragment)
+        // findNavController().navigate(R.id.action_mainFragment_to_specialtyFragment)
     }
 
     private fun sendSpecialtyKind(item: KindItem) {
