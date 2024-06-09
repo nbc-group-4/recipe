@@ -5,57 +5,66 @@
     android:id="@+id/specialtyFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.fragment.specialty.SpecialtyFragment">
+    tools:context=".presentation.fragment.SpecialtyFragment">
 
-    <!--    <androidx.cardview.widget.CardView-->
-    <!--        android:id="@+id/cvSpecialtyKind"-->
-    <!--        android:layout_width="150dp"-->
-    <!--        android:layout_height="150dp"-->
-    <!--        app:cardCornerRadius="180dp">-->
-
-    <!--        <ImageView-->
-    <!--            android:id="@+id/ivSpecialtyKind"-->
-    <!--            android:layout_width="150dp"-->
-    <!--            android:layout_height="150dp"-->
-    <!--            android:scaleType="centerCrop"-->
-    <!--            android:src="@drawable/img_specialty_sample7"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--    </androidx.cardview.widget.CardView>-->
-
-    <TextView
-        android:id="@+id/tvSpecialtyKind"
+    <EditText
+        android:id="@+id/etSpecialtySearch"
+        style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="280dp"
-        android:text="곡물류"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerContainer"
+        android:layout_marginTop="40dp"
+        android:hint="아래 특산물을 참조하여 검색하세요"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/recyclerContainer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/default_padding"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/ivSearch"
+        android:layout_width="@dimen/small_button_size"
+        android:layout_height="@dimen/small_button_size"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/search" />
+
+    <TextView
+        android:id="@+id/tvSpecialtyKind"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="과일"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSpecialtyKind">
+        app:layout_constraintTop_toBottomOf="@+id/etSpecialtySearch" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginEnd="160dp"
+        android:background="#808080"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyKind" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/recyclerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyKind">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewSpecialtyDetail"
+            android:id="@+id/recyclerViewSpecialty"
             style="@style/content_text_style"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:padding="@dimen/default_padding"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:spanCount="2"
             tools:listitem="@layout/item_specialty" />
 
