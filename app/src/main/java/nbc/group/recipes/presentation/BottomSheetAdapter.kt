@@ -1,4 +1,4 @@
-package nbc.group.recipes
+package nbc.group.recipes.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,9 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import nbc.group.recipes.R
+import nbc.group.recipes.data.model.dto.Item
 import nbc.group.recipes.databinding.BottomsheetItemBinding
 
-class BottomSheetAdapter(private val onClick : (TestData, Int) -> Unit) : ListAdapter<TestData, BottomSheetAdapter.BottomSheetViewHolder>(BottomSheetDiffUtil){
+class BottomSheetAdapter(private val onClick : (Item, Int) -> Unit) : ListAdapter<Item, BottomSheetAdapter.BottomSheetViewHolder>(
+    BottomSheetDiffUtil
+){
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -30,26 +34,23 @@ class BottomSheetAdapter(private val onClick : (TestData, Int) -> Unit) : ListAd
 
     class BottomSheetViewHolder(private var binding : BottomsheetItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        private var currentItem : TestData?= null
-        fun bind(item : TestData){
-            currentItem = item
+        fun bind(item : Item){
 
             Glide.with(itemView.context)
-                .load(item.url)
+                .load(item.imgUrl)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(binding.recipeImage)
 
-            binding.recipeName.text = item.title
-            binding.recipeDescription.text = item.description
+            binding.recipeName.text = item.cntntsSj
         }
     }
 
-    object BottomSheetDiffUtil : DiffUtil.ItemCallback<TestData>(){
-        override fun areItemsTheSame(oldItem: TestData, newItem: TestData): Boolean {
-            return oldItem.id == newItem.id
+    object BottomSheetDiffUtil : DiffUtil.ItemCallback<Item>(){
+        override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+            return oldItem.areaName == newItem.areaName
         }
 
-        override fun areContentsTheSame(oldItem: TestData, newItem: TestData): Boolean {
+        override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
             return oldItem == newItem
         }
     }

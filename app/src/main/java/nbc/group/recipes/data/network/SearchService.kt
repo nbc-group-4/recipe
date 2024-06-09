@@ -1,7 +1,5 @@
 package nbc.group.recipes.data.network
 
-import android.provider.SyncStateContract.Constants
-import dagger.Provides
 import nbc.group.recipes.data.model.dto.SearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Headers

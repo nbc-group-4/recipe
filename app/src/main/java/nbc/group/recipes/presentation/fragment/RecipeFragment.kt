@@ -1,10 +1,12 @@
 package nbc.group.recipes.presentation.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,8 +15,8 @@ import kotlinx.coroutines.launch
 import nbc.group.recipes.BuildConfig
 import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentRecipeBinding
+import nbc.group.recipes.viewmodel.MapViewModel
 import nbc.group.recipes.viewmodel.RecipeViewModel
-
 @AndroidEntryPoint
 class RecipeFragment : Fragment() {
     private var _binding: FragmentRecipeBinding? = null
@@ -22,6 +24,7 @@ class RecipeFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel by viewModels<RecipeViewModel>()
+    private val sharedMapViewModel : MapViewModel by activityViewModels()
     private lateinit var recipeAdapter: RecipeAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +38,8 @@ class RecipeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeViewModel()
-        fetchRecipes()
+//        fetchRecipes()
+        observeSharedViewModel()
     }
 
     private fun setupRecyclerView() {
@@ -69,6 +73,15 @@ class RecipeFragment : Fragment() {
             }
         }
     }
+
+    private fun observeSharedViewModel(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            sharedMapViewModel.selectedSpecialty.collect{
+                Log.d("observeSharedViewModel___" , it.toString())   // it = 클릭한 특산물데이터에 대한 정보 들어옴
+            }
+        }
+    }
+
 
     private fun fetchRecipes() {
         viewModel.getRecipeDetails(
