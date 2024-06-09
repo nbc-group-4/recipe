@@ -39,6 +39,7 @@ import nbc.group.recipes.R
 import nbc.group.recipes.data.model.dto.SearchDocumentsResponse
 import nbc.group.recipes.data.network.KAKAO_MAP_KEY
 import nbc.group.recipes.databinding.FragmentMapBinding
+import nbc.group.recipes.viewmodel.MapSharedViewModel
 import nbc.group.recipes.viewmodel.MapViewModel
 import java.lang.Exception
 import java.util.Locale
@@ -53,7 +54,7 @@ class MapFragment : Fragment() {
     private var kakaoMap : KakaoMap? = null
 
     private val mapViewModel: MapViewModel by viewModels()
-    private val sharedMapViewModel : MapViewModel by activityViewModels()
+    private val mapSharedViewModel : MapSharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -116,7 +117,7 @@ class MapFragment : Fragment() {
 
                         if (regionName.isNotEmpty()){
                             // 라벨이 클릭될때, 지역명을 관찰해서 특산물데이터 받아옴
-                            sharedMapViewModel.getSpecialtie(regionName)
+                            mapSharedViewModel.getSpecialtie(regionName)
 
                             val bottomSheetFragment = BottomSheetFragment()
                             bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
@@ -153,7 +154,7 @@ class MapFragment : Fragment() {
                     binding.searchEt.setText(regionName)
 
                     // 라벨이 클릭될때, 지역명을 관찰
-                    sharedMapViewModel.getSpecialtie(regionName)
+                    mapSharedViewModel.getSpecialtie(regionName)
 
                     val bottomSheetFragment = BottomSheetFragment()
                     bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
