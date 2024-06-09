@@ -1,38 +1,32 @@
-package nbc.group.recipes.presentation
+package nbc.group.recipes.presentation.fragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import nbc.group.recipes.R
-import nbc.group.recipes.data.model.dto.Item
+import nbc.group.recipes.KindItem
 import nbc.group.recipes.databinding.ItemSpecialtyBinding
 
-val diffCallbackSpecialty = object : DiffUtil.ItemCallback<Item>() {
-    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
-        return oldItem.cntntsSj == newItem.cntntsSj
+val diffCallbackSpecialty = object : DiffUtil.ItemCallback<KindItem>() {
+    override fun areItemsTheSame(oldItem: KindItem, newItem: KindItem): Boolean {
+        return oldItem.item == newItem.item
     }
 
-    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+    override fun areContentsTheSame(oldItem: KindItem, newItem: KindItem): Boolean {
         return oldItem == newItem
     }
 }
 
 class SpecialtyAdapter :
-    ListAdapter<Item, SpecialtyAdapter.ItemViewHolder>(diffCallbackSpecialty) {
+    ListAdapter<KindItem, SpecialtyAdapter.ItemViewHolder>(diffCallbackSpecialty) {
 
     class ItemViewHolder(
         private val binding: ItemSpecialtyBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(items: Item) {
+        fun bind(items: KindItem) {
             binding.apply {
-                Glide.with(root.context)
-                    .load(items.imgUrl)
-                    .into(ivSpecialty)
-
-                tvSpecialty.text = items.cntntsSj
+                tvSpecialty.text = items.item
             }
         }
     }
