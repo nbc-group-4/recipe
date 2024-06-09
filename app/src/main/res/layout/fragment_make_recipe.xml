@@ -176,20 +176,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin_20"
+                android:layout_marginTop="@dimen/default_padding"
                 android:layout_marginBottom="@dimen/default_margin_20"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/iv_image_add_button"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
+                    android:layout_gravity="bottom"
                     android:src="@drawable/ic_image_add"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_images"
                     android:layout_marginStart="@dimen/default_margin_20"
                     android:layout_width="match_parent"
-                    android:layout_height="108dp"/>
+                    android:layout_height="120dp"
+                    android:orientation="horizontal"/>
 
             </LinearLayout>
 

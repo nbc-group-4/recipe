@@ -2,6 +2,7 @@ package nbc.group.recipes.data.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
@@ -14,8 +15,8 @@ import javax.inject.Inject
 
 class FirebaseRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
-    private val storage: FirebaseStorage
-): FirebaseRepository {
+    private val storage: FirebaseStorage,
+) : FirebaseRepository {
     override suspend fun putImage(
         storagePath: String,
         inputStream: InputStream,
@@ -25,7 +26,7 @@ class FirebaseRepositoryImpl @Inject constructor(
                 .child(storagePath)
             val result = profileRef.putStream(inputStream).await()
             FirebaseResult.Success(true)
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             FirebaseResult.Failure(e)
         }
     }
@@ -34,7 +35,7 @@ class FirebaseRepositoryImpl @Inject constructor(
         return try {
             val result = firestore.collection("recipes").get().await()
             FirebaseResult.Success(result.toObjects(Recipe::class.java))
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             FirebaseResult.Failure(e)
         }
     }
@@ -72,15 +73,20 @@ class FirebaseRepositoryImpl @Inject constructor(
 
     override suspend fun putRecipeTransaction(
         uid: String,
-        recipe: Recipe
+        recipe: Recipe,
+        imageStreamList: List<InputStream>,
     ): FirebaseResult<Boolean> {
-        val recipeRef = firestore.collection("recipes")
-        val userMetaRef = firestore.collection("userMeta/$uid")
         return try {
-            firestore.runTransaction { transaction ->
-                val snapshot = firestore.collection("recipes")
-
-                // todo: 0605 마지막 작업 중 -> firestore + storage 이를 통하여 transaction 구현
+            val result1 = firestore.collection("recipes").add(recipe).await()
+            val result2 = firestore.collection("userMeta").document(uid).get().await()
+            val meta = result2.toObject<UserMetaData>() ?: UserMetaData()
+            val temp = meta.recipeIds.toMutableList()
+            temp.add(result1.id)
+            val result3 = firestore.collection("userMeta")
+                .document(uid).set(meta.copy(temp)).await()
+            for(i in imageStreamList.indices) {
+                val recipeRef = storage.reference.child("recipeImage/${result1.id}/$i.jpg")
+                recipeRef.putStream(imageStreamList[i]).await()
             }
             FirebaseResult.Success(true)
         } catch (e: Exception) {

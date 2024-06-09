@@ -32,9 +32,7 @@ class BookmarkFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.testButton.setOnClickListener {
-            viewModel.putRecipeTransaction(
-                Recipe()
-            )
+
         }
     }
 

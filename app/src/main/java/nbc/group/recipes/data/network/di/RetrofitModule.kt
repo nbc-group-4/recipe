@@ -96,4 +96,6 @@ object RetrofitModule {
     ): SearchService {
         return retrofit.create(SearchService::class.java)
     }
+
+
 }

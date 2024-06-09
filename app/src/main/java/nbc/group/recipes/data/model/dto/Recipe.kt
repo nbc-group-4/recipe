@@ -22,4 +22,22 @@ data class Recipe(
         1, 1, "a", "b", "c", "d",
         "e", "f", "g", "h", "i", "j",
         "k", "l")
+
+    constructor(
+        recipeName: String,
+        summary: String,
+        nationCode: String,
+        nationName: String,
+        cookingTime: String,
+        levelName: String,
+        ingredientCode: String,
+    ): this(0, 0, recipeName, summary, nationCode, nationName, "",
+        "", cookingTime, "", "", levelName, ingredientCode, "")
 }
+
+
+/**
+ * Wrapper class 를 따로 만들지 않고 nationCode, nationName을 이용할까?
+ * ex) nationCode -> custom, nationName -> ${user.uid}
+ *
+ * */

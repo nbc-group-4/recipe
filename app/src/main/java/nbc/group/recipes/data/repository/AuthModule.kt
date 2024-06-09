@@ -48,6 +48,12 @@ object AuthModule {
 
     @Singleton
     @Provides
+    fun provideFirebaseRepository(
+        firebaseRepositoryImpl: FirebaseRepositoryImpl
+    ): FirebaseRepository = firebaseRepositoryImpl
+
+    @Singleton
+    @Provides
     fun provideRecipeRepository(
         recipeRepositoryImpl: RecipeRepositoryImpl
     ): RecipeRepository = recipeRepositoryImpl

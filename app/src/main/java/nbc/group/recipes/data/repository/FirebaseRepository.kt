@@ -20,7 +20,7 @@ interface FirebaseRepository {
 
     suspend fun putUserMeta(uid: String, userMetaData: UserMetaData): FirebaseResult<Boolean>
 
-    suspend fun putRecipeTransaction(uid: String, recipe: Recipe): FirebaseResult<Boolean>
+    suspend fun putRecipeTransaction(uid: String, recipe: Recipe, imageStreamList: List<InputStream>): FirebaseResult<Boolean>
 
 
 }

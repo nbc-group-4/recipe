@@ -13,6 +13,7 @@ import nbc.group.recipes.data.model.dto.SpecialtyResponse
 import nbc.group.recipes.data.model.firebase.UserMetaData
 import nbc.group.recipes.data.network.FirebaseResult
 import nbc.group.recipes.data.repository.AuthRepository
+import nbc.group.recipes.data.repository.FirebaseRepository
 import nbc.group.recipes.data.repository.FirestoreRepository
 import nbc.group.recipes.data.repository.RecipeSpecialtyRepository
 import nbc.group.recipes.data.repository.StorageRepository
@@ -24,8 +25,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val repository: RecipeSpecialtyRepository,
     private val authRepository: AuthRepository,
-    private val firestoreRepository: FirestoreRepository,
-    private val storageRepository: StorageRepository
+    private val firebaseRepository: FirebaseRepository
 ): ViewModel() {
 
     /**
@@ -83,18 +83,21 @@ class MainViewModel @Inject constructor(
     }
 
     fun putRecipe(recipe: Recipe) = viewModelScope.launch {
-        val result = firestoreRepository.putRecipe(recipe)
+        val result = firebaseRepository.putRecipe(recipe)
         _putRecipeFlow.emit(result)
     }
 
     fun getRecipe() = viewModelScope.launch {
-        val result = firestoreRepository.getRecipes()
+        val result = firebaseRepository.getRecipes()
         _recipes.emit(result)
     }
 
-    fun putRecipeTransaction(recipe: Recipe) = viewModelScope.launch {
+    fun putRecipeTransaction(
+        recipe: Recipe,
+        imageStreamList: List<InputStream>
+    ) = viewModelScope.launch {
         currentUser?.let {
-            firestoreRepository.putRecipeTransaction(it.uid, recipe)
+            firebaseRepository.putRecipeTransaction(it.uid, recipe, imageStreamList)
         }
     }
 
@@ -103,12 +106,12 @@ class MainViewModel @Inject constructor(
     ) = viewModelScope.launch {
         currentUser?.let {
             Log.e("TAG", "putUserMeta: uid: ${it.uid}")
-            firestoreRepository.putUserMeta(it.uid, userMetaData)
+            firebaseRepository.putUserMeta(it.uid, userMetaData)
         }
     }
 
     fun getUserMeta(uid: String) = viewModelScope.launch {
-        val result = firestoreRepository.getUserMeta(uid)
+        val result = firebaseRepository.getUserMeta(uid)
         _userMetaData.emit(result)
     }
 
@@ -116,7 +119,7 @@ class MainViewModel @Inject constructor(
         inputStream: InputStream
     ) = viewModelScope.launch {
         currentUser?.let {
-            storageRepository.putImage(
+            firebaseRepository.putImage(
                 getUserProfileStoragePath(it.uid),
                 inputStream
             )

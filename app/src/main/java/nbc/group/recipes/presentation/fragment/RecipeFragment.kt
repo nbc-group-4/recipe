@@ -30,12 +30,12 @@ class RecipeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
-        observeViewModel()
-        fetchRecipes()
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        setupRecyclerView()
+//        observeViewModel()
+//        fetchRecipes()
+//    }
 
     private fun setupRecyclerView() {
         recipeAdapter = RecipeAdapter {recipe ->
@@ -58,9 +58,9 @@ class RecipeFragment : Fragment() {
         }
     }
 
-    private fun fetchRecipes() {
-        viewModel.getRecipes(startIndex = 1, endIndex = 15, recipeName = "", recipeId = 0)
-    }
+//    private fun fetchRecipes() {
+//        viewModel.getRecipes(startIndex = 1, endIndex = 15, recipeName = "", recipeId = 0)
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
