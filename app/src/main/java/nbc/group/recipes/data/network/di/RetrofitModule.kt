@@ -6,8 +6,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import nbc.group.recipes.data.network.NaverSearchService
 import nbc.group.recipes.data.network.SPECIALTY_API_BASE
 import nbc.group.recipes.data.network.RECIPE_API_BASE
+import nbc.group.recipes.data.network.NAVER_API_BASE
 import nbc.group.recipes.data.network.SpecialtyService
 import nbc.group.recipes.data.network.RecipeService
 import nbc.group.recipes.data.network.SEARCH_API_BASE
@@ -97,5 +99,23 @@ object RetrofitModule {
         return retrofit.create(SearchService::class.java)
     }
 
+    @Singleton
+    @Provides
+    @Named("NaverSearch")
+    fun provideRetrofitNaverSearch(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(NAVER_API_BASE)
+            .build()
+    }
 
+    @Singleton
+    @Provides
+    @Named("NaverSearchService")
+    fun provideApiServiceNaverSearch(
+        @Named("NaverSearch") retrofit: Retrofit
+    ): NaverSearchService {
+        return retrofit.create(NaverSearchService::class.java)
+    }
 }

@@ -1,6 +1,7 @@
 package nbc.group.recipes.data.model.dto
 
 import com.google.gson.annotations.SerializedName
+import nbc.group.recipes.data.model.entity.RecipeEntity
 
 data class Recipe(
     @SerializedName("ROW_NUM") val rowNum: Int,
@@ -41,3 +42,21 @@ data class Recipe(
  * ex) nationCode -> custom, nationName -> ${user.uid}
  *
  * */
+
+// RecipeEntity를 Recipe로 변환하는 확장함수
+fun RecipeEntity.toRecipe() = Recipe(
+    rowNum = 0,
+    recipeId = id,
+    recipeName = recipeName,
+    summary = explain,
+    nationCode = "",
+    nationName = ingredient,
+    typeCode = "",
+    typeName = "",
+    cookingTime = time,
+    calorie = "",
+    quantity = "",
+    levelName = difficulty,
+    ingredientCode = "",
+    price = ""
+)

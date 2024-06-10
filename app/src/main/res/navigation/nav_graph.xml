@@ -26,4 +26,30 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
 
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="nbc.group.recipes.presentation.fragment.RecipeFragment"
+        android:label="fragment_recipe"
+        tools:layout="@layout/fragment_recipe" />
+
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="nbc.group.recipes.presentation.fragment.RecipeDetailFragment"
+        android:label="fragment_recipeDetail"
+        tools:layout="@layout/fragment_recipe_detail" />
+
+    <!--    임시-->
+    <fragment
+        android:id="@+id/specialtyFragment"
+        android:name="nbc.group.recipes.presentation.fragment.SpecialtyFragment"
+        android:label="fragment_specialty"
+        tools:layout="@layout/fragment_specialty" />
+
+    <!--    임시-->
+    <fragment
+        android:id="@+id/specialtyDetailFragment"
+        android:name="nbc.group.recipes.presentation.fragment.SpecialtyDetailFragment"
+        android:label="fragment_specialty_datail"
+        tools:layout="@layout/fragment_specialty_detail" />
+
 </navigation>

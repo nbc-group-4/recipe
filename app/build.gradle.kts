@@ -7,6 +7,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
+    id ("kotlin-parcelize")
 }
 
 val properties = Properties().apply {
@@ -33,6 +34,9 @@ android {
         buildConfigField("String", "KAKAO_MAP_KEY", properties.getProperty("KAKAO_MAP_KEY"))
         buildConfigField("String", "SEARCH_API_BASE", properties.getProperty("SEARCH_API_BASE"))
         buildConfigField("String", "SEARCH_REST_API_KEY", properties.getProperty("SEARCH_REST_API_KEY"))
+        buildConfigField("String", "NAVER_CLIENT_ID", properties.getProperty("NAVER_CLIENT_ID"))
+        buildConfigField("String", "NAVER_CLIENT_SECRET", properties.getProperty("NAVER_CLIENT_SECRET"))
+        buildConfigField("String", "NAVER_API_BASE", properties.getProperty("NAVER_API_BASE"))
     }
 
     buildTypes {
@@ -59,6 +63,7 @@ android {
 
 dependencies {
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("com.airbnb.android:lottie:5.2.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
 

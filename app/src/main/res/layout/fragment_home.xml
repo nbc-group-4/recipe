@@ -5,7 +5,7 @@
     android:id="@+id/homeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.fragment.home.HomeFragment">
+    tools:context=".presentation.fragment.HomeFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbHome"
@@ -46,15 +46,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/ivSearch"
-                android:layout_width="@dimen/small_button_size"
-                android:layout_height="@dimen/small_button_size"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/search" />
+<!--            <ImageView-->
+<!--                android:id="@+id/ivSearch"-->
+<!--                android:layout_width="@dimen/small_button_size"-->
+<!--                android:layout_height="@dimen/small_button_size"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:layout_marginEnd="32dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:srcCompat="@drawable/search" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -97,6 +97,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toTopOf="@+id/tvHomeKind"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvHomeQuiz"
                 tools:listitem="@layout/item_home_quiz" />
@@ -108,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_padding"
                 android:layout_marginEnd="175dp"
-                android:text="우리나라 특산품의 종류"
+                android:text="우리나라 특산물의 종류"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

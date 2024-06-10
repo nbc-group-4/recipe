@@ -129,10 +129,11 @@ class MainViewModel @Inject constructor(
     private val _specialties = MutableStateFlow<SpecialtyResponse?>(null)
     val specialties = _specialties.asStateFlow()
 
-    fun doTest(string: String) {
+    // doTest 함수명 변경
+    fun getItem(string: String) {
         viewModelScope.launch {
             _specialties.emit(
-                repository.getSpecialty("양구")
+                repository.getSpecialty("") // 전체 지역
             )
         }
     }
