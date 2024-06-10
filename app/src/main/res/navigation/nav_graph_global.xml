@@ -19,9 +19,6 @@
         <action
             android:id="@+id/action_mainFragment_to_specialtyFragment"
             app:destination="@id/specialtyFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_makeRecipeFragment"
-            app:destination="@id/makeRecipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -53,6 +50,9 @@
         <action
             android:id="@+id/action_recipeFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />
+        <action
+            android:id="@+id/action_recipeFragment_to_makeRecipeFragment"
+            app:destination="@id/makeRecipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/makeRecipeFragment"

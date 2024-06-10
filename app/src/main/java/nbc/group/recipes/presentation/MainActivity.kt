@@ -39,6 +39,6 @@ class MainActivity : AppCompatActivity() {
     fun moveToSpecialtyDetailFragment() = navController
         .navigate(R.id.action_specialtyFragment_to_specialtyDetailFragment)
     fun moveToMakeRecipeFragment() = navController
-        .navigate(R.id.action_mainFragment_to_makeRecipeFragment)
+        .navigate(R.id.action_recipeFragment_to_makeRecipeFragment)
     fun moveToBack() = navController.popBackStack()
 }

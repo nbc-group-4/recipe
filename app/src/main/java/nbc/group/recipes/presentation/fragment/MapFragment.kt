@@ -83,7 +83,6 @@ class MapFragment : Fragment() {
 
         // KakaoMapSDK 초기화!!
         KakaoMapSdk.init(requireContext(), KAKAO_MAP_KEY)
-
         mapView.start(object : MapLifeCycleCallback() {
 
             override fun onMapDestroy() {
@@ -234,6 +233,8 @@ class MapFragment : Fragment() {
             val layer = kakaoMap?.labelManager?.addLayer(layerOptions)  //  val layer = kakaoMap?.labelManager?.getLayer()
             // Label 생성
             layer?.addLabel(options)
+
+
         }else{
             Log.e("kakaoMap", "LabelStyles null값 에러")
         }
@@ -369,7 +370,6 @@ class MapFragment : Fragment() {
         val addresses = geocoder.getFromLocation(latitude, longitude, 1)
         // 주소 정보에서 "시" 단위 지역명 추출
         val locality = addresses?.firstOrNull()?.locality ?: "${addresses}"
-
         // 지역명이 Allregions 리스트에 포함되어 있는지 확인하고 반환
         return Allregions.firstOrNull { locality.contains(it) } ?: ""
     }
@@ -397,9 +397,13 @@ class MapFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        kakaoMap?.labelManager?.clearAll()
+        kakaoMap?.labelManager?.removeAllLabelLayer()
+        kakaoMap?.labelManager?.removeAllAnimator()
+        kakaoMap?.labelManager?.removeAllLodLabelLayer()
         kakaoMap = null
+        mapView.finish()
     }
-
 }
 
 

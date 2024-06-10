@@ -62,7 +62,11 @@ class RecipeFragment : Fragment() {
             setHasFixedSize(true)
         }
         binding.btBack.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
+            (activity as MainActivity).moveToBack()
+        }
+
+        binding.btMakeRecipe.setOnClickListener {
+            (activity as MainActivity).moveToMakeRecipeFragment()
         }
     }
 
