@@ -40,7 +40,7 @@ data class Items(
 data class Item(
     @PropertyElement(name="areaNm") var areaName: String?,
     @PropertyElement(name="cntntsNo") var cntntsNo : Int?,
-    @PropertyElement(name="cntntsSj") var cntntsSj : String?,   //지역이름 넘겨주기
+    @PropertyElement(name="cntntsSj") var cntntsSj : String?,
     @PropertyElement(name="imgUrl") var imgUrl : String?,
     @PropertyElement(name="linkUrl") var linkUrl: String?,
     @PropertyElement(name="svcDt") var svcDt: String?

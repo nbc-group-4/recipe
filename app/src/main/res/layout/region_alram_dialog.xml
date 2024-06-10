@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="20dp"
+    android:layout_marginHorizontal="20dp">
+
+    <ImageView
+        android:id="@+id/dialog_close"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="end"
+        android:src="@drawable/ic_close_circle"
+        android:layout_marginEnd="@dimen/default_margin_20" />
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="검색할 수 있는 지역명"
+        android:layout_marginTop="@dimen/default_margin_20"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/dialog_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="아래에 해당하는 지역명만 검색이 가능합니다"
+        android:layout_marginTop="70dp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/dialog_region"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginTop="100dp"
+        android:textSize="15sp"
+        android:textColor="@color/grey2"
+        android:padding="15dp"/>
+
+</androidx.cardview.widget.CardView>

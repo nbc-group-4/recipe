@@ -52,6 +52,16 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@drawable/ic_delete"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/search_et"
+        app:layout_constraintEnd_toStartOf="@+id/alert_iv"
+        app:layout_constraintTop_toTopOf="@+id/search_et" />
+
+    <ImageView
+        android:id="@+id/alert_iv"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        android:src="@drawable/ic_alert"
         android:layout_marginEnd="@dimen/default_margin_20"
         app:layout_constraintBottom_toBottomOf="@+id/search_et"
         app:layout_constraintEnd_toEndOf="@+id/search_et"
