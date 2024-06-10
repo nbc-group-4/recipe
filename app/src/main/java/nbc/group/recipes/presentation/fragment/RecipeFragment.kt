@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import nbc.group.recipes.BuildConfig
 import nbc.group.recipes.databinding.FragmentRecipeBinding
 import nbc.group.recipes.presentation.MainActivity
-import nbc.group.recipes.viewmodel.MapViewModel
+import nbc.group.recipes.presentation.adapter.RecipeAdapter
 import nbc.group.recipes.viewmodel.MapSharedViewModel
 import nbc.group.recipes.viewmodel.RecipeViewModel
 @AndroidEntryPoint

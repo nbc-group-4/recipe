@@ -8,9 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -18,6 +16,7 @@ import nbc.group.recipes.KindItem
 import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentSpecialtyBinding
 import nbc.group.recipes.presentation.MainActivity
+import nbc.group.recipes.presentation.adapter.SpecialtyAdapter
 import nbc.group.recipes.specialties1
 import nbc.group.recipes.specialties2
 import nbc.group.recipes.specialties3
