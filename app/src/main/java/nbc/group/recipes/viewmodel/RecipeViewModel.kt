@@ -22,72 +22,73 @@ import javax.inject.Inject
 class RecipeViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
     private val naverSearchRepository: NaverSearchRepository,
-): ViewModel() {
+) : ViewModel() {
 
     private val _recipes = MutableStateFlow<List<RecipeEntity>?>(null)
     val recipes = _recipes.asStateFlow()
-
-    private val _recipeIngredients = MutableStateFlow<List<RecipeIngredient>?>(null)
-    val recipeIngredients = _recipeIngredients.asStateFlow()
-
-    private val _recipeProcedures = MutableStateFlow<List<RecipeProcedure>?>(null)
-    val recipeProcedures = _recipeProcedures.asStateFlow()
 
     private fun encodeToUtf8(query: String): String {
         val convertQuery = convertToOfficial(query)
         return URLEncoder.encode(convertQuery, StandardCharsets.UTF_8.toString())
     }
 
-    fun getRecipeDetails(startIndex: Int, endIndex: Int, recipeName: String, recipeId: Int, clientId: String, clientSecret: String) = viewModelScope.launch{
+    suspend fun fetchRecipeIds(ingredientName: String, startIndex: Int, endIndex: Int): List<Int> {
+        val ingredientResponse =
+            recipeRepository.getRecipeIngredients(startIndex, endIndex, ingredientName)
+        return ingredientResponse.row.map { it.recipeId }
+    }
+
+    fun getRecipeDetails(
+        startIndex: Int,
+        endIndex: Int,
+        recipeName: String,
+        recipeId: Int,
+        clientId: String,
+        clientSecret: String
+    ) = viewModelScope.launch {
         try {
-            val ingredientName = "논살딸기" // 바텀 시트에서 클릭된 재료명
-            val encodedRecipeName = encodeToUtf8(ingredientName)
-
-            val ingredientResponse = recipeRepository.getRecipeIngredients(startIndex, endIndex, encodedRecipeName, recipeId)
-            val recipeIds = ingredientResponse.row.map { it.recipeId }
-
             val recipes = mutableListOf<RecipeEntity>()
+            val recipeDeferred = async { recipeRepository.getRecipes(startIndex, endIndex, "", recipeId) }
+            val recipeResponse = recipeDeferred.await()
 
-            for (id in recipeIds) {
-                val recipeDeferred = async { recipeRepository.getRecipes(startIndex, endIndex, "", id) }
-                val recipeResponse = recipeDeferred.await()
-
-                val recipe = recipeResponse.row.first()
-                val recipeName = recipe.recipeName
-                val encodedRecipeName = encodeToUtf8(recipeName)
-                val imageDeferred = async { naverSearchRepository.searchEncyclopedia(encodedRecipeName, clientId, clientSecret) }
-                val imageResponse = imageDeferred.await()
-
-                val firstItem = imageResponse.items.firstOrNull()
-                val thumbnailUrl = firstItem?.thumbnail ?: ""
-
-                recipes.add(
-                    RecipeEntity(
-                        id = recipe.recipeId,
-                        recipeImg = thumbnailUrl,
-                        recipeName = recipe.recipeName,
-                        explain = recipe.summary,
-                        step = "",
-                        ingredient = "",
-                        difficulty = recipe.levelName,
-                        time = recipe.cookingTime
-                    )
+            val recipe = recipeResponse.row.first()
+            val recipeName = recipe.recipeName
+            val encodedRecipeName = encodeToUtf8(recipeName)
+            val imageDeferred = async {
+                naverSearchRepository.searchEncyclopedia(
+                    encodedRecipeName,
+                    clientId,
+                    clientSecret
                 )
             }
+            val imageResponse = imageDeferred.await()
+
+            val firstItem = imageResponse.items.firstOrNull()
+            val thumbnailUrl = firstItem?.thumbnail ?: ""
+
+            val procedureDeferred = async { recipeRepository.getRecipeProcedures(startIndex, endIndex, recipeId) }
+            val procedureResponse = procedureDeferred.await()
+            val procedure = procedureResponse.row.firstOrNull().toString()
+
+            val ingredientDeferred = async { recipeRepository.getRecipeIngredients(startIndex, endIndex, recipeId) }
+            val ingredientResponse = ingredientDeferred.await()
+            val ingredients = ingredientResponse.row.firstOrNull().toString()
+
+            recipes.add(
+                RecipeEntity(
+                    id = recipe.recipeId,
+                    recipeImg = thumbnailUrl,
+                    recipeName = recipe.recipeName,
+                    explain = recipe.summary,
+                    step = procedure,
+                    ingredient = ingredients,
+                    difficulty = recipe.levelName,
+                    time = recipe.cookingTime
+                )
+            )
             _recipes.emit(recipes)
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
-
-    fun getRecipeIngredients(startIndex: Int, endIndex: Int, ingredient: String, recipeId: Int) = viewModelScope.launch {
-        val response = recipeRepository.getRecipeIngredients(startIndex, endIndex, ingredient, recipeId)
-        _recipeIngredients.emit(response.row)
-    }
-
-    fun getRecipeProcedures(startIndex: Int, endIndex: Int, recipeId: Int) = viewModelScope.launch {
-        val response = recipeRepository.getRecipeProcedures(startIndex, endIndex, recipeId)
-        _recipeProcedures.emit(response.row)
-    }
-
 }

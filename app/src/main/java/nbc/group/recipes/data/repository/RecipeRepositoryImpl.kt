@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class RecipeRepositoryImpl @Inject constructor(
-    private val recipeDataSource: RecipeDataSource
+    @Named("RecipeService") private val recipeDataSource: RecipeDataSource
 ) : RecipeRepository {
     override suspend fun getRecipes(
         startIndex: Int,
@@ -37,6 +37,30 @@ class RecipeRepositoryImpl @Inject constructor(
             endIndex = endIndex,
             ingredientName = ingredientName,
             recipeId = recipeId
+        )
+    }
+
+    override suspend fun getRecipeIngredients(
+        startIndex: Int,
+        endIndex: Int,
+        ingredientName: String,
+    ): RecipeResponse<RecipeIngredient> {
+        return recipeDataSource.getRecipeIngredient(
+            startIndex = startIndex,
+            endIndex = endIndex,
+            ingredientName = ingredientName,
+        )
+    }
+
+    override suspend fun getRecipeIngredients(
+        startIndex: Int,
+        endIndex: Int,
+        recipeId: Int
+    ): RecipeResponse<RecipeIngredient> {
+        return recipeDataSource.getRecipeIngredient(
+            startIndex = startIndex,
+            endIndex = endIndex,
+            recipeId = recipeId,
         )
     }
 
