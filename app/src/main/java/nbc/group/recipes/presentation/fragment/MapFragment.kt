@@ -397,7 +397,12 @@ class MapFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        kakaoMap?.labelManager?.clearAll()
+        kakaoMap?.labelManager?.removeAllLabelLayer()
+        kakaoMap?.labelManager?.removeAllAnimator()
+        kakaoMap?.labelManager?.removeAllLodLabelLayer()
         kakaoMap = null
+        mapView.finish()
     }
 
 }
