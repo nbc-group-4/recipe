@@ -13,9 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.BuildConfig
-import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentRecipeBinding
-import nbc.group.recipes.viewmodel.MapViewModel
+import nbc.group.recipes.viewmodel.MapSharedViewModel
 import nbc.group.recipes.viewmodel.RecipeViewModel
 @AndroidEntryPoint
 class RecipeFragment : Fragment() {
@@ -24,7 +23,7 @@ class RecipeFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel by viewModels<RecipeViewModel>()
-    private val sharedMapViewModel : MapViewModel by activityViewModels()
+    private val mapSharedViewModel : MapSharedViewModel by activityViewModels()
     private lateinit var recipeAdapter: RecipeAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,7 +75,7 @@ class RecipeFragment : Fragment() {
 
     private fun observeSharedViewModel(){
         viewLifecycleOwner.lifecycleScope.launch {
-            sharedMapViewModel.selectedSpecialty.collect{
+            mapSharedViewModel.selectedSpecialty.collect{
                 Log.d("observeSharedViewModel___" , it.toString())   // it = 클릭한 특산물데이터에 대한 정보 들어옴
             }
         }
