@@ -1,5 +1,6 @@
 package nbc.group.recipes.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,11 +33,11 @@ class SpecialtyViewModel @Inject constructor(
 
     fun searchItem(cntntsSj: String) {
         viewModelScope.launch {
-            val specialtyResponse = repository.getSpecialty(cntntsSj)
-            val filteredItems = specialtyResponse.body.items.item.filter { item ->
+            val specialtyResponse = repository.getSpecialty("", cntntsSj)
+            val filteredItems = specialtyResponse.body.items.item?.filter { item ->
                 item.cntntsSj?.contains(cntntsSj, ignoreCase = true) == true
             }
-            setSearchResult(filteredItems)
+            setSearchResult(filteredItems!!)
         }
     }
 }

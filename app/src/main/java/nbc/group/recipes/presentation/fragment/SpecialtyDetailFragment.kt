@@ -1,6 +1,6 @@
 package nbc.group.recipes.presentation.fragment
 
-import GridSpacingItemDecoration
+import  nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentSpecialtyDetailBinding
+import nbc.group.recipes.presentation.adapter.SpecialtyDetailAdapter
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
 
 @AndroidEntryPoint

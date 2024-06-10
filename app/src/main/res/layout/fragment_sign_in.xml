@@ -110,6 +110,15 @@
         app:layout_constraintEnd_toEndOf="@id/et_id_layout"
         app:layout_constraintTop_toBottomOf="@id/bt_sign_in"/>
 
-
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        style="@style/error_text_style"
+        android:layout_marginTop="@dimen/default_margin_20"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintTop_toBottomOf="@+id/tv_search_pw_button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

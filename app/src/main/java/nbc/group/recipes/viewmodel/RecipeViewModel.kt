@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nbc.group.recipes.convertToOfficial
+import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.model.dto.RecipeIngredient
 import nbc.group.recipes.data.model.dto.RecipeProcedure
 import nbc.group.recipes.data.model.entity.RecipeEntity

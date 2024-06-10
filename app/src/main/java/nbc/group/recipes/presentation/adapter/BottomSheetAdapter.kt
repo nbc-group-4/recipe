@@ -1,4 +1,4 @@
-package nbc.group.recipes.presentation
+package nbc.group.recipes.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

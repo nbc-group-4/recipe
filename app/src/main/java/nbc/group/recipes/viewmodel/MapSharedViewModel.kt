@@ -23,7 +23,7 @@ class MapSharedViewModel @Inject constructor(
 
     fun getSpecialtie(ariaName : String) = viewModelScope.launch {
         val getAriaData = repository.getAreaName(ariaName)
-        val filteredItems = getAriaData.body.items.item.filter {
+        val filteredItems = getAriaData.body.items.item?.filter {
             // 제거해야되는 특산물데이터 필터링(추후에 더 추가예정)
             when(ariaName){
                 "양주" -> it.cntntsSj != "반려식물"

@@ -41,6 +41,26 @@
     <string name="sign_up_fragment_confirm_button_text">회원가입</string>
 
     <!-- MypageFragment -->
+    <string name="mypage_fragment_top_banner_text">마이페이지</string>
     <string name="mypage_fragment_sign_in_button_text">로그인</string>
+    <string name="mypage_fragment_sign_out_text">로그아웃</string>
+    <string name="mypage_fragment_sign_in_indic_text">로그인이 필요한 서비스입니다.</string>
+    <string name="mypage_fragment_edit_profile_text">프로필 수정</string>
+    <string name="mypage_fragment_user_recipe_indic_text">작성한 레시피</string>
+
+    <!-- MakeRecipeFragment -->
+    <string name="make_recipe_fragment_top_banner_text">레시피</string>
+    <string name="make_recipe_fragment_make_button_text">게시</string>
+    <string name="make_recipe_fragment_recipe_name_indic">레시피명</string>
+    <string name="make_recipe_fragment_recipe_description_indic">레시피 소개</string>
+    <string name="make_recipe_fragment_recipe_description_hint">레시피를 간단하게 소개해 주세요.</string>
+    <string name="make_recipe_fragment_recipe_level_indic">레시피 난이도</string>
+    <string name="make_recipe_fragment_recipe_cooking_time_indic">예상 소요 시간</string>
+    <string name="make_recipe_fragment_recipe_cooking_time_hint">예상 소요 시간을 입력해 주세요.</string>
+    <string name="make_recipe_fragment_recipe_ingredient_indic">주요 재료</string>
+    <string name="make_recipe_fragment_recipe_ingredient_hint">재료를 선택해 주세요.</string>
+    <string name="make_recipe_fragment_recipe_cooking_process_indic">조리방법</string>
+    <string name="make_recipe_fragment_recipe_cooking_process_hint">조리방법을 입력해 주세요.</string>
+    <string name="make_recipe_fragment_recipe_photo_indic">사진 등록</string>
 
 </resources>

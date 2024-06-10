@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +26,8 @@ import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.network.FirebaseResult
 import nbc.group.recipes.databinding.FragmentMypageBinding
 import nbc.group.recipes.presentation.MainActivity
+import nbc.group.recipes.presentation.adapter.MyPageRecipeAdapter
+import nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import nbc.group.recipes.viewmodel.MainViewModel
 import java.io.File
 
@@ -37,14 +40,11 @@ class MypageFragment : Fragment() {
 
     private var _binding: FragmentMypageBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainViewModel by activityViewModels()
 
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if(isGranted) {
-                Log.e(TAG, "Permission Granted")
-            }
-        }
+    private var _adapter: MyPageRecipeAdapter? = null
+    private val adapter get() = _adapter!!
+
+    private val viewModel: MainViewModel by activityViewModels()
 
     private val pickMedia = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -53,7 +53,7 @@ class MypageFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launch {
                 val inputStream = requireActivity().contentResolver.openInputStream(uri)
                 viewModel.putImage(inputStream!!)
-                binding.testImageView.setImageURI(uri)
+                binding.ivUserProfile.setImageURI(uri)
             }
         }
     }
@@ -69,50 +69,43 @@ class MypageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requestPermissionLauncher.launch(
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-
-        binding.testImageView2.setOnClickListener {
-            GlideApp.with(this)
-                .load(Firebase.storage.reference.child("userProfile/jun/profile.jpg"))
-                .into(binding.testImageView2)
-        }
+        _adapter = MyPageRecipeAdapter(this)
 
         with(binding) {
-            testButton1.setOnClickListener {
-                viewModel.putRecipe(
-                    Recipe()
+            btSignIn.setOnClickListener(signInButtonClickListener)
+            tvLogOutButton.setOnClickListener(logOutButtonClickListener)
+            ivUserProfile.setOnClickListener(userProfileImageClickListener)
+            rvUserRecipe.layoutManager = GridLayoutManager(activity, 2)
+            rvUserRecipe.adapter = adapter
+            rvUserRecipe.addItemDecoration(
+                GridSpacingItemDecoration(
+                    2,
+                    (20 * resources.displayMetrics.density + 0.5f).toInt(),
+                    false
                 )
-            }
-            testButton2.setOnClickListener {
-                viewModel.getRecipe()
-            }
-            testImageView.setOnClickListener {
-                pickMedia.launch(
-                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                )
-            }
-            fab.setOnClickListener {
-                (activity as MainActivity).moveToSignInFragment()
-            }
+            )
         }
 
-        viewModel.currentUser?.let {
-            binding.tv.text = "${it.email}"
+        binding.testButton.setOnClickListener {
+            (activity as MainActivity).moveToMakeRecipeFragment()
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.signInFlow.collect { nullable ->
-                if(nullable == null) binding.tv.text = "There is no user"
+                if(nullable == null) {
+                    binding.clUser.visibility = View.GONE
+                    binding.clNonUser.visibility = View.VISIBLE
+                }
                 nullable?.let { nonNull ->
                     when(nonNull) {
                         is FirebaseResult.Success -> {
-                            binding.tv.text = nonNull.result.email
+                            binding.clNonUser.visibility = View.GONE
+                            binding.clUser.visibility = View.VISIBLE
+                            initUser()
                         }
                         is FirebaseResult.Failure -> {
-                            Log.e(SignInFragment.TAG, "onViewCreated: Failure", )
-                            binding.tv.text = ""
+                            binding.clUser.visibility = View.GONE
+                            binding.clNonUser.visibility = View.VISIBLE
                         }
                         is FirebaseResult.Loading -> {
 
@@ -121,40 +114,38 @@ class MypageFragment : Fragment() {
                 }
             }
         }
+    }
 
+    private fun initUser() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.recipes.collect { nullable ->
-                if(nullable == null) binding.tv.text = "There are no recipes"
-                nullable?.let { nonNull ->
-                    when(nonNull) {
-                        is FirebaseResult.Success -> {
-                            binding.tv.text = nonNull.result.toString()
-                        }
-                        is FirebaseResult.Failure -> {
-                            Log.e(SignInFragment.TAG, "onViewCreated: Failure: ${nonNull.exception}", )
-                            binding.tv.text = ""
-                        }
-                        is FirebaseResult.Loading -> {
-
-                        }
-                    }
-                }
+            viewModel.currentUser?.let { currentUser ->
+                binding.tvUserName.text = currentUser.displayName
+                GlideApp.with(this@MypageFragment)
+                    .load(Firebase.storage.reference
+                        .child("userProfile/${currentUser.uid}/profile.jpg"))
+                    .error(R.drawable.img_app_name)
+                    .into(binding.ivUserProfile)
             }
         }
-
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewModel.user.collect {
-//                it?.let { user ->
-//                    binding.tv.text = "${user.email}"
-//                }
-//            }
-//        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        Log.e(TAG, "onDestroyView: ", )
+        _adapter = null
     }
 
+    private val signInButtonClickListener: (View) -> Unit = {
+        (activity as MainActivity).moveToSignInFragment()
+    }
+
+    private val logOutButtonClickListener: (View) -> Unit = {
+        viewModel.logout()
+    }
+
+    private val userProfileImageClickListener: (View) -> Unit = {
+        pickMedia.launch(
+            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+        )
+    }
 }

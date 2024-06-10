@@ -14,7 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import nbc.group.recipes.presentation.BottomSheetAdapter
+import nbc.group.recipes.presentation.adapter.BottomSheetAdapter
 import nbc.group.recipes.databinding.FragmentBottomsheetBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.viewmodel.MapSharedViewModel
