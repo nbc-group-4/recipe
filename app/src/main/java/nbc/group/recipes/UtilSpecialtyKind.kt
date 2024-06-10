@@ -18,13 +18,13 @@ val specialtyKind = listOf(
         imageResourceId = R.drawable.img_specialty_kind4
     ),
     KindItem(
-        item = "해조류",
+        item = "고기",
         imageResourceId = R.drawable.img_specialty_kind5
     ),
     KindItem(
-        item = "고기",
+        item = "기타",
         imageResourceId = R.drawable.img_specialty_kind6
-    ),
+    )
 )
 
 // 더보기 아이템
@@ -34,9 +34,9 @@ val specialtyKindMore = listOf(
         imageResourceId = R.drawable.img_specialty_kind7
     ),
     KindItem(
-        item = "기타",
+        item = "해조류",
         imageResourceId = R.drawable.img_specialty_kind8
-    )
+    ),
 )
 
 data class KindItem(
