@@ -25,10 +25,20 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.fcv_main) as NavHostFragment
         navController = navHostFragment.navController
     }
-    fun moveToSignInFragment() = navController.navigate(R.id.action_mainFragment_to_signInFragment)
-    fun moveToSignUpFragment() = navController.navigate(R.id.action_signInFragment_to_signUpFragment)
-    fun moveToRecipeFragment() = navController.navigate(R.id.action_mainFragment_to_recipeFragment)
-    fun moveToSpecialtyFragment() = navController.navigate(R.id.action_mainFragment_to_specialtyFragment)
-    fun moveToMakeRecipeFragment() = navController.navigate(R.id.action_mainFragment_to_makeRecipeFragment)
+
+    fun moveToSignInFragment() = navController
+        .navigate(R.id.action_mainFragment_to_signInFragment)
+    fun moveToSignUpFragment() = navController
+        .navigate(R.id.action_signInFragment_to_signUpFragment)
+    fun moveToRecipeFragment() = navController
+        .navigate(R.id.action_mainFragment_to_recipeFragment)
+    fun moveToRecipeDetailFragment(bundle: Bundle) = navController
+        .navigate(R.id.action_mainFragment_to_recipeFragment, bundle)
+    fun moveToSpecialtyFragment() = navController
+        .navigate(R.id.action_mainFragment_to_specialtyFragment)
+    fun moveToSpecialtyDetailFragment() = navController
+        .navigate(R.id.action_specialtyFragment_to_specialtyDetailFragment)
+    fun moveToMakeRecipeFragment() = navController
+        .navigate(R.id.action_mainFragment_to_makeRecipeFragment)
     fun moveToBack() = navController.popBackStack()
 }

@@ -15,6 +15,7 @@ import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentHomeBinding
 import nbc.group.recipes.KindItem
 import nbc.group.recipes.dummyRecipe
+import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.specialtyKind
 import nbc.group.recipes.specialtyKindMore
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
@@ -88,8 +89,7 @@ class HomeFragment : Fragment() {
 
     private fun navigateToSpecialty(item: KindItem) {
         sharedViewModel.setSelectedKindItem(item)
-        findNavController().navigate(R.id.specialtyFragment)
-        // findNavController().navigate(R.id.action_mainFragment_to_specialtyFragment)
+        (activity as MainActivity).moveToSpecialtyFragment()
     }
 
     private fun sendSpecialtyKind(item: KindItem) {

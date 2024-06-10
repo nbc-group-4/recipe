@@ -3,15 +3,19 @@ package nbc.group.recipes.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import nbc.group.recipes.convertToOfficial
 import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.model.dto.RecipeIngredient
 import nbc.group.recipes.data.model.dto.RecipeProcedure
 import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.data.repository.NaverSearchRepository
 import nbc.group.recipes.data.repository.RecipeRepository
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import javax.inject.Inject
 
 @HiltViewModel

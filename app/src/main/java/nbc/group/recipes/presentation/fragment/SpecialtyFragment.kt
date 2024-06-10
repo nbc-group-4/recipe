@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import nbc.group.recipes.KindItem
 import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentSpecialtyBinding
+import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.specialties1
 import nbc.group.recipes.specialties2
 import nbc.group.recipes.specialties3
@@ -66,7 +67,7 @@ class SpecialtyFragment : Fragment() {
         binding.ivSearch.setOnClickListener {
             // performSearch()
             hideKeyboard()
-            findNavController().navigate(R.id.specialtyDetailFragment)
+            (activity as MainActivity).moveToSpecialtyDetailFragment()
         }
     }
 
