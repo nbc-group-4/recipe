@@ -14,6 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.BuildConfig
 import nbc.group.recipes.databinding.FragmentRecipeBinding
+import nbc.group.recipes.presentation.MainActivity
+import nbc.group.recipes.presentation.adapter.RecipeAdapter
 import nbc.group.recipes.viewmodel.MapSharedViewModel
 import nbc.group.recipes.viewmodel.RecipeViewModel
 @AndroidEntryPoint
@@ -43,15 +45,16 @@ class RecipeFragment : Fragment() {
 
     private fun setupRecyclerView() {
         recipeAdapter = RecipeAdapter { recipe ->
-            val bundle = Bundle().apply {
-                putParcelable("recipeDetail", recipe)
-            }
-            val detailFragment = RecipeDetailFragment()
-            detailFragment.arguments = bundle
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(androidx.fragment.R.id.fragment_container_view_tag, detailFragment)
-                .addToBackStack(null)
-                .commit()
+            val bundle = Bundle().apply { putParcelable("recipeDetail", recipe) }
+            (activity as MainActivity).moveToRecipeDetailFragment(bundle)
+
+
+//            val detailFragment = RecipeDetailFragment()
+//            detailFragment.arguments = bundle
+//            requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(androidx.fragment.R.id.fragment_container_view_tag, detailFragment)
+//                .addToBackStack(null)
+//                .commit()
         }
         binding.rvRecipe.apply {
             layoutManager = GridLayoutManager(context, 2)

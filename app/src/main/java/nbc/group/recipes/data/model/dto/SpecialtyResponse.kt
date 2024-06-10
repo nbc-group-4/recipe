@@ -33,7 +33,7 @@ data class Body(
 
 @Xml(name = "items")
 data class Items(
-    @Element(name = "item") val item: List<Item>
+    @Element(name = "item") val item: List<Item>?
 )
 
 @Xml

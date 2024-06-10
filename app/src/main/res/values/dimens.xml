@@ -10,6 +10,14 @@
     <dimen name="fragment_horizontal_margin">20dp</dimen>
     <dimen name="top_banner_left_icon_margin">28dp</dimen>
     <dimen name="top_banner_height">80dp</dimen>
-    <dimen name="default_button_height">60dp</dimen>
 
+    <dimen name="default_button_height">60dp</dimen>
+    <dimen name="small_button_height">48dp</dimen>
+
+    <dimen name="my_page_image_size">108dp</dimen>
+    <dimen name="my_page_image_size_small">60dp</dimen>
+
+    <dimen name="edit_profile_image_size">200dp</dimen>
+
+    <dimen name="make_recipe_image_size">108dp</dimen>
 </resources>

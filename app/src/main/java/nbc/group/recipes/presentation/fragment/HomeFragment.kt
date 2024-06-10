@@ -1,20 +1,20 @@
 package nbc.group.recipes.presentation.fragment
 
-import GridSpacingItemDecoration
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentHomeBinding
 import nbc.group.recipes.KindItem
 import nbc.group.recipes.dummyRecipe
+import nbc.group.recipes.presentation.MainActivity
+import nbc.group.recipes.presentation.adapter.HomeKindAdapter
+import nbc.group.recipes.presentation.adapter.HomeQuizAdapter
 import nbc.group.recipes.specialtyKind
 import nbc.group.recipes.specialtyKindMore
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
@@ -88,8 +88,7 @@ class HomeFragment : Fragment() {
 
     private fun navigateToSpecialty(item: KindItem) {
         sharedViewModel.setSelectedKindItem(item)
-        findNavController().navigate(R.id.specialtyFragment)
-        // findNavController().navigate(R.id.action_mainFragment_to_specialtyFragment)
+        (activity as MainActivity).moveToSpecialtyFragment()
     }
 
     private fun sendSpecialtyKind(item: KindItem) {

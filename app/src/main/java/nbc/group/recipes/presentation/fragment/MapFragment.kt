@@ -51,6 +51,7 @@ class MapFragment : Fragment() {
     private var _binding: FragmentMapBinding? = null
 
     private lateinit var mapView: MapView
+
     private var kakaoMap : KakaoMap? = null
 
     private val mapViewModel: MapViewModel by viewModels()

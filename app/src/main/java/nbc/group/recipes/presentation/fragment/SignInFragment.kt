@@ -50,6 +50,7 @@ class SignInFragment : Fragment() {
             btSignIn.setOnClickListener(signInButtonClickListener)
             tvSignUpButton.setOnClickListener(signUpButtonClickListener)
             tvSearchPwButton.setOnClickListener(searchPwButtonClickListener)
+            ivBackButton.setOnClickListener(backButtonClickListener)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -57,10 +58,12 @@ class SignInFragment : Fragment() {
                 nullable?.let { nonNull ->
                     when(nonNull) {
                         is FirebaseResult.Success -> {
-                            findNavController().popBackStack()
+                            (activity as MainActivity).moveToBack()
                         }
                         is FirebaseResult.Failure -> {
                             Log.e(TAG, "onViewCreated: Failure", )
+                            binding.tvError.text = nonNull.exception.message
+
                         }
                         is FirebaseResult.Loading -> {
 
@@ -92,4 +95,9 @@ class SignInFragment : Fragment() {
     private val searchPwButtonClickListener: (View) -> Unit = {
 
     }
+
+    private val backButtonClickListener: (View) -> Unit = {
+        (activity as MainActivity).moveToBack()
+    }
+
 }

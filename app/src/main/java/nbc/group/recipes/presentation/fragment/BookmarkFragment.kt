@@ -14,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import nbc.group.recipes.presentation.BookMarkAdapter
+import nbc.group.recipes.presentation.adapter.BookMarkAdapter
 import nbc.group.recipes.viewmodel.BookMarkViewModel
 import nbc.group.recipes.VisibilityView
 import nbc.group.recipes.data.model.dto.Recipe

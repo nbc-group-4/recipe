@@ -64,6 +64,9 @@ android {
 dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("com.airbnb.android:lottie:5.2.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
     implementation ("com.google.android.material:material:1.4.0")
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     implementation("com.google.firebase:firebase-analytics")
