@@ -22,4 +22,7 @@ class RecipeSpecialtyRepository @Inject constructor(
         sAreaNm = sAreaName,
         cntntsSj = cntntsSj
     )
+
+    suspend fun getAreaName(areaName: String) = specialtyDataSource.getSpecialty(areaName)
+
 }
