@@ -72,7 +72,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                 Log.d("it_region_data__", it.toString())    // "검색한 지역의 특산물"값 받아옴
 
                 // 어뎁터 업데이트
-                bottomSheetAdapter.submitList(it?.body?.items?.item)
+                bottomSheetAdapter.submitList(it)
             }
         }
     }

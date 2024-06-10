@@ -18,11 +18,20 @@ class MapSharedViewModel @Inject constructor(
 
 
     // 지역이름
-    private val _specialtie = MutableStateFlow<SpecialtyResponse?>(null)
-    val specialtie : StateFlow<SpecialtyResponse?> = _specialtie
+    private val _specialtie = MutableStateFlow<List<Item>?>(null)
+    val specialtie : StateFlow<List<Item>?> = _specialtie
 
     fun getSpecialtie(ariaName : String) = viewModelScope.launch {
-        _specialtie.emit(repository.getAreaName(ariaName))
+        val getAriaData = repository.getAreaName(ariaName)
+        val filteredItems = getAriaData.body.items.item.filter {
+            // 제거해야되는 특산물데이터 필터링(추후에 더 추가예정)
+            when(ariaName){
+                "양주" -> it.cntntsSj != "반려식물"
+                "군산" -> it.cntntsSj != "바다향"
+                else -> true
+            }
+        }
+        _specialtie.emit(filteredItems)
     }
 
 
