@@ -65,7 +65,7 @@ class SpecialtyFragment : Fragment() {
 
     private fun setUpListener() {
         binding.ivSearch.setOnClickListener {
-            // performSearch()
+            performSearch()
             hideKeyboard()
             (activity as MainActivity).moveToSpecialtyDetailFragment()
         }

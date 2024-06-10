@@ -133,7 +133,7 @@ class MainViewModel @Inject constructor(
     fun getItem(string: String) {
         viewModelScope.launch {
             _specialties.emit(
-                repository.getSpecialty("") // 전체 지역
+                repository.getSpecialty("", "") // 전체 지역
             )
         }
     }

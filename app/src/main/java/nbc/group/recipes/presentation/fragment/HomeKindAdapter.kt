@@ -21,8 +21,7 @@ val diffCallbackHomeKind = object : DiffUtil.ItemCallback<KindItem>() {
 
 class HomeKindAdapter(
     private val itemClickListener: OnItemClickListener
-) :
-    ListAdapter<KindItem, HomeKindAdapter.ItemViewHolder>(diffCallbackHomeKind) {
+): ListAdapter<KindItem, HomeKindAdapter.ItemViewHolder>(diffCallbackHomeKind) {
 
     interface OnItemClickListener {
         fun onClick(data: KindItem)
@@ -48,8 +47,8 @@ class HomeKindAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val binding =
-            ItemHomeKindBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemHomeKindBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding, itemClickListener)
     }
 

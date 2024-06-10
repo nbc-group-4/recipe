@@ -21,21 +21,20 @@ class MapViewModel @Inject constructor(
 
     // 검색어
     private val _regionSearch = MutableStateFlow<SearchResponse?>(null)
-    val regionSearch : StateFlow<SearchResponse?> = _regionSearch
+    val regionSearch: StateFlow<SearchResponse?> = _regionSearch
 
     fun getRegionSearch(query: String) = viewModelScope.launch {
         _regionSearch.emit(searchRepository.requestSearch(query))
     }
 
 
-
     // 지역이름
     private val _specialtie = MutableStateFlow<SpecialtyResponse?>(null)
-    val specialtie : StateFlow<SpecialtyResponse?> = _specialtie
+    val specialtie: StateFlow<SpecialtyResponse?> = _specialtie
 
-    fun getSpecialtie(ariaName : String) = viewModelScope.launch {
-            _specialtie.emit(repository.getSpecialty(ariaName))
-        }
+    fun getSpecialtie(ariaName: String) = viewModelScope.launch {
+        _specialtie.emit(repository.getSpecialty(ariaName, ""))
+    }
 
 
     // 클릭한 특산물 데이터
