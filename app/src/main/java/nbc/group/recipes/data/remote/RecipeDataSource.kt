@@ -1,5 +1,7 @@
 package nbc.group.recipes.data.remote
 
+import nbc.group.recipes.data.model.dto.RecipeIngredient
+import nbc.group.recipes.data.model.dto.RecipeResponse
 import nbc.group.recipes.data.network.RecipeService
 import javax.inject.Inject
 import javax.inject.Named
@@ -14,7 +16,7 @@ import javax.inject.Named
 class RecipeDataSource @Inject constructor(
     @Named("RecipeService") private val service: RecipeService
 ) {
-    suspend fun getRecipe (
+    suspend fun getRecipe(
         startIndex: Int = 1,
         endIndex: Int = 20,
         recipeName: String,
@@ -38,6 +40,26 @@ class RecipeDataSource @Inject constructor(
         recipeId = recipeId
     )
 
+    suspend fun getRecipeIngredient(
+        startIndex: Int,
+        endIndex: Int,
+        ingredientName: String
+    ) = service.getRecipeIngredients(
+        startIndex = startIndex,
+        endIndex = endIndex,
+        ingredientName = ingredientName,
+    )
+
+    suspend fun getRecipeIngredient(
+        startIndex: Int,
+        endIndex: Int,
+        recipeId: Int
+    ) = service.getRecipeIngredientsId(
+        startIndex = startIndex,
+        endIndex = endIndex,
+        recipeId = recipeId,
+    )
+
     suspend fun getRecipeProcedure(
         startIndex: Int = 1,
         endIndex: Int = 20,
@@ -47,5 +69,4 @@ class RecipeDataSource @Inject constructor(
         endIndex = endIndex,
         recipeId = recipeId
     )
-
 }
