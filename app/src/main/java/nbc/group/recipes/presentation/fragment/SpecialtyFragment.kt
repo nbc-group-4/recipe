@@ -103,11 +103,11 @@ class SpecialtyFragment : Fragment() {
             "채소" -> specialties2
             "과일" -> specialties3
             "어류" -> specialties4
-            "해조류" -> specialties8
             "고기" -> specialties5
-            "쌀" -> specialties7
             "기타" -> specialties6
-            else -> specialties8
+            "쌀" -> specialties7
+            "해조류" -> specialties8
+            else -> specialties6
         }
     }
 
@@ -117,10 +117,10 @@ class SpecialtyFragment : Fragment() {
             "채소" -> R.drawable.img_specialty_kind2
             "과일" -> R.drawable.img_specialty_kind3
             "어류" -> R.drawable.img_specialty_kind4
-            "해조류" -> R.drawable.img_specialty_kind6
-            "고기" -> R.drawable.img_specialty_kind8
+            "고기" -> R.drawable.img_specialty_kind5
+            "기타" -> R.drawable.img_specialty_kind6
             "쌀" -> R.drawable.img_specialty_kind7
-            "기타" -> R.drawable.img_specialty_kind5
+            "해조류" -> R.drawable.img_specialty_kind8
             else -> R.drawable.img_specialty_kind6
         }
     }
