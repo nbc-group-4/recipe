@@ -154,6 +154,7 @@
         style="@style/content_text_style"
         android:text="30분"
         android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/tv_cooking_time"
         app:layout_constraintStart_toEndOf="@+id/tv_cooking_time"
         app:layout_constraintTop_toBottomOf="@+id/tv_difficulty" />
