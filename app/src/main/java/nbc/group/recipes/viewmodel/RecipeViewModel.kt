@@ -3,6 +3,7 @@ package nbc.group.recipes.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,6 +37,10 @@ class RecipeViewModel @Inject constructor(
         val ingredientResponse =
             recipeRepository.getRecipeIngredients(startIndex, endIndex, ingredientName)
         return ingredientResponse.row.map { it.recipeId }
+    }
+
+    fun putRecipeEntity(recipeEntity: RecipeEntity) = viewModelScope.launch(Dispatchers.IO) {
+        recipeRepository.putRecipeEntity(recipeEntity)
     }
 
     fun getRecipeDetails(

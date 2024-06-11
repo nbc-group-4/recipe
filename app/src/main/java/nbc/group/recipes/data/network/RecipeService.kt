@@ -8,7 +8,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface RecipeService {
-
     @GET(RECIPE_API)
     suspend fun getRecipe(
         @Query("API_KEY") apiKey: String = RECIPE_API_KEY,

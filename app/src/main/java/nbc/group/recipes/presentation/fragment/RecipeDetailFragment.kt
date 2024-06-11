@@ -21,6 +21,8 @@ class RecipeDetailFragment : Fragment() {
     private var _binding: FragmentRecipeDetailBinding? = null
     private val binding: FragmentRecipeDetailBinding
         get() = _binding!!
+
+    private val recipeDetail = arguments?.getParcelable<RecipeEntity>("recipeDetail")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -37,8 +39,6 @@ class RecipeDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val recipeDetail = arguments?.getParcelable<RecipeEntity>("recipeDetail")
 
         recipeDetail?.let { recipe ->
             recipeViewModel.getRecipeDetails(
@@ -61,8 +61,12 @@ class RecipeDetailFragment : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
+        // 북마크 상태 검사에 따른 UI 업데이트
         // val src = if (북마크 상태 true) R.drawable.ic_bookmark_fill else R.drawable.ic_bookmark_empty
         binding.ivBookmark.setOnClickListener {
+            if (recipeDetail != null) {
+                recipeViewModel.putRecipeEntity(recipeDetail)
+            }
             // setResource(src)
         }
     }
