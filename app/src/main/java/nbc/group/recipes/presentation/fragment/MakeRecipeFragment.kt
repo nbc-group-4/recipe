@@ -45,7 +45,7 @@ class MakeRecipeFragment : Fragment() {
     private val pickMedia = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri ->
-        if(uri != null) {
+        if (uri != null) {
             viewLifecycleOwner.lifecycleScope.launch {
                 val inputStream = requireActivity().contentResolver.openInputStream(uri)
                 inputStream?.let {
@@ -87,21 +87,22 @@ class MakeRecipeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.makeRecipeFlow.collectLatest {
                 it?.let { result ->
-                    when(result) {
+                    when (result) {
                         is FirebaseResult.Success -> {
                             (activity as MainActivity).moveToBack()
                         }
+
                         is FirebaseResult.Failure -> {
 
                         }
+
                         is FirebaseResult.Loading -> {
-                            Log.e("MakeRecipeFragment", "onViewCreated: Loading ~", )
+                            Log.e("MakeRecipeFragment", "onViewCreated: Loading ~")
                         }
                     }
                 }
             }
         }
-
     }
 
     override fun onDestroyView() {
@@ -143,9 +144,6 @@ class MakeRecipeFragment : Fragment() {
                 recipe = currentRecipe(),
                 imageStreamList = imageStreamList
             )
-
-            imageStreamList.forEach { it.close() }
-            imageStreamList.clear()
         }
     }
 

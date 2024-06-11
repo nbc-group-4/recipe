@@ -35,6 +35,16 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun resign(): FirebaseResult<Boolean> {
+        return try {
+            val target = firebaseAuth.currentUser!!
+            val result = target.delete().await()
+            FirebaseResult.Success(true)
+        } catch(e: Exception) {
+            FirebaseResult.Failure(e)
+        }
+    }
+
     override fun logout() {
         firebaseAuth.signOut()
     }

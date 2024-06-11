@@ -51,8 +51,8 @@ class FirebaseRepositoryImpl @Inject constructor(
 
     override suspend fun getUserMeta(uid: String): FirebaseResult<UserMetaData> {
         return try {
-            val result = firestore.collection("userMeta/${uid}").get().await()
-            FirebaseResult.Success(result.toObjects(UserMetaData::class.java)[0])
+            val result = firestore.collection("userMeta").document(uid).get().await()
+            FirebaseResult.Success(result.toObject<UserMetaData>() ?: UserMetaData())
         } catch (e: Exception) {
             FirebaseResult.Failure(e)
         }
@@ -86,7 +86,7 @@ class FirebaseRepositoryImpl @Inject constructor(
                 .document(uid).set(meta.copy(temp)).await()
             for(i in imageStreamList.indices) {
                 val recipeRef = storage.reference.child("recipeImage/${result1.id}/$i.jpg")
-                recipeRef.putStream(imageStreamList[i]).await()
+                val result4 = recipeRef.putStream(imageStreamList[i]).await()
             }
             FirebaseResult.Success(true)
         } catch (e: Exception) {

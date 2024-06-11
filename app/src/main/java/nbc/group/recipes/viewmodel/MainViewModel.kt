@@ -78,6 +78,10 @@ class MainViewModel @Inject constructor(
         _user.emit(authRepository.currentUser)
     }
 
+    fun resign() = viewModelScope.launch {
+        authRepository.resign()
+    }
+
     fun logout() = viewModelScope.launch {
         authRepository.logout()
         _signInFlow.emit(null)
@@ -103,6 +107,10 @@ class MainViewModel @Inject constructor(
             _makeRecipeFlow
                 .emit(firebaseRepository.putRecipeTransaction(it.uid, recipe, imageStreamList))
         }
+    }
+
+    fun resetMakeRecipeFlow() {
+        _makeRecipeFlow.value = null
     }
 
     fun putUserMeta(

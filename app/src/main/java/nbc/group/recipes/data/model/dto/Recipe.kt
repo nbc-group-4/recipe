@@ -10,8 +10,8 @@ data class Recipe(
     @SerializedName("SUMRY") val summary: String,
     @SerializedName("NATION_CODE") val nationCode: String,
     @SerializedName("NATION_NM") val nationName: String,
-    @SerializedName("TY_CODE") val typeCode: String,
-    @SerializedName("TY_NM") val typeName: String,
+    @SerializedName("TY_CODE") val typeCode: String, // 사용 x
+    @SerializedName("TY_NM") val typeName: String,   // 사용 x
     @SerializedName("COOKING_TIME") val cookingTime: String,
     @SerializedName("CALORIE") val calorie: String,
     @SerializedName("QNT") val quantity: String,

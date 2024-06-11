@@ -16,6 +16,7 @@ import nbc.group.recipes.BuildConfig
 import nbc.group.recipes.databinding.FragmentRecipeBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.RecipeAdapter
+import nbc.group.recipes.viewmodel.MainViewModel
 import nbc.group.recipes.viewmodel.MapSharedViewModel
 import nbc.group.recipes.viewmodel.RecipeViewModel
 @AndroidEntryPoint
@@ -26,6 +27,7 @@ class RecipeFragment : Fragment() {
 
     private val viewModel by viewModels<RecipeViewModel>()
     private val mapSharedViewModel : MapSharedViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var recipeAdapter: RecipeAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +43,9 @@ class RecipeFragment : Fragment() {
         observeViewModel()
 //        fetchRecipes()
         observeSharedViewModel()
+        mainViewModel.resetMakeRecipeFlow()
+
+
     }
 
     private fun setupRecyclerView() {
