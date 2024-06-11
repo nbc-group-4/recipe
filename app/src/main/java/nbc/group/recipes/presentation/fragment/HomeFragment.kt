@@ -15,6 +15,7 @@ import nbc.group.recipes.dummyRecipe
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.HomeKindAdapter
 import nbc.group.recipes.presentation.adapter.HomeQuizAdapter
+import nbc.group.recipes.presentation.adapter.decoration.ListSpacingItemDecoration
 import nbc.group.recipes.specialtyKind
 import nbc.group.recipes.specialtyKindMore
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
@@ -50,6 +51,10 @@ class HomeFragment : Fragment() {
 
         setupRecyclerViewQuiz()
         setupRecyclerViewKind()
+
+        // 아이템 데코레이션
+        val itemDecoration = ListSpacingItemDecoration(resources.displayMetrics.density)
+        itemDecoration.setPaddingValues(endDp = 12)
 
         // 더보기 클릭
         binding.btnHomeKindMore.setOnClickListener {

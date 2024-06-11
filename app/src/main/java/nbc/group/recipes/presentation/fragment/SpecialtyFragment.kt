@@ -25,7 +25,6 @@ import nbc.group.recipes.specialties5
 import nbc.group.recipes.specialties6
 import nbc.group.recipes.specialties7
 import nbc.group.recipes.specialties8
-import nbc.group.recipes.viewmodel.MainViewModel
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
 
 @AndroidEntryPoint
@@ -36,7 +35,6 @@ class SpecialtyFragment : Fragment() {
         get() = _binding!!
     private var specialtyAdapter: SpecialtyAdapter? = null
     private val sharedViewModel: SpecialtyViewModel by activityViewModels()
-    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
