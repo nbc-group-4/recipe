@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import nbc.group.recipes.BuildConfig
-import nbc.group.recipes.data.model.dto.RecipeIngredient
-import nbc.group.recipes.data.model.dto.RecipeProcedure
 import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.databinding.FragmentRecipeDetailBinding
 import nbc.group.recipes.viewmodel.RecipeViewModel
@@ -21,6 +21,8 @@ class RecipeDetailFragment : Fragment() {
     private var _binding: FragmentRecipeDetailBinding? = null
     private val binding: FragmentRecipeDetailBinding
         get() = _binding!!
+
+    private val recipeDetail = arguments?.getParcelable<RecipeEntity>("recipeDetail")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -32,37 +34,64 @@ class RecipeDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentRecipeDetailBinding.inflate(inflater, container, false)
-        val recipeDetail = arguments?.getParcelable<RecipeEntity>("recipeDetail")
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // setStars() <- 난이도(LEVEL_NM) 값을 String 넘겨 줘야 함
+        recipeDetail?.let { recipe ->
+            recipeViewModel.getRecipeDetails(
+                startIndex = 1,
+                endIndex = 30,
+                recipeName = recipe.recipeName,
+                recipeId =  recipe.id,
+                clientId = BuildConfig.NAVER_CLIENT_ID,
+                clientSecret = BuildConfig.NAVER_CLIENT_SECRET,
+            )
+        }
 
-        recipeViewModel.getRecipeDetails(startIndex = 1, endIndex = 15, recipeName = "약식", recipeId = 5, clientId = BuildConfig.NAVER_CLIENT_ID, clientSecret = BuildConfig.NAVER_CLIENT_SECRET)
-//        recipeViewModel.recipeIngredients.observe(viewLifecycleOwner) { ingredients ->
-//            binding.tvDetailIngredients.text = ingredientsInfo()
-//        }
+        observeDifficulty()
+        recipeDetail?.let { bindRecipeDetail(it) }
+        setClickListeners()
+    }
 
-//        recipeViewModel.recipeProcedures.observe(viewLifecycleOwner) { procedures ->
-//            binding.tvDetailSteps.text = proceduresInfo(procedures)
-//        }
-
+    private fun setClickListeners() {
         binding.ibBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+
+        // 북마크 상태 검사에 따른 UI 업데이트
+        // val src = if (북마크 상태 true) R.drawable.ic_bookmark_fill else R.drawable.ic_bookmark_empty
+        binding.ivBookmark.setOnClickListener {
+            if (recipeDetail != null) {
+                recipeViewModel.putRecipeEntity(recipeDetail)
+            }
+            // setResource(src)
+        }
     }
 
-//    private fun ingredientsInfo(ingredients: List<RecipeIngredient>?): String {
-//        // 재료 정보 데이터 처리 및 반한
-//    }
+    private fun bindRecipeDetail(recipeDetail: RecipeEntity) {
+        Glide.with(requireContext())
+            .load(recipeDetail.recipeImg)
+            .into(binding.ivDetailImg)
 
-//    private fun proceduresInfo(procedures: List<RecipeProcedure>?): String {
-//        // 과정 정보 데이터 처리 및 반환
-//    }
+        binding.tvDetailTitle.text = recipeDetail.recipeName
+        binding.tvTime.text = recipeDetail.time
+        binding.tvDetailIngredients.text = recipeDetail.ingredient
+        binding.tvRecipeSteps.text = recipeDetail.step
+    }
+
+    private fun observeDifficulty() {
+        lifecycleScope.launchWhenStarted {
+            recipeViewModel.recipes.collect { recipes ->
+                recipes?.let {
+                    val difficulty = it.firstOrNull()?.difficulty
+                    difficulty?.let { setStars(it) }
+                }
+            }
+        }
+    }
 
     private fun setStars(difficulty: String) {
         when(difficulty) {
