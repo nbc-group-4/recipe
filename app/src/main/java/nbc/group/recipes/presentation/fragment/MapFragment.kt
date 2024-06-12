@@ -132,7 +132,6 @@ class MapFragment : Fragment() {
                         val latitude = label.position.latitude
                         val longitude = label.position.longitude
                         val regionName = AllgetRegionName(latitude, longitude)
-                        Log.d("regionNamessdsd___", regionName)
                         binding.searchEt.setText(regionName)
                         Snackbar.make(binding.searchEt, "해당지역은 특산물 데이터가 없습니다", Snackbar.LENGTH_SHORT).show()
                     }
@@ -179,10 +178,9 @@ class MapFragment : Fragment() {
     // 해당위치로 이동, 라벨 표시
     private fun setMapData(searchDocumentsResponse: SearchDocumentsResponse) {
         // 좌표값 포맷팅
-        // y=37.4560044656444, x=126.705258070068 -> 여기서 소숫점 6자리숫자까지만 표시!
         val latitude = searchDocumentsResponse.y
         val longitude = searchDocumentsResponse.x
-        val latitude_formatter = String.format("%.6f", latitude).toDouble()  // %.6f는 소수점 이하 6자리까지만 표시
+        val latitude_formatter = String.format("%.6f", latitude).toDouble()
         val longitude_formatter = String.format("%.6f", longitude).toDouble()
 
         // 이동할 위치(위도,경도) 설정
@@ -191,22 +189,22 @@ class MapFragment : Fragment() {
         kakaoMap?.moveCamera(camera, CameraAnimation.from(500,true,true))
         kakaoMap?.labelManager?.clearAll()
 
-        kakaoMap?.setOnCameraMoveEndListener(object : KakaoMap.OnCameraMoveEndListener{
-            override fun onCameraMoveEnd(kakaoMap: KakaoMap, cameraPosition: CameraPosition, gestureType: GestureType) {
+        kakaoMap?.setOnCameraMoveEndListener { kakaoMap, cameraPosition, gestureType ->
+            val styles = kakaoMap.labelManager?.addLabelStyles(
+                LabelStyles.from(LabelStyle.from(R.drawable.ic_map_red)
+                        .setIconTransition(LabelTransition.from(Transition.Scale, Transition.Scale))
+                )
+            )
 
-                val styles = kakaoMap.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.ic_map_red)
-                    .setIconTransition(LabelTransition.from(Transition.Scale,Transition.Scale))))
-
-                // styles가 null이 아닐때만, LabelOptions 생성하고 라벨추가
-                if(styles != null){
-                    val options = LabelOptions.from(LatLng.from(latitude_formatter, longitude_formatter)).setStyles(styles)
-                    val layer = kakaoMap.labelManager?.getLayer()
-                    layer?.addLabel(options)
-                }else{
-                    Log.e("kakaoMap", "LabelStyles null값 에러")
-                }
+            // styles가 null이 아닐때만, LabelOptions 생성하고 라벨추가
+            if (styles != null) {
+                val options = LabelOptions.from(LatLng.from(latitude_formatter, longitude_formatter)).setStyles(styles)
+                val layer = kakaoMap.labelManager?.getLayer()
+                layer?.addLabel(options)
+            } else {
+                Log.e("kakaoMap", "LabelStyles null값 에러")
             }
-        })
+        }
     }
 
 
@@ -340,7 +338,7 @@ class MapFragment : Fragment() {
         dialogBinding.dialogClose.setOnClickListener {
             dialog.dismiss()
         }
-        dialogBinding.dialogRegion.setText("$regions")
+        dialogBinding.dialogRegion.text = "$regions"
 
         dialog.show()
     }

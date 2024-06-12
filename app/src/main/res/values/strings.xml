@@ -63,4 +63,8 @@
     <string name="make_recipe_fragment_recipe_cooking_process_hint">조리방법을 입력해 주세요.</string>
     <string name="make_recipe_fragment_recipe_photo_indic">사진 등록</string>
 
+    <!--region_alram_dialog-->
+    <string name="region_dialog_title">특산물 데이터가 존재하는 지역</string>
+    <string name="region_dialog_content">해당하는 지역에만 특산물 데이터가 존재합니다</string>
+
 </resources>
