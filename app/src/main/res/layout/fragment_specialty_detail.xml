@@ -7,15 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".presentation.fragment.SpecialtyDetailFragment">
 
+    <ImageView
+        android:id="@+id/ivBackSpecialty"
+        android:layout_width="@dimen/small_button_size"
+        android:layout_height="@dimen/small_button_size"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back_android" />
+
     <TextView
         android:id="@+id/tvSpecialtyDetail"
         style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="150dp"
-        android:text="찾으신 특산품 리스트입니다!"
+        android:layout_marginEnd="200dp"
+        android:text="특산품 종류"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/recyclerContainer"
         app:layout_constraintEnd_toEndOf="parent"

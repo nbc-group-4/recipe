@@ -7,32 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".presentation.fragment.SpecialtyFragment">
 
+    <ImageView
+        android:id="@+id/ivBackHome"
+        android:layout_width="@dimen/small_button_size"
+        android:layout_height="@dimen/small_button_size"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back_android" />
+
     <EditText
         android:id="@+id/etSpecialtySearch"
         style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="아래 특산물을 참조하여 검색하세요"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:hint="아래 특산물 종류 중에서 검색해주세요"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/ivSearch"
-        android:layout_width="@dimen/small_button_size"
-        android:layout_height="@dimen/small_button_size"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/search" />
 
     <TextView
         android:id="@+id/tvSpecialtyKind"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:layout_marginEnd="300dp"
         android:text="과일"
         android:textAlignment="center"
         android:textSize="30sp"
@@ -41,15 +43,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSpecialtySearch" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginEnd="160dp"
-        android:background="#808080"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyKind" />
+    <!--    <View-->
+    <!--        android:layout_width="80dp"-->
+    <!--        android:layout_height="2dp"-->
+    <!--        android:layout_marginEnd="250dp"-->
+    <!--        android:background="#808080"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyKind" />-->
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/recyclerContainer"
@@ -64,8 +65,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:padding="@dimen/default_padding"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
             tools:listitem="@layout/item_specialty" />
 
     </androidx.core.widget.NestedScrollView>

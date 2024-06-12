@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -56,12 +58,17 @@ class SpecialtyFragment : Fragment() {
     private fun setRecyclerView() {
         binding.recyclerViewSpecialty.apply {
             adapter = specialtyAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = GridLayoutManager(requireContext(), 3)
         }
     }
 
     private fun setUpListener() {
-        binding.ivSearch.setOnClickListener {
+        binding.ivBackHome.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+
+        // 검색창 새로 구현
+        binding.etSpecialtySearch.setOnClickListener {
             performSearch()
             hideKeyboard()
             (activity as MainActivity).moveToSpecialtyDetailFragment()
@@ -85,6 +92,7 @@ class SpecialtyFragment : Fragment() {
             sharedViewModel.selectedKindItem.collect { item ->
                 item?.let {
                     binding.tvSpecialtyKind.text = item.item
+
                     val specialtyItems = displaySpecialtyItems(it.item)
                     val kindItemList = specialtyItems.map { specialty ->
                         KindItem(specialty, getImageResourceId(specialty))

@@ -41,7 +41,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeQuizAdapter = HomeQuizAdapter()
+        homeQuizAdapter = HomeQuizAdapter() // 네이버 api 사용 예정
+
         homeKindAdapter = HomeKindAdapter(object : HomeKindAdapter.OnItemClickListener {
             override fun onClick(data: KindItem) {
                 navigateToSpecialty(data)
@@ -51,10 +52,6 @@ class HomeFragment : Fragment() {
 
         setupRecyclerViewQuiz()
         setupRecyclerViewKind()
-
-        // 아이템 데코레이션
-        val itemDecoration = ListSpacingItemDecoration(resources.displayMetrics.density)
-        itemDecoration.setPaddingValues(endDp = 12)
 
         // 더보기 클릭
         binding.btnHomeKindMore.setOnClickListener {

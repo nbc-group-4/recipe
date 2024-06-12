@@ -38,23 +38,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="150dp"
-                android:text="앱 이름"
+                android:text="맛고"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-<!--            <ImageView-->
-<!--                android:id="@+id/ivSearch"-->
-<!--                android:layout_width="@dimen/small_button_size"-->
-<!--                android:layout_height="@dimen/small_button_size"-->
-<!--                android:layout_marginTop="24dp"-->
-<!--                android:layout_marginEnd="32dp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:srcCompat="@drawable/search" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -86,6 +76,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!--네이버 api 제철 특산물 요리-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewHomeQuiz"
                 android:layout_width="match_parent"

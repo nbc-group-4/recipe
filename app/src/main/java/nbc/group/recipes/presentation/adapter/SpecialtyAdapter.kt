@@ -24,6 +24,7 @@ class SpecialtyAdapter :
     class ItemViewHolder(
         private val binding: ItemSpecialtyBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(items: KindItem) {
             binding.apply {
                 tvSpecialty.text = items.item

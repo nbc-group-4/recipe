@@ -42,6 +42,7 @@ class SpecialtyDetailFragment : Fragment() {
         binding.tvSpecialtyDetail.startAnimation(animation)
 
         setRecyclerView()
+        setUpListener()
         observeSearchResult()
     }
 
@@ -57,6 +58,12 @@ class SpecialtyDetailFragment : Fragment() {
                     false
                 )
             )
+        }
+    }
+
+    private fun setUpListener() {
+        binding.ivBackSpecialty.setOnClickListener {
+            parentFragmentManager.popBackStack()
         }
     }
 
