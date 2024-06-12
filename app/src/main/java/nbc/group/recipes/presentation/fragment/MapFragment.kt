@@ -1,6 +1,9 @@
 package nbc.group.recipes.presentation.fragment
 
+import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +19,7 @@ import androidx.lifecycle.Lifecycle.State.*
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
+import com.kakao.vectormap.GestureType
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.KakaoMapSdk
@@ -23,6 +27,7 @@ import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
 import com.kakao.vectormap.camera.CameraAnimation
+import com.kakao.vectormap.camera.CameraPosition
 import com.kakao.vectormap.camera.CameraUpdateFactory
 import com.kakao.vectormap.label.LabelLayerOptions
 import com.kakao.vectormap.label.LabelOptions
@@ -39,6 +44,7 @@ import nbc.group.recipes.R
 import nbc.group.recipes.data.model.dto.SearchDocumentsResponse
 import nbc.group.recipes.data.network.KAKAO_MAP_KEY
 import nbc.group.recipes.databinding.FragmentMapBinding
+import nbc.group.recipes.databinding.RegionAlramDialogBinding
 import nbc.group.recipes.viewmodel.MapSharedViewModel
 import nbc.group.recipes.viewmodel.MapViewModel
 import java.lang.Exception
@@ -51,15 +57,16 @@ class MapFragment : Fragment() {
     private var _binding: FragmentMapBinding? = null
 
     private lateinit var mapView: MapView
-
     private var kakaoMap : KakaoMap? = null
 
     private val mapViewModel: MapViewModel by viewModels()
     private val mapSharedViewModel : MapSharedViewModel by activityViewModels()
 
+    private var searchDocumentsResponse: SearchDocumentsResponse? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
         return binding.root
@@ -83,24 +90,21 @@ class MapFragment : Fragment() {
 
         // KakaoMapSDK 초기화!!
         KakaoMapSdk.init(requireContext(), KAKAO_MAP_KEY)
+
         mapView.start(object : MapLifeCycleCallback() {
 
             override fun onMapDestroy() {
-                // 지도 API가 정상적으로 종료될 때 호출
                 Log.d("KakaoMap", "onMapDestroy")
             }
 
             override fun onMapError(p0: Exception?) {
-                // 인증 실패 및 지도 사용 중 에러가 발생할 때 호출
                 Log.e("KakaoMap", "onMapError")
             }
         }, object : KakaoMapReadyCallback() {
             override fun onMapReady(kakaomap: KakaoMap) {
-                // 정상적으로 인증이 완료되었을 때 호출
-                kakaoMap = kakaomap
-                baseSettingMap()
 
-                // Label 클릭리스너 (검색시)
+                kakaoMap = kakaomap
+
                 kakaomap.setOnLabelClickListener { kakaoMap, labelLayer, label ->
 
                     val searchText = binding.searchEt.text.toString()
@@ -111,8 +115,6 @@ class MapFragment : Fragment() {
                         val longitude = label.position.longitude
 
                         val regionName = getRegionName(latitude, longitude)
-                        Log.d("regionName___", regionName)  // 통영
-
                         binding.searchEt.setText(regionName)
 
                         if (regionName.isNotEmpty()){
@@ -125,44 +127,17 @@ class MapFragment : Fragment() {
                             Snackbar.make(binding.searchEt, "지역명을 입력해주세요", Snackbar.LENGTH_SHORT).show()
                         }
 
-
                     }else{
                         // 특산품 데이터가 없는 지역일경우
                         val latitude = label.position.latitude
                         val longitude = label.position.longitude
                         val regionName = AllgetRegionName(latitude, longitude)
-                        Log.d("regionNamessdsd___", regionName)
                         binding.searchEt.setText(regionName)
-
                         Snackbar.make(binding.searchEt, "해당지역은 특산물 데이터가 없습니다", Snackbar.LENGTH_SHORT).show()
                     }
                 }
-
-                // LodLabel 클릭리스너 (기본세팅)
-                kakaoMap?.setOnLodLabelClickListener{ kakaoMap, labelLayer, label ->
-
-                    // 마커 클릭시, 클릭한 지역의 위도,경도 받아오기
-                    // 그 위도,경도에 맞는 지역이름을 가져옴
-                    // 그 지역이름을 search EditText에 표시
-
-                    val latitude = label.position.latitude
-                    val longitude = label.position.longitude
-
-                    val regionName = getRegionName(latitude, longitude)
-                    Log.d("regionName_si__", regionName)  // 통영
-
-                    binding.searchEt.setText(regionName)
-
-                    // 라벨이 클릭될때, 지역명을 관찰
-                    mapSharedViewModel.getSpecialtie(regionName)
-
-                    val bottomSheetFragment = BottomSheetFragment()
-                    bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
-                }
             }
-
             override fun getZoomLevel(): Int {
-                // 지도 시작 시 확대/축소 줌 레벨 설정 (8~10사이가 적당)
                 return 8
             }
         })
@@ -176,7 +151,6 @@ class MapFragment : Fragment() {
 
                 val searchText = searchEt.text.toString()
 
-                // 뷰모델에 내가 입력한 텍스트값 전달
                 if (searchText.isNotEmpty()) {
                     mapViewModel.getRegionSearch(searchText)
                 } else {
@@ -191,7 +165,6 @@ class MapFragment : Fragment() {
                     Snackbar.make(searchEt, "검색할수없는 지역입니다", Snackbar.LENGTH_SHORT).show()
                 }
 
-                // 키보드 내리기
                 val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(requireActivity().window.decorView.applicationWindowToken, 0)
 
@@ -204,41 +177,34 @@ class MapFragment : Fragment() {
 
     // 해당위치로 이동, 라벨 표시
     private fun setMapData(searchDocumentsResponse: SearchDocumentsResponse) {
-
         // 좌표값 포맷팅
-        // y=37.4560044656444, x=126.705258070068 -> 여기서 소숫점 6자리숫자까지만 표시!
         val latitude = searchDocumentsResponse.y
         val longitude = searchDocumentsResponse.x
-        val latitude_formatter = String.format("%.6f", latitude).toDouble()  // %.6f는 소수점 이하 6자리까지만 표시
+        val latitude_formatter = String.format("%.6f", latitude).toDouble()
         val longitude_formatter = String.format("%.6f", longitude).toDouble()
 
         // 이동할 위치(위도,경도) 설정
         val camera = CameraUpdateFactory.newCenterPosition(LatLng.from(latitude_formatter, longitude_formatter))
         // 해당위치로 지도 이동
-//        kakaoMap?.moveCamera(camera)
-        kakaoMap?.moveCamera(camera, CameraAnimation.from(500,true,true))     // 애니메이션 적용해서 이동
+        kakaoMap?.moveCamera(camera, CameraAnimation.from(500,true,true))
+        kakaoMap?.labelManager?.clearAll()
 
+        kakaoMap?.setOnCameraMoveEndListener { kakaoMap, cameraPosition, gestureType ->
+            val styles = kakaoMap.labelManager?.addLabelStyles(
+                LabelStyles.from(LabelStyle.from(R.drawable.ic_map_red)
+                        .setIconTransition(LabelTransition.from(Transition.Scale, Transition.Scale))
+                )
+            )
 
-        // 커스텀으로 라벨 생성 및 가져옴
-        // 1. LabelStyles 생성 - Icon 이미지 하나만 있는 스타일
-        val styles = kakaoMap?.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.ic_map_red)
-            .setIconTransition(LabelTransition.from(Transition.Scale,Transition.Scale))))
-
-        // styles가 null이 아닐때만, LabelOptions 생성하고 라벨추가
-        if(styles != null){
-            // LabelOptions 생성
-            val options = LabelOptions.from(LatLng.from(latitude_formatter, longitude_formatter)).setStyles(styles)
-            // LabelLayer 가져옴
-            val layerOptions = LabelLayerOptions.from().setZOrder(2)     // setZOrder -> 우선순위 지정
-            val layer = kakaoMap?.labelManager?.addLayer(layerOptions)  //  val layer = kakaoMap?.labelManager?.getLayer()
-            // Label 생성
-            layer?.addLabel(options)
-
-
-        }else{
-            Log.e("kakaoMap", "LabelStyles null값 에러")
+            // styles가 null이 아닐때만, LabelOptions 생성하고 라벨추가
+            if (styles != null) {
+                val options = LabelOptions.from(LatLng.from(latitude_formatter, longitude_formatter)).setStyles(styles)
+                val layer = kakaoMap.labelManager?.getLayer()
+                layer?.addLabel(options)
+            } else {
+                Log.e("kakaoMap", "LabelStyles null값 에러")
+            }
         }
-
     }
 
 
@@ -246,47 +212,18 @@ class MapFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch{
 
             mapViewModel.regionSearch.flowWithLifecycle(viewLifecycleOwner.lifecycle, STARTED).collectLatest{
-                Log.d("it_data", it.toString()) // SearchResponse 전체가져옴
 
-                // 검색결과에 documents가 포함되어있으면(무조건 포함함), 그 documents값중 첫번째값을 가져옴
+                // 검색결과에 documents가 포함되어있으면, 그 documents값중 첫번째값을 가져옴
                 it?.documents?.firstOrNull()?.let { document ->
-                    Log.d("documents__",document.toString()) // SearchDocumentsResponse의 첫번째값 가져옴
+                    searchDocumentsResponse = document
                     setMapData(document)
                 }
             }
         }
     }
 
-
-    // 시작하자마자 기본으로 보여지는 라벨(라벨 여러개 표시)
-    private fun baseSettingMap(){
-
-        val baseMapResponseLists = listOf(
-            BaseMapResponse(id = 1, regionName = "군산", x_longitude = 126.736840, y_latitude = 35.967466),
-            BaseMapResponse(id = 2, regionName = "김포", x_longitude = 126.715657, y_latitude = 37.615268),
-            BaseMapResponse(id = 3, regionName = "양주", x_longitude = 127.045786, y_latitude = 37.785313),
-            BaseMapResponse(id = 4, regionName = "논산", x_longitude = 127.098734, y_latitude = 36.187183),
-        )
-
-        val styles = kakaoMap?.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.ic_map_blue)))
-
-        if(styles != null){
-            baseMapResponseLists.forEach{
-                val options = LabelOptions.from(LatLng.from(it.y_latitude, it.x_longitude)).setStyles(styles)
-                val layerOptions = LabelLayerOptions.from().setZOrder(1)
-                val layer = kakaoMap?.labelManager?.addLodLayer(layerOptions)   // val layer = kakaoMap?.labelManager?.getLodLayer()
-                layer?.addLodLabel(options)
-            }
-        }else{
-            Log.e("kakaoMap", "LabelStyles null값 에러")
-        }
-    }
-
-
     private fun chipGroup(){
         binding.chipGroup.setOnCheckedStateChangeListener { chipGroup, checkedId ->
-
-            Log.d("Chip",checkedId.toString())
             val selectChip = chipGroup.checkedChipId
 
             when(selectChip){
@@ -332,31 +269,28 @@ class MapFragment : Fragment() {
 
 
     // 특산품에 대한 데이터가 있는 지역리스트
-    private val regions = listOf("통영","대전","군산","김포","양주","논산","통영","안성","파주","세종","인천",
-        "원주","서산","함양","성주","영암","부산","봉화","정읍","횡성","삼척","평택","창녕"
-        ,"거제","진주","울릉","포항","영암","옹진","충주","상주","김천","대구","영천","경주",
-        "울산","김해","통영","여수","나주","전주","보령","제천","영주","완도")
+    private val regions = listOf("통영","대전","군산","김포","양주","논산","안성","파주","세종","인천","원주",
+        "서산","함양","성주","영암","부산","봉화","정읍","횡성","삼척","평택","창녕","거제","진주","울릉","포항",
+        "충주","상주","김천","대구","경주","울산","김해","여수","나주","전주","보령","제천","영주","완도","남해",
+        "계룡","연천","합천","산청","함안")
 
 
-    // 모든 지역리스트 (추후에 더 추가예정..)
-    private val Allregions = listOf("통영","대전","군산","김포","양주","논산","통영","대전","안성","파주","세종","인천",
-        "원주","서산","함양","성주","영암","부산","봉화","정읍","횡성","삼척","평택","창녕"
-        ,"거제","진주","울릉","포항","영암","옹진","충주","상주","김천","대구","영천","경주",
-        "울산","김해","통영","여수","나주","전주","보령","제천","영주","완도","영종도","포천","수원","서울","과천"
-        ,"광주","포천","화성","오산","이천","춘천","속초","강릉","당진")
+    // 모든 지역리스트
+    private val Allregions = listOf("통영","대전","군산","김포","양주","논산","대전","안성","파주","세종","인천",
+        "원주","서산","함양","성주","영암","부산","봉화","정읍","횡성","삼척","평택","창녕","거제","진주","울릉","포항",
+        "충주","상주","김천","대구","영천","경주","울산","김해","여수","나주","전주","보령","제천","영주","완도","포천",
+        "수원","서울","과천","광주","포천","화성","오산","이천","춘천","속초","강릉","동해","당진","천안","태백","문경",
+        "안동","구미","밀양","양산","창원","광양","목포","남원","김제","익산","청주","진도","남해","계룡","연천","합천"
+        ,"산청","함안")
 
 
 
     // 위도,경도를 통해 지역명 가져오는 함수
     private fun getRegionName(latitude: Double, longitude: Double) : String {
-        // Geocoder는 위,경도 좌표 이용해서 해당위치의 주소정보 가져올수있는 클래스
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
-        // 위도, 경도 정보로부터 주소정보 가져오기
         val addresses = geocoder.getFromLocation(latitude, longitude, 1)
         // 주소 정보에서 "시" 단위 지역명 추출
         val locality = addresses?.firstOrNull()?.locality ?: "${addresses}"
-        Log.d("asda", locality)
-
         // 지역명이 regions 리스트에 포함되어 있는지 확인하고 반환
         return regions.firstOrNull { locality.contains(it) } ?: ""
     }
@@ -364,11 +298,8 @@ class MapFragment : Fragment() {
 
     // 위도,경도를 통해 지역명 가져오는 함수(전체)
     private fun AllgetRegionName(latitude: Double, longitude: Double) : String {
-        // Geocoder는 위,경도 좌표 이용해서 해당위치의 주소정보 가져올수있는 클래스
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
-        // 위도, 경도 정보로부터 주소정보 가져오기
         val addresses = geocoder.getFromLocation(latitude, longitude, 1)
-        // 주소 정보에서 "시" 단위 지역명 추출
         val locality = addresses?.firstOrNull()?.locality ?: "${addresses}"
         // 지역명이 Allregions 리스트에 포함되어 있는지 확인하고 반환
         return Allregions.firstOrNull { locality.contains(it) } ?: ""
@@ -376,9 +307,12 @@ class MapFragment : Fragment() {
 
     private fun deleteText() = with(binding){
         deleteIv.setOnClickListener {
-            // 텍스트값 제거
             searchEt.setText("")
             Snackbar.make(mapView, "검색어가 삭제되었습니다", Snackbar.LENGTH_SHORT).show()
+        }
+
+        alertIv.setOnClickListener {
+            alertDialog()
         }
     }
 
@@ -394,13 +328,24 @@ class MapFragment : Fragment() {
         return Allregions.any { searchText.contains(it) }
     }
 
+
+    fun alertDialog(){
+        val dialog = Dialog(requireContext())
+        val dialogBinding = RegionAlramDialogBinding.inflate(layoutInflater)
+        dialog.setContentView(dialogBinding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialogBinding.dialogClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialogBinding.dialogRegion.text = "$regions"
+
+        dialog.show()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        kakaoMap?.labelManager?.clearAll()
-        kakaoMap?.labelManager?.removeAllLabelLayer()
-        kakaoMap?.labelManager?.removeAllAnimator()
-        kakaoMap?.labelManager?.removeAllLodLabelLayer()
         kakaoMap = null
         mapView.finish()
     }
