@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
@@ -68,10 +69,14 @@ class SpecialtyFragment : Fragment() {
         }
 
         // 검색창 새로 구현
-        binding.etSpecialtySearch.setOnClickListener {
-            performSearch()
-            hideKeyboard()
-            (activity as MainActivity).moveToSpecialtyDetailFragment()
+        binding.etSpecialtySearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                performSearch()
+                hideKeyboard()
+                (activity as MainActivity).moveToSpecialtyDetailFragment()
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
         }
     }
 
