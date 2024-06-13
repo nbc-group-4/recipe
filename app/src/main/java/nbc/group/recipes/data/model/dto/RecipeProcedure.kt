@@ -8,5 +8,4 @@ data class RecipeProcedure(
     @SerializedName("COOKING_NO") val cookingNumber: Int,
     @SerializedName("COOKING_DC") val cookingDescription: String,
     @SerializedName("STEP_TIP") val tip: String,
-
 )

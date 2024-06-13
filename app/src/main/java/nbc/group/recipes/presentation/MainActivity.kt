@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     fun moveToRecipeFragment() = navController
         .navigate(R.id.action_mainFragment_to_recipeFragment)
     fun moveToRecipeDetailFragment(bundle: Bundle) = navController
-        .navigate(R.id.action_mainFragment_to_recipeFragment, bundle)
+        .navigate(R.id.action_recipeFragment_to_recipeDetailFragment, bundle)
     fun moveToSpecialtyFragment() = navController
         .navigate(R.id.action_mainFragment_to_specialtyFragment)
     fun moveToSpecialtyDetailFragment() = navController

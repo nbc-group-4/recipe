@@ -14,6 +14,8 @@ import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.databinding.FragmentRecipeDetailBinding
 import nbc.group.recipes.viewmodel.RecipeViewModel
 
+
+private const val ARG_PARAM1 = "param1"
 @AndroidEntryPoint
 class RecipeDetailFragment : Fragment() {
 
@@ -22,18 +24,20 @@ class RecipeDetailFragment : Fragment() {
     private val binding: FragmentRecipeDetailBinding
         get() = _binding!!
 
-    private val recipeDetail = arguments?.getParcelable<RecipeEntity>("recipeDetail")
+    private var recipeDetail: RecipeEntity? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            recipeDetail = it.getParcelable("recipeDetail")
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val binding = FragmentRecipeDetailBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentRecipeDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -65,7 +69,7 @@ class RecipeDetailFragment : Fragment() {
         // val src = if (북마크 상태 true) R.drawable.ic_bookmark_fill else R.drawable.ic_bookmark_empty
         binding.ivBookmark.setOnClickListener {
             if (recipeDetail != null) {
-                recipeViewModel.putRecipeEntity(recipeDetail)
+                recipeViewModel.putRecipeEntity(recipeDetail!!)
             }
             // setResource(src)
         }
@@ -117,9 +121,10 @@ class RecipeDetailFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() =
+        fun newInstance(param1: RecipeEntity) =
             RecipeDetailFragment().apply {
                 arguments = Bundle().apply {
+                    putParcelable(ARG_PARAM1, param1)
                 }
             }
     }
