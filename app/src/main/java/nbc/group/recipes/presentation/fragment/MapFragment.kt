@@ -349,7 +349,6 @@ class MapFragment : Fragment() {
         kakaoMap = null
         mapView.finish()
     }
-
 }
 
 

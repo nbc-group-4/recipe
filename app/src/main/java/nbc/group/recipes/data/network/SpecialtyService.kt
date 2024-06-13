@@ -10,6 +10,6 @@ interface SpecialtyService {
         @Query("apiKey") apiKey: String = SPECIALTY_API_KEY, // API 인증키
         @Query("sAreaNm") sAreaNm: String?, // 시도 선택값
         @Query("numOfRows") numOfRows: Int = 200, // 한 페이지 당 제공 건수
-        @Query("cntntsSj") cntntsSj: String? // 특산물 명
+        @Query("sText") cntntsSj: String? // 특산물 명
     ): SpecialtyResponse
 }

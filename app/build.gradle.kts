@@ -63,6 +63,8 @@ android {
 
 dependencies {
 
+    implementation("org.jsoup:jsoup:1.17.1")
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("com.airbnb.android:lottie:5.2.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")

@@ -45,7 +45,7 @@ object RetrofitModule {
                     .create(TikXml.Builder().exceptionOnUnreadXml(false).build())
             )
             .client(okHttpClient)
-            .baseUrl(SPECIALTY_API_BASE.toString())
+            .baseUrl(SPECIALTY_API_BASE)
             .build()
     }
 
@@ -56,7 +56,7 @@ object RetrofitModule {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
-            .baseUrl(RECIPE_API_BASE.toString())
+            .baseUrl(RECIPE_API_BASE)
             .build()
     }
 

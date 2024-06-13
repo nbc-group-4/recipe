@@ -10,9 +10,9 @@ import nbc.group.recipes.R
 import nbc.group.recipes.data.model.dto.Item
 import nbc.group.recipes.databinding.BottomsheetItemBinding
 
-class BottomSheetAdapter(private val onClick : (Item, Int) -> Unit) : ListAdapter<Item, BottomSheetAdapter.BottomSheetViewHolder>(
-    BottomSheetDiffUtil
-){
+class BottomSheetAdapter(
+    private val onClick : (Item, Int) -> Unit
+) : ListAdapter<Item, BottomSheetAdapter.BottomSheetViewHolder>(BottomSheetDiffUtil){
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
