@@ -65,7 +65,7 @@ class SpecialtyFragment : Fragment() {
 
     private fun setUpListener() {
         binding.ivBackHome.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            (activity as MainActivity).moveToBack()
         }
 
         // 검색창 새로 구현

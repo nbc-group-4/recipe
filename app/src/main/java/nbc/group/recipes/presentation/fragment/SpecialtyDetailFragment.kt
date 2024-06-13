@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentSpecialtyDetailBinding
+import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.SpecialtyDetailAdapter
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
 
@@ -64,14 +65,14 @@ class SpecialtyDetailFragment : Fragment() {
 
     private fun setUpListener() {
         binding.ivBackSpecialty.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            (activity as MainActivity).moveToBack()
         }
     }
 
     private fun observeSearchResult() {
         viewLifecycleOwner.lifecycleScope.launch {
             sharedViewModel.searchResult.collect { searchResult ->
-                Log.e("URGENT_TAG", "observeSearchResult: $searchResult", )
+                Log.e("URGENT_TAG", "observeSearchResult: $searchResult")
                 specialtyDetailAdapter?.submitList(searchResult)
             }
         }
