@@ -11,10 +11,11 @@ import nbc.group.recipes.GlideApp
 import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.databinding.ItemMypageRecipeBinding
 import nbc.group.recipes.presentation.adapter.diff_util.RecipeDiffUtil
+import nbc.group.recipes.presentation.fragment.MypageFragment
 
 class MyPageRecipeAdapter(
     private val fragment: Fragment
-): ListAdapter<Recipe, MyPageRecipeAdapter.MyRecipeViewHolder>(RecipeDiffUtil()) {
+): ListAdapter<String, MyPageRecipeAdapter.MyRecipeViewHolder>(RecipeDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyRecipeViewHolder {
         val binding = ItemMypageRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,14 +24,9 @@ class MyPageRecipeAdapter(
 
     override fun onBindViewHolder(holder: MyRecipeViewHolder, position: Int) {
         val current = getItem(position)
-        with(holder.binding) {
-            tvRecipe.text = current.recipeName
-
-            // todo: Recipe Wrapper를 이용하여 Recipe 이미지 경로 가져오기
-            GlideApp.with(fragment)
-                .load(Firebase.storage.reference.child("userProfile/jun/profile.jpg"))
-                .into(ivRecipe)
-        }
+        GlideApp.with(fragment)
+            .load(Firebase.storage.reference.child("recipeImage/$current/0.jpg"))
+            .into(holder.binding.ivRecipe)
     }
 
     inner class MyRecipeViewHolder(

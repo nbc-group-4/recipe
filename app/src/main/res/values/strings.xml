@@ -42,6 +42,7 @@
 
     <!-- MypageFragment -->
     <string name="mypage_fragment_top_banner_text">마이페이지</string>
+    <string name="mypage_fragment_top_banner_button">회원탈퇴</string>
     <string name="mypage_fragment_sign_in_button_text">로그인</string>
     <string name="mypage_fragment_sign_out_text">로그아웃</string>
     <string name="mypage_fragment_sign_in_indic_text">로그인이 필요한 서비스입니다.</string>

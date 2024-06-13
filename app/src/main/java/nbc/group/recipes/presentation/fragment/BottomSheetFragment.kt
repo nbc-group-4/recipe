@@ -74,6 +74,10 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                 // 어뎁터 업데이트
                 bottomSheetAdapter.submitList(it)
             }
+
+            mapSharedViewModel.specialtie.collect {
+
+            }
         }
     }
 

@@ -73,6 +73,7 @@ class MypageFragment : Fragment() {
 
         with(binding) {
             btSignIn.setOnClickListener(signInButtonClickListener)
+            tvResignButton.setOnClickListener(resignButtonClickListener)
             tvLogOutButton.setOnClickListener(logOutButtonClickListener)
             ivUserProfile.setOnClickListener(userProfileImageClickListener)
             rvUserRecipe.layoutManager = GridLayoutManager(activity, 2)
@@ -84,10 +85,6 @@ class MypageFragment : Fragment() {
                     false
                 )
             )
-        }
-
-        binding.testButton.setOnClickListener {
-            (activity as MainActivity).moveToMakeRecipeFragment()
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -114,6 +111,25 @@ class MypageFragment : Fragment() {
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.userMetaData.collect { nullable ->
+                nullable?.let { nonNull ->
+                    when(nonNull) {
+                        is FirebaseResult.Success -> {
+                            Log.e(TAG, "onViewCreated: get recipeIds: Success", )
+                            adapter.submitList(nonNull.result.recipeIds)
+                        }
+                        is FirebaseResult.Failure -> {
+                            Log.e(TAG, "onViewCreated: get recipeIds: Failure: ${nonNull.exception}", )
+                        }
+                        is FirebaseResult.Loading -> {
+                            Log.e(TAG, "onViewCreated: get recipeIds: Loading", )
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun initUser() {
@@ -125,6 +141,7 @@ class MypageFragment : Fragment() {
                         .child("userProfile/${currentUser.uid}/profile.jpg"))
                     .error(R.drawable.img_app_name)
                     .into(binding.ivUserProfile)
+                viewModel.getUserMeta(currentUser.uid)
             }
         }
     }
@@ -137,6 +154,11 @@ class MypageFragment : Fragment() {
 
     private val signInButtonClickListener: (View) -> Unit = {
         (activity as MainActivity).moveToSignInFragment()
+    }
+
+    private val resignButtonClickListener: (View) -> Unit = {
+        viewModel.resign()
+        viewModel.logout()
     }
 
     private val logOutButtonClickListener: (View) -> Unit = {

@@ -7,6 +7,8 @@ import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
 import com.firebase.ui.storage.images.FirebaseImageLoader
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.launch
+import org.jsoup.Jsoup
 import java.io.InputStream
 
 val specialties = listOf(
@@ -53,4 +55,10 @@ class StorageGlideModule : AppGlideModule() {
             FirebaseImageLoader.Factory()
         )
     }
+}
+
+fun getRecipeImageUrl(query: String): String? {
+    val doc = Jsoup.connect("https://www.10000recipe.com/recipe/list.html?q=${query}").get()
+    val tags = doc.select(".common_sp_thumb img").last()?.attr("src")
+    return tags
 }

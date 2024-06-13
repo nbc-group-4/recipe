@@ -41,6 +41,9 @@ class MainViewModel @Inject constructor(
     private val _signUpFlow = MutableStateFlow<FirebaseResult<FirebaseUser>?>(null)
     val signUpFlow = _signUpFlow.asStateFlow()
 
+    private val _makeRecipeFlow = MutableStateFlow<FirebaseResult<Boolean>?>(null)
+    val makeRecipeFlow = _makeRecipeFlow.asStateFlow()
+
     private val _user = MutableStateFlow<FirebaseUser?>(null)
     val user = _user.asStateFlow()
     val currentUser: FirebaseUser?
@@ -75,6 +78,10 @@ class MainViewModel @Inject constructor(
         _user.emit(authRepository.currentUser)
     }
 
+    fun resign() = viewModelScope.launch {
+        authRepository.resign()
+    }
+
     fun logout() = viewModelScope.launch {
         authRepository.logout()
         _signInFlow.emit(null)
@@ -97,8 +104,13 @@ class MainViewModel @Inject constructor(
         imageStreamList: List<InputStream>
     ) = viewModelScope.launch {
         currentUser?.let {
-            firebaseRepository.putRecipeTransaction(it.uid, recipe, imageStreamList)
+            _makeRecipeFlow
+                .emit(firebaseRepository.putRecipeTransaction(it.uid, recipe, imageStreamList))
         }
+    }
+
+    fun resetMakeRecipeFlow() {
+        _makeRecipeFlow.value = null
     }
 
     fun putUserMeta(

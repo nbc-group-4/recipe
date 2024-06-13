@@ -1,7 +1,6 @@
 package nbc.group.recipes.presentation.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import nbc.group.recipes.R
 import nbc.group.recipes.data.network.FirebaseResult
 import nbc.group.recipes.databinding.FragmentSignUpBinding
 import nbc.group.recipes.presentation.MainActivity
@@ -38,6 +36,7 @@ class SignUpFragment : Fragment() {
         with(binding) {
             btSignUp.setOnClickListener(signUpButtonClickListener)
             ivBackButton.setOnClickListener(backButtonClickListener)
+            etPwCheck.setOnFocusChangeListener(pwCheckFocusChangeListener)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -81,4 +80,17 @@ class SignUpFragment : Fragment() {
     private val backButtonClickListener: (View) -> Unit = {
         (activity as MainActivity).moveToBack()
     }
+
+    private val pwCheckFocusChangeListener: (View, Boolean) -> Unit = { view, hasFocus ->
+        if(!hasFocus) {
+            with(binding) {
+                if(etPw.text.toString() != etPwCheck.text.toString()) {
+                    etPwCheckLayout.error = "비밀번호를 정확하게 입력하세요."
+                } else {
+                    etPwCheckLayout.error = null
+                }
+            }
+        }
+    }
+
 }

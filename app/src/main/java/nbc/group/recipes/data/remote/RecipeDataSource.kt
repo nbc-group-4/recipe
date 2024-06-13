@@ -60,6 +60,18 @@ class RecipeDataSource @Inject constructor(
         recipeId = recipeId,
     )
 
+    suspend fun getRecipeV2(
+        recipeId: Int
+    ) = service.getRecipeV2(recipeId)
+
+    suspend fun getRecipeIngredientV2(
+        ingredientName: String
+    ) = service.getRecipeIngredientV2(ingredientName)
+
+    suspend fun getRecipeProcedureV2(
+        recipeId: Int
+    ) = service.getRecipeProcedureV2(recipeId)
+
     suspend fun getRecipeProcedure(
         startIndex: Int = 1,
         endIndex: Int = 20,

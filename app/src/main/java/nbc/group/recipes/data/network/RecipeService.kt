@@ -2,8 +2,11 @@ package nbc.group.recipes.data.network
 
 import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.model.dto.RecipeIngredient
+import nbc.group.recipes.data.model.dto.RecipeIngredientWrapper
 import nbc.group.recipes.data.model.dto.RecipeProcedure
+import nbc.group.recipes.data.model.dto.RecipeProcedureWrapper
 import nbc.group.recipes.data.model.dto.RecipeResponse
+import nbc.group.recipes.data.model.dto.RecipeWrapper
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -30,6 +33,23 @@ interface RecipeService {
         @Query("IRDNT_NM") ingredientName: String,
         @Query("RECIPE_ID") recipeId: Int,
     ): RecipeResponse<RecipeIngredient>
+
+
+    @GET(RECIPE_API)
+    suspend fun getRecipeV2(
+        @Query("RECIPE_ID") recipeId: Int,
+    ): RecipeWrapper
+
+    @GET(RECIPE_INGREDIENT_API)
+    suspend fun getRecipeIngredientV2(
+        @Query("IRDNT_NM") ingredientName: String,
+    ): RecipeIngredientWrapper
+
+    @GET(RECIPE_PROCEDURE_API)
+    suspend fun getRecipeProcedureV2(
+        @Query("RECIPE_ID") recipeId: Int,
+    ): RecipeProcedureWrapper
+
 
     @GET(RECIPE_INGREDIENT_API)
     suspend fun getRecipeIngredients(

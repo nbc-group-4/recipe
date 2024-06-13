@@ -2,6 +2,7 @@ package nbc.group.recipes.presentation.fragment
 
 import  nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -63,6 +64,7 @@ class SpecialtyDetailFragment : Fragment() {
     private fun observeSearchResult() {
         viewLifecycleOwner.lifecycleScope.launch {
             sharedViewModel.searchResult.collect { searchResult ->
+                Log.e("URGENT_TAG", "observeSearchResult: $searchResult", )
                 specialtyDetailAdapter?.submitList(searchResult)
             }
         }
