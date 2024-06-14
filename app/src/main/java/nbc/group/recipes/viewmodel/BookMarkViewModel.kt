@@ -3,6 +3,7 @@ package nbc.group.recipes.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,7 +46,7 @@ class BookMarkViewModel @Inject constructor(
 
 
     // 데이터삭제
-    fun deleteData(recipeEntity: RecipeEntity) = viewModelScope.launch {
+    fun deleteData(recipeEntity: RecipeEntity) = viewModelScope.launch(Dispatchers.IO) {
         recipeDao.deleteData(recipeEntity)
     }
 

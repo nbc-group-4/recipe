@@ -20,4 +20,6 @@
     <dimen name="edit_profile_image_size">200dp</dimen>
 
     <dimen name="make_recipe_image_size">108dp</dimen>
+
+    <dimen name="recipe_fragment_top_banner_inter_value">12dp</dimen>
 </resources>

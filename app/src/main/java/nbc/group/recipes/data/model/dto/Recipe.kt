@@ -30,10 +30,12 @@ data class Recipe(
         nationCode: String,
         nationName: String,
         cookingTime: String,
+        typeCode: String,
+        typeName: String,
         levelName: String,
         ingredientCode: String,
-    ): this(0, 0, recipeName, summary, nationCode, nationName, "",
-        "", cookingTime, "", "", levelName, ingredientCode, "")
+    ): this(0, 0, recipeName, summary, nationCode, nationName, typeCode,
+        typeName, cookingTime, "", "", levelName, ingredientCode, "")
 }
 
 

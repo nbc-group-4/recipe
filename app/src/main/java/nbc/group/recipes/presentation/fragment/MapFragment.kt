@@ -349,6 +349,10 @@ class MapFragment : Fragment() {
         kakaoMap = null
         mapView.finish()
     }
+
+    fun moveToRecipeFragment() {
+        (requireParentFragment().parentFragment as MainFragment).moveToRecipeFragment()
+    }
 }
 
 

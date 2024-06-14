@@ -6,80 +6,92 @@
     android:layout_height="match_parent"
     tools:context=".presentation.fragment.RecipeFragment">
 
+    <ImageView
+        android:id="@+id/iv_banner_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/top_banner_left_icon_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/gl_top"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_top_bar"/>
+
     <TextView
-        android:id="@+id/tv_spciality_name"
+        android:id="@+id/tv_top_banner"
         style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="28dp"
-        android:text="소고기"
-        app:layout_constraintEnd_toStartOf="@+id/textView3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/recipe_fragment_top_banner_text"
+        android:layout_marginStart="@dimen/recipe_fragment_top_banner_inter_value"
+        app:layout_constraintStart_toEndOf="@id/iv_banner_icon"
+        app:layout_constraintTop_toTopOf="@id/iv_banner_icon"
+        app:layout_constraintBottom_toBottomOf="@id/iv_banner_icon"/>
 
-    <TextView
-        android:id="@+id/textView3"
-        style="@style/top_banner_text_style"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="152dp"
-        android:text="@string/recipe_explain"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_spciality_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_spciality_name"
-        app:layout_constraintTop_toTopOf="@+id/tv_spciality_name" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/top_banner_height"/>
 
-    <ImageButton
-        android:id="@+id/bt_back"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="28dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_back_arrow"
-        app:layout_constraintEnd_toStartOf="@+id/tv_spciality_name"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/fragment_horizontal_margin"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/fragment_horizontal_margin"/>
+
+
+    <HorizontalScrollView
+        android:id="@+id/sv_chip_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintTop_toTopOf="@id/gl_top">
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cg_recipe_nation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            app:singleLine="true"/>
+    </HorizontalScrollView>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_recipe"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sp_recipe_type"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintTop_toBottomOf="@id/sv_chip_group"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <Spinner
-        android:id="@+id/sp_recipe_type"
-        android:layout_width="120dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_spinner"
-        app:layout_constraintStart_toStartOf="@+id/rv_recipe"
-        app:layout_constraintTop_toBottomOf="@+id/bt_back" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/bt_make_recipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="52dp"
-        android:backgroundTint="#14870C"
-        android:clickable="true"
-        android:src="@drawable/ic_plus"
-        app:tint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/recipe_fragment_make_button_text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:backgroundTint="?colorPrimary"
+        android:textColor="@color/white"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlayExtended"
+        app:iconSize="16dp"
+        app:iconTint="@color/white"
+        app:icon="@drawable/ic_plus"
+        android:layout_marginBottom="@dimen/default_margin_20"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:shapeAppearanceOverlay="@style/CustomFabShape" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

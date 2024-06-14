@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -20,6 +21,10 @@ class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
+
+    private var _navController: NavController? = null
+    private val navController get() = _navController!!
+
     private val viewModel: MainViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,12 +42,17 @@ class MainFragment : Fragment() {
 
     private fun initNavigation() {
         val navHostFragment = binding.fcv.getFragment<NavHostFragment>()
-        val navController = navHostFragment.navController
+        _navController = navHostFragment.navController
         binding.bottomNavBar.setupWithNavController(navController)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _navController = null
+    }
+
+    fun moveToRecipeFragment() {
+        binding.bottomNavBar.selectedItemId = R.id.recipeFragment
     }
 }
