@@ -4,6 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
+import nbc.group.recipes.data.model.dto.Recipe
 
 @Entity
 data class RecipeEntity(
@@ -15,7 +17,9 @@ data class RecipeEntity(
     val ingredient: String,
     val difficulty: String,
     val time: String,
-): Parcelable {
+    val from: String = "api",
+    val firebaseId: String = ""
+): Parcelable, Comparable<RecipeEntity> {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -25,6 +29,8 @@ data class RecipeEntity(
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString()
     ) {
     }
 
@@ -37,6 +43,8 @@ data class RecipeEntity(
         parcel.writeString(ingredient)
         parcel.writeString(difficulty)
         parcel.writeString(time)
+        parcel.writeString(from)
+        parcel.writeString(firebaseId)
     }
 
     override fun describeContents(): Int {
@@ -53,4 +61,7 @@ data class RecipeEntity(
         }
     }
 
+    override fun compareTo(other: RecipeEntity): Int {
+        return recipeName.compareTo(other.recipeName)
+    }
 }

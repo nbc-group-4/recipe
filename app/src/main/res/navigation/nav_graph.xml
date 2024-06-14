@@ -8,7 +8,11 @@
         android:id="@+id/mapFragment"
         android:name="nbc.group.recipes.presentation.fragment.MapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"
         android:name="nbc.group.recipes.presentation.fragment.BookmarkFragment"
@@ -24,4 +28,9 @@
         android:name="nbc.group.recipes.presentation.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="nbc.group.recipes.presentation.fragment.RecipeFragment"
+        android:label="fragment_recipe"
+        tools:layout="@layout/fragment_recipe" />
 </navigation>

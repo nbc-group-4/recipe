@@ -34,7 +34,8 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             Log.d("click_specialtyData__",item.toString())
 
             // RecipeFragment로 이동
-            (activity as MainActivity).moveToRecipeFragment()
+            // (activity as MainActivity).moveToRecipeFragment() todo: bottom navigation 이동
+            (parentFragment as MapFragment).moveToRecipeFragment()
         }
     }
 

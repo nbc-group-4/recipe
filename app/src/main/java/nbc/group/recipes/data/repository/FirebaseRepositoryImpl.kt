@@ -40,6 +40,18 @@ class FirebaseRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getRecipesByIngredient(ingredient: String): FirebaseResult<List<Recipe>> {
+        return try {
+            val result = firestore
+                .collection("recipes")
+                .whereEqualTo("ingredientCode", ingredient)
+                .get().await()
+            FirebaseResult.Success(result.toObjects(Recipe::class.java))
+        } catch (e: Exception) {
+            FirebaseResult.Failure(e)
+        }
+    }
+
     override suspend fun putRecipe(recipe: Recipe): FirebaseResult<Boolean> {
         return try {
             val result = firestore.collection("recipes").add(recipe).await()

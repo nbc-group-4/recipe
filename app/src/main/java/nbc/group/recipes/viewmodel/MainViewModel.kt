@@ -35,6 +35,9 @@ class MainViewModel @Inject constructor(
      *
      * */
 
+    private val _splashFlow = MutableStateFlow(true)
+    val splashFlow = _splashFlow.asStateFlow()
+
     private val _signInFlow = MutableStateFlow<FirebaseResult<FirebaseUser>?>(null)
     val signInFlow = _signInFlow.asStateFlow()
 
@@ -63,6 +66,12 @@ class MainViewModel @Inject constructor(
             viewModelScope.launch {
                 _signInFlow.emit(FirebaseResult.Success(authRepository.currentUser!!))
             }
+        }
+    }
+
+    fun homeFragmentStatusChange() {
+        viewModelScope.launch {
+            _splashFlow.emit(false)
         }
     }
 
@@ -134,18 +143,6 @@ class MainViewModel @Inject constructor(
             firebaseRepository.putImage(
                 getUserProfileStoragePath(it.uid),
                 inputStream
-            )
-        }
-    }
-
-    private val _specialties = MutableStateFlow<SpecialtyResponse?>(null)
-    val specialties = _specialties.asStateFlow()
-
-    // doTest 함수명 변경
-    fun getItem(string: String) {
-        viewModelScope.launch {
-            _specialties.emit(
-                repository.getSpecialty("", "") // 전체 지역
             )
         }
     }

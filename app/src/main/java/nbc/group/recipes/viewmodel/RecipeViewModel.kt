@@ -10,12 +10,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import nbc.group.recipes.BuildConfig
 import nbc.group.recipes.convertToOfficial
-import nbc.group.recipes.data.model.dto.Recipe
-import nbc.group.recipes.data.model.dto.RecipeIngredient
-import nbc.group.recipes.data.model.dto.RecipeProcedure
 import nbc.group.recipes.data.model.entity.RecipeEntity
+import nbc.group.recipes.data.repository.FirebaseRepository
 import nbc.group.recipes.data.repository.NaverSearchRepository
 import nbc.group.recipes.data.repository.RecipeRepository
 import nbc.group.recipes.getRecipeImageUrl
@@ -27,27 +24,18 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
-    private val naverSearchRepository: NaverSearchRepository,
+    private val firebaseRepository: FirebaseRepository,
+    private val naverSearchRepository: NaverSearchRepository
 ) : ViewModel() {
 
     private val _recipes = MutableStateFlow<List<RecipeEntity>?>(null)
     val recipes = _recipes.asStateFlow()
 
-    private val _testRecipes = MutableStateFlow<List<RecipeEntity>?>(null)
-    val testRecipe = _testRecipes.asStateFlow()
-
-    private fun encodeToUtf8(query: String): String {
-        val convertQuery = convertToOfficial(query)
-        return URLEncoder.encode(convertQuery, StandardCharsets.UTF_8.toString())
-    }
-
-    suspend fun fetchRecipeIds(ingredientName: String, startIndex: Int, endIndex: Int): List<Int> {
-        val ingredientResponse =
-            recipeRepository.getRecipeIngredients(startIndex, endIndex, ingredientName)
-        return ingredientResponse.row.map { it.recipeId }
-    }
-
-    suspend fun fetchRecipeIdsV2(ingredientName: String) = viewModelScope.launch(Dispatchers.IO) {
+    /**
+     * API를 통해서 가져온 레시피의 경우 step이 RecipeProcedure type이다.
+     * 유저가 만든 레시피의 경우 일반 string 이다.
+     * */
+    suspend fun fetchRecipe(ingredientName: String) = viewModelScope.launch(Dispatchers.IO) {
 
         val temp1 = async { recipeRepository.getRecipeIngredientsV2(ingredientName) }
         val recipeIds = temp1.await().recipeIngredient.row
@@ -59,31 +47,14 @@ class RecipeViewModel @Inject constructor(
             val recipeWrapper = temp2.await()
             if (recipeWrapper.recipe.totalCnt >= 1) {
                 val recipe = recipeWrapper.recipe.row[0]
-
-//                val encodedRecipeName = URLEncoder.encode(recipe.recipeName, StandardCharsets.UTF_8.toString())
-//                val temp3 = async {
-//                    naverSearchRepository.searchEncyclopedia(
-//                        encodedRecipeName,
-//                        BuildConfig.NAVER_CLIENT_ID,
-//                        BuildConfig.NAVER_CLIENT_SECRET
-//                    )
-//                }
-//                val imageResponse = temp3.await()
-//
-//                val temp4 = imageResponse.items.firstOrNull()
-//                val temp5 = temp4?.thumbnail
-                val temp5 = getRecipeImageUrl(recipe.recipeName)
-
-                val temp6 = async { recipeRepository.getRecipeProceduresV2(recipe.recipeId) }
-
-
+                val temp3 = getRecipeImageUrl(recipe.recipeName)
+                val temp4 = async { recipeRepository.getRecipeProceduresV2(recipe.recipeId) }
                 val gson = Gson()
-                val procedure = gson.toJson(temp6.await().recipeProcedure.row)
-
+                val procedure = gson.toJson(temp4.await().recipeProcedure.row)
                 recipeEntityList.add(
                     RecipeEntity(
                         id = recipe.recipeId,
-                        recipeImg = temp5?: "",
+                        recipeImg = temp3?: "",
                         recipeName = recipe.recipeName,
                         explain = recipe.summary,
                         step = procedure,
@@ -95,12 +66,30 @@ class RecipeViewModel @Inject constructor(
             }
         }
 
-        _testRecipes.emit(recipeEntityList)
+
+//        firebaseRepository.getRecipesByIngredient(ingredientName)
+
+
+        _recipes.emit(recipeEntityList)
     }
+
 
 
     fun putRecipeEntity(recipeEntity: RecipeEntity) = viewModelScope.launch(Dispatchers.IO) {
         recipeRepository.putRecipeEntity(recipeEntity)
+    }
+
+
+
+    private fun encodeToUtf8(query: String): String {
+        val convertQuery = convertToOfficial(query)
+        return URLEncoder.encode(convertQuery, StandardCharsets.UTF_8.toString())
+    }
+
+    suspend fun fetchRecipeIds(ingredientName: String, startIndex: Int, endIndex: Int): List<Int> {
+        val ingredientResponse =
+            recipeRepository.getRecipeIngredients(startIndex, endIndex, ingredientName)
+        return ingredientResponse.row.map { it.recipeId }
     }
 
     fun getRecipeDetails(

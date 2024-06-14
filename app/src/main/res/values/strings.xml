@@ -10,10 +10,6 @@
     <string name="region_five">서산</string>
     <string name="region_six">세종</string>
 
-
-    <!-- RecipeFragment -->
-    <string name="recipe_explain"> 활용 레시피</string>
-
     <!-- RecipeDetailFragment -->
     <string name="recipe_base_explain">레시피 기본 설명</string>
     <string name="recipe_difficulty">난이도</string>
@@ -63,6 +59,10 @@
     <string name="make_recipe_fragment_recipe_cooking_process_indic">조리방법</string>
     <string name="make_recipe_fragment_recipe_cooking_process_hint">조리방법을 입력해 주세요.</string>
     <string name="make_recipe_fragment_recipe_photo_indic">사진 등록</string>
+
+    <!-- RecipeFragment -->
+    <string name="recipe_fragment_top_banner_text">레시피</string>
+    <string name="recipe_fragment_make_button_text">레시피 작성</string>
 
     <!--region_alram_dialog-->
     <string name="region_dialog_title">특산물 데이터가 존재하는 지역</string>

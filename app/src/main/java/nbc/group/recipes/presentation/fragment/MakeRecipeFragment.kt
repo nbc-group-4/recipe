@@ -39,6 +39,7 @@ class MakeRecipeFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
 
+
     private val imageUriList = mutableListOf<Uri>()
     private val imageStreamList = mutableListOf<InputStream>()
 
@@ -120,6 +121,8 @@ class MakeRecipeFragment : Fragment() {
             nationCode = "custom",
             nationName = viewModel.currentUser!!.uid,
             cookingTime = binding.etCookingTime.text.toString(),
+            typeCode = "user",
+            typeName = viewModel.currentUser!!.uid,
             levelName = "",
             ingredientCode = binding.etIngredient.text.toString(),
         )
