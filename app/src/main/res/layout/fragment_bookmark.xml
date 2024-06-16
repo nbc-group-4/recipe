@@ -5,47 +5,114 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.fragment.BookmarkFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="56dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/fragment_horizontal_margin"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/fragment_horizontal_margin"/>
+
+
+    <ImageView
+        android:id="@+id/app_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/gl_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_appbar" />
 
     <TextView
         android:id="@+id/tv_bookmark"
         style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/top_banner_left_icon_margin"
-        android:layout_marginTop="@dimen/top_banner_left_icon_margin"
         android:text="북마크한 레시피"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/gl_top"
+        app:layout_constraintStart_toEndOf="@+id/app_bar"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_bookmark_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="총 0개"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bookmark" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/top_banner_left_icon_margin"
-        android:layout_marginEnd="@dimen/top_banner_left_icon_margin"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="@dimen/default_margin_20"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="@dimen/default_margin_20"
         android:layout_marginBottom="3dp"
         android:visibility="invisible"
-        tools:listitem="@layout/bookmark_item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_bookmark" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_bookmark_count"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/bookmark_item" />
 
-    <TextView
-        android:id="@+id/tv_empty"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="북마크한 레시피가 없어요"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="@+id/recyclerView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recyclerView" />
+        app:layout_constraintStart_toStartOf="@+id/recyclerView"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/iv_bookmark_empty"
+            android:layout_width="@dimen/my_page_image_size"
+            android:layout_height="@dimen/my_page_image_size"
+            android:src="@drawable/ic_empty"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="북마크한 레시피가 없어요"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@+id/iv_bookmark_empty"
+            app:layout_constraintStart_toStartOf="@+id/iv_bookmark_empty"
+            app:layout_constraintTop_toBottomOf="@+id/iv_bookmark_empty" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

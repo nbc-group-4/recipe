@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import nbc.group.recipes.R
 import nbc.group.recipes.data.network.FirebaseResult
 import nbc.group.recipes.databinding.FragmentSignUpBinding
 import nbc.group.recipes.presentation.MainActivity
@@ -37,24 +39,35 @@ class SignUpFragment : Fragment() {
             btSignUp.setOnClickListener(signUpButtonClickListener)
             ivBackButton.setOnClickListener(backButtonClickListener)
             etPwCheck.setOnFocusChangeListener(pwCheckFocusChangeListener)
+            checkboxAll.setOnClickListener { onCheckedTerms(checkboxAll) }
+            checkbox1.setOnClickListener { onCheckedTerms(checkbox1) }
+            checkbox2.setOnClickListener { onCheckedTerms(checkbox2) }
+
+            ivCheckbox2Arrow.setOnClickListener {
+                (activity as MainActivity).moveToPrivacyPolicyFragment()
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.signUpFlow.collect { nullable ->
-                nullable?.let { nonNull ->
-                    when (nonNull) {
-                        is FirebaseResult.Success -> {
-                            findNavController().popBackStack()
-                        }
+                nullable?.let { nonNull -> with(binding){
+                        when (nonNull) {
+                            is FirebaseResult.Success -> {
+                                if (checkboxAll.isChecked){
+                                    findNavController().popBackStack()
+                                }else{
+                                    tvErrorIndic.text = "모든 약관에 동의해주세요"
+                                }
+                            }
 
-                        is FirebaseResult.Failure -> {
-                            binding.clLoading.visibility = View.GONE
-                            binding.tvErrorIndic.text = nonNull.exception.message
-                        }
+                            is FirebaseResult.Failure -> {
+                                clLoading.visibility = View.GONE
+                                tvErrorIndic.text = nonNull.exception.message
+                            }
 
-                        is FirebaseResult.Loading -> {
-                            binding.clLoading.visibility = View.VISIBLE
-
+                            is FirebaseResult.Loading -> {
+                                clLoading.visibility = View.VISIBLE
+                            }
                         }
                     }
                 }
@@ -69,11 +82,15 @@ class SignUpFragment : Fragment() {
 
     private val signUpButtonClickListener: (View) -> Unit = {
         with(binding) {
-            viewModel.signUp(
-                name = etNickname.text?.toString()?: "",
-                id = etId.text?.toString()?: "",
-                pw = etPw.text?.toString()?: ""
-            )
+            if (checkboxAll.isChecked){
+                viewModel.signUp(
+                    name = etNickname.text?.toString()?: "",
+                    id = etId.text?.toString()?: "",
+                    pw = etPw.text?.toString()?: ""
+                )
+            }else{
+                tvErrorIndic.text = "모든 약관에 동의해주세요"
+            }
         }
     }
 
@@ -88,6 +105,24 @@ class SignUpFragment : Fragment() {
                     etPwCheckLayout.error = "비밀번호를 정확하게 입력하세요."
                 } else {
                     etPwCheckLayout.error = null
+                }
+            }
+        }
+    }
+
+    private fun onCheckedTerms(compoundButton: CompoundButton){
+        with(binding){
+            when(compoundButton.id){
+                R.id.checkbox_all -> {
+                    if(checkboxAll.isChecked){
+                        checkbox1.isChecked = true
+                        checkbox2.isChecked = true
+                    }else{
+                        checkbox1.isChecked = false
+                        checkbox2.isChecked = false
+                    }
+                }else -> {
+                checkboxAll.isChecked = (checkbox1.isChecked && checkbox2.isChecked)
                 }
             }
         }

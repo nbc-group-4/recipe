@@ -7,64 +7,85 @@
     android:layout_height="match_parent"
     tools:context=".presentation.fragment.MapFragment">
 
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_begin20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
+
+
     <com.kakao.vectormap.MapView
         android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
     </com.kakao.vectormap.MapView>
 
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:background="#00FFFFFF"
+        android:layout_height="132dp"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <EditText
         android:id="@+id/search_et"
-        android:layout_width="360dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="@dimen/top_banner_left_icon_margin"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
         android:hint="@string/search_text"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:textColor="@color/black"
-        android:padding="14dp"
+        android:padding="8dp"
         android:inputType="text"
         android:maxLines="1"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
         android:imeOptions="actionSearch"
         android:background="@drawable/corner_edittext"
-        android:drawableStart="@drawable/ic_search"
-        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_searches"
+        android:drawablePadding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/delete_iv"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="12dp"
         android:src="@drawable/ic_delete"
-        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/search_et"
-        app:layout_constraintEnd_toStartOf="@+id/alert_iv"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_end20"
         app:layout_constraintTop_toTopOf="@+id/search_et" />
 
     <ImageView
         android:id="@+id/alert_iv"
-        android:layout_width="23dp"
-        android:layout_height="23dp"
-        android:src="@drawable/ic_alert"
-        android:layout_marginEnd="@dimen/default_margin_20"
-        app:layout_constraintBottom_toBottomOf="@+id/search_et"
-        app:layout_constraintEnd_toEndOf="@+id/search_et"
-        app:layout_constraintTop_toTopOf="@+id/search_et" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/map_alram2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 
 
     <HorizontalScrollView
@@ -87,6 +108,7 @@
             app:singleSelection="true"
             android:paddingHorizontal="12dp"
             app:selectionRequired="true">
+
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/fist_type"

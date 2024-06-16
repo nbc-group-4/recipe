@@ -4,22 +4,19 @@ import android.app.AlertDialog
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import nbc.group.recipes.databinding.FragmentHomeBinding
 import nbc.group.recipes.KindItem
-import nbc.group.recipes.dummyRecipe
+import nbc.group.recipes.R
 import nbc.group.recipes.presentation.MainActivity
+import nbc.group.recipes.presentation.adapter.BannerAdpater
 import nbc.group.recipes.presentation.adapter.HomeKindAdapter
 import nbc.group.recipes.presentation.adapter.HomeQuizAdapter
 import nbc.group.recipes.specialtyKind
@@ -57,29 +54,19 @@ class HomeFragment : Fragment() {
             }
         })
 
-        setupRecyclerViewQuiz()
         setupRecyclerViewKind()
 
-        // 더보기 클릭
-        binding.btnHomeKindMore.setOnClickListener {
-            loadMoreItems()
-        }
-
+//        // 더보기 클릭
+//        binding.btnHomeKindMore.setOnClickListener {
+//            loadMoreItems()
+//        }
 
         // Splash 종료
         mainViewModel.homeFragmentStatusChange()
         if(!isInternetConnection()) {
             showDialog()
         }
-    }
-
-    private fun setupRecyclerViewQuiz() {
-        binding.recyclerViewHomeQuiz.apply {
-            adapter = homeQuizAdapter
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        }
-        homeQuizAdapter?.submitList(dummyRecipe)
+        banner()
     }
 
     private fun setupRecyclerViewKind() {
@@ -124,6 +111,26 @@ class HomeFragment : Fragment() {
         homeKindAdapter = null
     }
 
+
+    private fun banner(){
+
+        val bannerAdpater = BannerAdpater(this)
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner1))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner2))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner3))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner4))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner5))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner6))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner7))
+
+
+        with(binding){
+            homeBanner.adapter = bannerAdpater
+            homeBanner.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            homeBannerIndicator.setViewPager(binding.homeBanner)
+        }
+    }
+
     private fun showDialog() {
         val dialog = AlertDialog.Builder(requireActivity())
             .setTitle("인터넷이 필요한 서비스입니다.")
@@ -135,4 +142,5 @@ class HomeFragment : Fragment() {
             }
         dialog.show()
     }
+
 }
