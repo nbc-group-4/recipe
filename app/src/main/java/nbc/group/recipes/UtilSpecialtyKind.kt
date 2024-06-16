@@ -3,28 +3,29 @@ package nbc.group.recipes
 val specialtyKind = listOf(
     KindItem(
         item = "곡물",
-        imageResourceId = R.drawable.img_specialty_kind1
+        imageResourceId = R.drawable.ic_home_grain
     ),
     KindItem(
         item = "채소",
-        imageResourceId = R.drawable.img_specialty_kind2
+        imageResourceId = R.drawable.ic_home_vegetable
     ),
     KindItem(
         item = "과일",
-        imageResourceId = R.drawable.img_specialty_kind3
+        imageResourceId = R.drawable.ic_home_fruit
     ),
     KindItem(
         item = "어류",
-        imageResourceId = R.drawable.img_specialty_kind4
-    ),
-    KindItem(
-        item = "해조류",
-        imageResourceId = R.drawable.img_specialty_kind5
+        imageResourceId = R.drawable.ic_home_fish
     ),
     KindItem(
         item = "고기",
-        imageResourceId = R.drawable.img_specialty_kind6
+        imageResourceId = R.drawable.ic_home_meat
     ),
+    KindItem(
+        item = "기타",
+        imageResourceId = R.drawable.ic_home_etc
+    ),
+
 )
 
 // 더보기 아이템
