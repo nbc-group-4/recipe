@@ -8,6 +8,7 @@
     <color name="green4">#398D69</color>
     <color name="grey">#F2F1F5</color>
     <color name="grey2">#767676</color>
+    <color name="divider_color">#CACACA</color>
     <color name="indicator_grey">#D9D9D9</color>
     <color name="background_search">#EEEEEE</color>
 

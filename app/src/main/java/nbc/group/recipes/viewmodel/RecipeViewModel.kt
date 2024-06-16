@@ -7,15 +7,27 @@ import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import nbc.group.recipes.convertToOfficial
+import nbc.group.recipes.data.model.dto.Recipe
+import nbc.group.recipes.data.model.entity.ContentBanEntity
 import nbc.group.recipes.data.model.entity.RecipeEntity
+import nbc.group.recipes.data.model.entity.UserBanEntity
+import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.data.repository.BanRepository
 import nbc.group.recipes.data.repository.FirebaseRepository
 import nbc.group.recipes.data.repository.NaverSearchRepository
 import nbc.group.recipes.data.repository.RecipeRepository
+import nbc.group.recipes.data.utils.getRecipeStoragePath
 import nbc.group.recipes.getRecipeImageUrl
+import nbc.group.recipes.presentation.fragment.FROM_FIREBASE
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import javax.inject.Inject
@@ -25,11 +37,84 @@ import javax.inject.Inject
 class RecipeViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
     private val firebaseRepository: FirebaseRepository,
-    private val naverSearchRepository: NaverSearchRepository
+    private val naverSearchRepository: NaverSearchRepository,
+    private val banRepository: BanRepository,
 ) : ViewModel() {
 
     private val _recipes = MutableStateFlow<List<RecipeEntity>?>(null)
     val recipes = _recipes.asStateFlow()
+
+    private val _firebaseRecipes = MutableStateFlow<FirebaseResult<List<Recipe>>?>(null)
+    val firebaseRecipes = _firebaseRecipes.asStateFlow()
+
+    private val _contentBan = MutableStateFlow<List<ContentBanEntity>>(listOf())
+    val contentBan = _contentBan.asStateFlow()
+
+    private val _userBan = MutableStateFlow<List<UserBanEntity>>(listOf())
+    val userBan = _userBan.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            launch {
+                banRepository.getAllContentBan().collectLatest { contentBan ->
+                    val bannedList = mutableListOf<String>()
+                    contentBan.forEach { bannedList.add(it.target) }
+                    _recipes.value?.let { nonNull ->
+                        _recipes.emit(
+                            nonNull.filter { recipeEntity ->
+                                recipeEntity.firebaseId !in bannedList
+                            }
+                        )
+                    }
+                }
+            }
+            launch {
+                banRepository.getAllUserBan().collectLatest { userBan ->
+                    val bannedList = mutableListOf<String>()
+                    userBan.forEach { bannedList.add(it.target) }
+                    _recipes.value?.let { nonNull ->
+                        _recipes.emit(
+                            nonNull.filter { recipeEntity ->
+                                recipeEntity.writerId !in bannedList
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun recipeUpdate(recipes: List<RecipeEntity>) {
+        viewModelScope.launch {
+            _recipes.emit(recipes)
+        }
+    }
+
+    fun insertContentBan(contentId: String) {
+        banRepository.insertContentBan(contentId)
+    }
+
+    fun insertUserBan(userId: String) {
+        banRepository.insertUserBan(
+            UserBanEntity(target = userId)
+        )
+    }
+
+    fun test() {
+        viewModelScope.launch {
+            firebaseRepository.getRecipeForTest("치즈")
+        }
+    }
+
+    fun clearRecipes() {
+        viewModelScope.launch {
+            _recipes.emit(null)
+        }
+    }
+
+    fun mergeFirebaseData(recipeEntities: List<RecipeEntity>) = viewModelScope.launch {
+        _recipes.emit(recipeEntities)
+    }
 
     /**
      * API를 통해서 가져온 레시피의 경우 step이 RecipeProcedure type이다.
@@ -54,31 +139,41 @@ class RecipeViewModel @Inject constructor(
                 recipeEntityList.add(
                     RecipeEntity(
                         id = recipe.recipeId,
-                        recipeImg = temp3?: "",
+                        recipeImg = temp3 ?: "",
                         recipeName = recipe.recipeName,
                         explain = recipe.summary,
                         step = procedure,
                         ingredient = ingredientName,
                         difficulty = recipe.levelName,
-                        time = recipe.cookingTime
+                        time = recipe.cookingTime,
                     )
                 )
             }
         }
 
+        val temp5 = _recipes.value ?: mutableListOf()
+        val temp6 = temp5.toMutableList()
+        temp6.addAll(recipeEntityList)
 
-//        firebaseRepository.getRecipesByIngredient(ingredientName)
-
-
-        _recipes.emit(recipeEntityList)
+        _recipes.emit(temp6)
     }
 
+    suspend fun fetchRecipeFromFirebase(ingredientName: String) = viewModelScope.launch {
+        _firebaseRecipes.emit(
+            firebaseRepository.getRecipeForTest(ingredientName)
+        )
+    }
+
+    suspend fun fetchRecipeFromFirebase() = viewModelScope.launch {
+        _firebaseRecipes.emit(
+            firebaseRepository.getRecipeForTest("")
+        )
+    }
 
 
     fun putRecipeEntity(recipeEntity: RecipeEntity) = viewModelScope.launch(Dispatchers.IO) {
         recipeRepository.putRecipeEntity(recipeEntity)
     }
-
 
 
     private fun encodeToUtf8(query: String): String {

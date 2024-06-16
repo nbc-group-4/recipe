@@ -1,5 +1,6 @@
 package nbc.group.recipes.data.repository
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
@@ -47,6 +48,35 @@ class FirebaseRepositoryImpl @Inject constructor(
                 .whereEqualTo("ingredientCode", ingredient)
                 .get().await()
             FirebaseResult.Success(result.toObjects(Recipe::class.java))
+        } catch (e: Exception) {
+            FirebaseResult.Failure(e)
+        }
+    }
+
+    override suspend fun getRecipeForTest(
+        ingredient: String
+    ): FirebaseResult<List<Recipe>> {
+        return try {
+            val result = firestore.collection("recipes").get().await()
+            val temp = mutableListOf<Recipe>()
+            result.documents.forEach {
+                it.data?.let { map ->
+                    temp.add(
+                        Recipe(
+                            recipeName = "${it.id}/${map["recipeName"] as String}",
+                            summary = map["summary"] as String,
+                            nationCode = map["nationCode"] as String,
+                            nationName = map["nationName"] as String,
+                            cookingTime = map["cookingTime"] as String,
+                            typeCode = map["typeCode"] as String,
+                            typeName = map["typeName"] as String,
+                            levelName = map["levelName"] as String,
+                            ingredientCode = map["ingredientCode"] as String,
+                        )
+                    )
+                }
+            }
+            FirebaseResult.Success(temp)
         } catch (e: Exception) {
             FirebaseResult.Failure(e)
         }

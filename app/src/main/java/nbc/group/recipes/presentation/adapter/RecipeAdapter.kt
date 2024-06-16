@@ -1,5 +1,6 @@
 package nbc.group.recipes.presentation.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -13,16 +14,17 @@ import nbc.group.recipes.GlideApp
 import nbc.group.recipes.R
 import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.databinding.RecipeItemViewBinding
+import nbc.group.recipes.presentation.fragment.FROM_FIREBASE
 
-class RecipeAdapter (
+class RecipeAdapter(
     private val fragment: Fragment,
     private val onClick: (RecipeEntity) -> Unit,
-): ListAdapter<RecipeEntity, RecipeAdapter.ViewHolder>(diff) {
+) : ListAdapter<RecipeEntity, RecipeAdapter.ViewHolder>(diff) {
 
     class ViewHolder(
         private val binding: RecipeItemViewBinding,
         private val onClick: (RecipeEntity) -> Unit,
-    ): RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private lateinit var item: RecipeEntity
 
@@ -32,15 +34,14 @@ class RecipeAdapter (
             }
         }
 
-        fun bind(
-            fragment: Fragment,
-            recipeInfo: RecipeEntity) {
+        fun bind(fragment: Fragment, recipeInfo: RecipeEntity) {
             item = recipeInfo
 
-            if(recipeInfo.from == "user") {
+            if (recipeInfo.from == FROM_FIREBASE) {
+                Log.e("URGENT_TAG", "bind: ${Firebase.storage.reference.child(item.recipeImg)}", )
                 GlideApp.with(fragment)
-                    .load(Firebase.storage.reference
-                        .child("recipeImage/${item.firebaseId}/0.jpg")
+                    .load(
+                        Firebase.storage.reference.child(item.recipeImg)
                     )
                     .into(binding.ivRecipeImg)
             } else {

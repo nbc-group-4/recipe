@@ -18,12 +18,16 @@ data class RecipeEntity(
     val difficulty: String,
     val time: String,
     val from: String = "api",
-    val firebaseId: String = ""
+    val firebaseId: String = "",
+    val writerName: String = "",
+    val writerId: String = ""
 ): Parcelable, Comparable<RecipeEntity> {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readInt(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -45,6 +49,8 @@ data class RecipeEntity(
         parcel.writeString(time)
         parcel.writeString(from)
         parcel.writeString(firebaseId)
+        parcel.writeString(writerName)
+        parcel.writeString(writerId)
     }
 
     override fun describeContents(): Int {

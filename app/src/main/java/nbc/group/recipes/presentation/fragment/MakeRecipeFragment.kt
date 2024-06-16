@@ -115,6 +115,7 @@ class MakeRecipeFragment : Fragment() {
     }
 
     private fun currentRecipe(): Recipe {
+        val userMeta = viewModel.getUserMeta(viewModel.currentUser!!.uid)
         return Recipe(
             recipeName = binding.etRecipeName.text.toString(),
             summary = binding.etRecipeDescription.text.toString(),
@@ -142,6 +143,9 @@ class MakeRecipeFragment : Fragment() {
     }
 
     private val makeRecipeButtonClickListener: (View) -> Unit = {
+
+        // todo: recipe name 에 특수문자 금지
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.putRecipeTransaction(
                 recipe = currentRecipe(),

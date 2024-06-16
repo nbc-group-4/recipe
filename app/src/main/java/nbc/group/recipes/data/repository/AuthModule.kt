@@ -32,19 +32,7 @@ object AuthModule {
 
     @Singleton
     @Provides
-    fun provideFirestoreRepository(
-        firestoreRepositoryImpl: FirestoreRepositoryImpl
-    ): FirestoreRepository = firestoreRepositoryImpl
-
-    @Singleton
-    @Provides
     fun provideStorage(): FirebaseStorage = Firebase.storage
-
-    @Singleton
-    @Provides
-    fun provideStorageRepository(
-        storageRepositoryImpl: StorageRepositoryImpl
-    ): StorageRepository = storageRepositoryImpl
 
     @Singleton
     @Provides
@@ -57,4 +45,10 @@ object AuthModule {
     fun provideRecipeRepository(
         recipeRepositoryImpl: RecipeRepositoryImpl
     ): RecipeRepository = recipeRepositoryImpl
+
+    @Singleton
+    @Provides
+    fun provideBanRepository(
+        banRepositoryImpl: BanRepositoryImpl
+    ): BanRepository = banRepositoryImpl
 }
