@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.KindItem
@@ -58,17 +61,23 @@ class SpecialtyFragment : Fragment() {
     private fun setRecyclerView() {
         binding.recyclerViewSpecialty.apply {
             adapter = specialtyAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = GridLayoutManager(requireContext(), 3)
         }
     }
 
-    private fun setUpListener() {
-        binding.ivSearch.setOnClickListener {
-            performSearch()
-            hideKeyboard()
-            (activity as MainActivity).moveToSpecialtyDetailFragment()
+    private fun setUpListener() = with(binding){
+        etSpecialtySearch.setOnEditorActionListener { v, actionId, event ->
+            if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                performSearch()
+                hideKeyboard()
+                (activity as MainActivity).moveToSpecialtyDetailFragment()
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
         }
     }
+
+
 
     private fun performSearch() {
         val searchQuery = binding.etSpecialtySearch.text.toString()
@@ -103,9 +112,7 @@ class SpecialtyFragment : Fragment() {
             "채소" -> specialties2
             "과일" -> specialties3
             "어류" -> specialties4
-            "해조류" -> specialties5
             "고기" -> specialties6
-            "쌀" -> specialties7
             "기타" -> specialties8
             else -> specialties8
         }
@@ -113,15 +120,13 @@ class SpecialtyFragment : Fragment() {
 
     private fun getImageResourceId(specialty: String): Int {
         return when (specialty) {
-            "곡물" -> R.drawable.img_specialty_kind1
-            "채소" -> R.drawable.img_specialty_kind2
-            "과일" -> R.drawable.img_specialty_kind3
-            "어류" -> R.drawable.img_specialty_kind4
-            "해조류" -> R.drawable.img_specialty_kind5
-            "고기" -> R.drawable.img_specialty_kind6
-            "쌀" -> R.drawable.img_specialty_kind7
-            "기타" -> R.drawable.img_specialty_kind8
-            else -> R.drawable.img_specialty_kind8
+            "곡물" -> R.drawable.ic_home_grain
+            "채소" -> R.drawable.ic_home_vegetable
+            "과일" -> R.drawable.ic_home_fruit
+            "어류" -> R.drawable.ic_home_fish
+            "고기" -> R.drawable.ic_home_meat
+            "기타" -> R.drawable.ic_home_etc
+            else -> R.drawable.ic_home_etc
         }
     }
 

@@ -5,60 +5,73 @@
     android:id="@+id/homeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.fragment.HomeFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_begin20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/top_56"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="56dp" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbHome"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/white"
+        android:layout_height="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="16dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/ivTitle"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tvTitle"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvTitle"
-                app:srcCompat="@drawable/img_app_name" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_appbar" />
 
             <TextView
                 android:id="@+id/tvTitle"
                 style="@style/top_banner_text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="150dp"
-                android:text="앱 이름"
-                android:textColor="@color/black"
+                android:layout_marginStart="8dp"
+                android:text="맛고"
+                android:textColor="@color/green1"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="parent" />
-
-<!--            <ImageView-->
-<!--                android:id="@+id/ivSearch"-->
-<!--                android:layout_width="@dimen/small_button_size"-->
-<!--                android:layout_height="@dimen/small_button_size"-->
-<!--                android:layout_marginTop="24dp"-->
-<!--                android:layout_marginEnd="32dp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:srcCompat="@drawable/search" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
+
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -74,79 +87,88 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tvHomeQuiz"
-                style="@style/content_text_style"
+                android:id="@+id/home_banner_specialty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_padding"
-                android:layout_marginEnd="100dp"
-                android:text="Q: 어떤 특산물로 만든 요리일까요?"
+                android:text="6월 제철 특산물"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="20dp"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewHomeQuiz"
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_marginTop="@dimen/default_padding"
-                android:layout_marginBottom="60dp"
-                android:orientation="horizontal"
-                android:padding="@dimen/default_padding"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toTopOf="@+id/tvHomeKind"
+                android:layout_height="190dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvHomeQuiz"
-                tools:listitem="@layout/item_home_quiz" />
+                app:layout_constraintTop_toBottomOf="@+id/home_banner_specialty">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/home_banner"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="@+id/parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_banner_specialty" />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <me.relex.circleindicator.CircleIndicator3
+                android:id="@+id/home_banner_indicator"
+                android:layout_width="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:ci_drawable_unselected="@drawable/indicator_radius"
+                app:ci_drawable="@drawable/indicator_select_radius"
+                app:ci_animator="@animator/scale_with_alpha"
+                app:layout_constraintTop_toBottomOf="@id/cardview"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
 
             <TextView
                 android:id="@+id/tvHomeKind"
-                style="@style/content_text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_padding"
-                android:layout_marginEnd="175dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="64dp"
                 android:text="우리나라 특산물의 종류"
+                android:textColor="@color/black"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerViewHomeQuiz" />
+                app:layout_constraintTop_toBottomOf="@+id/home_banner_indicator" />
 
-            <Button
-                android:id="@+id/btnHomeKindMore"
-                style="@style/content_text_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="100dp"
-                android:layout_marginEnd="16dp"
-                android:background="@android:color/transparent"
-                android:text="더보기"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/tvHomeKind"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvHomeKind"
-                app:layout_constraintTop_toTopOf="@+id/tvHomeKind" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewHomeKind"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
-                android:layout_marginTop="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:orientation="horizontal"
-                android:padding="@dimen/default_padding"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvHomeKind"
-                app:layout_constraintVertical_bias="0.0"
-                app:spanCount="2"
-                tools:listitem="@layout/item_home_kind" />
+                tools:listitem="@layout/item_home_kind"
+                app:spanCount="2"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout 
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     tools:context=".presentation.fragment.MypageFragment">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/gl_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_appbar" />
 
     <TextView
         android:id="@+id/tv_top_banner"
+        style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/mypage_fragment_top_banner_text"
-        style="@style/top_banner_text_style"
-        android:layout_marginStart="@dimen/top_banner_left_icon_margin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/gl_top"/>
-
-    <TextView
-        android:id="@+id/tv_resign_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/mypage_fragment_top_banner_button"
-        android:layout_marginEnd="@dimen/top_banner_left_icon_margin"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@id/gl_top"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="@dimen/top_banner_height"/>
+        app:layout_constraintGuide_begin="56dp"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_start"
@@ -66,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mypage_fragment_sign_in_indic_text"
-            style="@style/content_text_style"
+            style="@style/content_text_style_high_light"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -79,13 +80,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tv_indic"
             android:layout_margin="@dimen/default_margin_20"
-            android:src="@drawable/img_app_name"/>
+            android:src="@drawable/ic_empty"/>
 
         <Button
             android:id="@+id/bt_sign_in"
             android:layout_width="match_parent"
             android:layout_height="@dimen/small_button_height"
             android:text="@string/mypage_fragment_sign_in_button_text"
+            android:textSize="16sp"
             android:background="@drawable/button_shape"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -99,41 +101,66 @@
         android:id="@+id/cl_user"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="@id/gl_start"
         app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintTop_toTopOf="@id/gl_top"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="visible">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_user_profile"
             android:layout_width="@dimen/my_page_image_size_small"
             android:layout_height="@dimen/my_page_image_size_small"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/default_margin_20"
-            android:src="@drawable/ic_launcher_background"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_user_name"
+            style="@style/content_text_style_high_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nickname"
-            style="@style/content_text_style_high_light"
-            app:layout_constraintTop_toTopOf="@+id/iv_user_profile"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_user_profile"
-            app:layout_constraintStart_toEndOf="@+id/iv_user_profile"
-            android:layout_marginStart="@dimen/default_margin_20"/>
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_user_profile"
+            app:layout_constraintStart_toStartOf="@+id/iv_user_profile"
+            app:layout_constraintTop_toBottomOf="@+id/iv_user_profile" />
 
-        <TextView
-            android:id="@+id/tv_log_out_button"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mypage_constraintLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mypage_fragment_sign_out_text"
-            style="@style/content_text_style"
-            app:layout_constraintTop_toTopOf="@id/iv_user_profile"
-            app:layout_constraintBottom_toBottomOf="@id/iv_user_profile"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_name">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/tv_log_out_button"
+                style="@style/content_text_style"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:background="@drawable/corner_button"
+                android:text="@string/mypage_fragment_sign_out_text"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/tv_resign_button"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="24dp"
+                android:background="@drawable/corner_button"
+                android:text="@string/mypage_fragment_top_banner_button"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/tv_log_out_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
             android:id="@+id/v_line"
@@ -141,9 +168,9 @@
             android:layout_height="1dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_user_profile"
-            android:layout_marginTop="@dimen/default_margin_20"
-            android:background="@color/black"/>
+            app:layout_constraintTop_toBottomOf="@id/mypage_constraintLayout"
+            android:layout_marginTop="32dp"
+            android:background="#BDBDBD"/>
 
         <TextView
             android:id="@+id/tv_recipe_indic"
@@ -151,7 +178,9 @@
             android:layout_height="wrap_content"
             android:text="@string/mypage_fragment_user_recipe_indic_text"
             style="@style/content_text_style"
-            android:layout_marginTop="@dimen/default_margin_20"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/v_line"/>
 

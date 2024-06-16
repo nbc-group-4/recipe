@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/specialtyFragment"
@@ -7,67 +8,94 @@
     android:layout_height="match_parent"
     tools:context=".presentation.fragment.SpecialtyFragment">
 
-    <EditText
-        android:id="@+id/etSpecialtySearch"
-        style="@style/top_banner_text_style"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_begin20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="아래 특산물을 참조하여 검색하세요"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
+
+
+    <EditText
+        android:id="@+id/etSpecialtySearch"
+        android:layout_width="348dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/corner_edittext"
+        android:drawableStart="@drawable/ic_searches"
+        android:drawablePadding="12dp"
+        android:hint="아래 특산품 종류중에서 검색해주세요"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ivSearch"
-        android:layout_width="@dimen/small_button_size"
-        android:layout_height="@dimen/small_button_size"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/search" />
+        android:id="@+id/back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/etSpecialtySearch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etSpecialtySearch"
+        app:srcCompat="@drawable/ic_back_arrows" />
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/ivSearch"-->
+    <!--        android:layout_width="@dimen/small_button_size"-->
+    <!--        android:layout_height="@dimen/small_button_size"-->
+    <!--        android:layout_marginTop="50dp"-->
+    <!--        android:layout_marginEnd="16dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:srcCompat="@drawable/search" />-->
 
     <TextView
         android:id="@+id/tvSpecialtyKind"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="과일"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="종류"
+        android:layout_marginTop="37dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline_begin20"
         app:layout_constraintTop_toBottomOf="@+id/etSpecialtySearch" />
 
-    <View
+
+    <!--    <androidx.core.widget.NestedScrollView-->
+    <!--        android:id="@+id/recyclerContainer"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyKind">-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSpecialty"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginEnd="160dp"
-        android:background="#808080"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyKind" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyKind"
+        app:spanCount="3"
+        tools:listitem="@layout/item_specialty" />
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/recyclerContainer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyKind">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewSpecialty"
-            style="@style/content_text_style"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:padding="@dimen/default_padding"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:spanCount="2"
-            tools:listitem="@layout/item_specialty" />
-
-    </androidx.core.widget.NestedScrollView>
+    <!--    </androidx.core.widget.NestedScrollView>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

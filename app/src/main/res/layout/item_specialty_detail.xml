@@ -25,29 +25,29 @@
     <TextView
         android:id="@+id/tvSpecialtyName"
         style="@style/content_text_style"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
+        android:layout_marginTop="10dp"
+        app:layout_constraintWidth_percent="1"
+        android:ellipsize="end"
         android:maxLines="1"
         android:text="특산품명"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardViewSpecialty" />
+        app:layout_constraintStart_toStartOf="@+id/cardViewSpecialty"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewSpecialty" />
 
     <TextView
         android:id="@+id/tvSpecialtyRegion"
         style="@style/content_text_style"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
+        android:layout_marginTop="5dp"
+        app:layout_constraintWidth_percent="1"
+        android:ellipsize="end"
         android:maxLines="1"
         android:text="지역"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSpecialtyName" />
+        app:layout_constraintStart_toStartOf="@+id/tvSpecialtyName"
+        app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

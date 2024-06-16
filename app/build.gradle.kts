@@ -114,6 +114,10 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     // bottomSheet
     implementation ("com.google.android.material:material:1.12.0")
+    //circleindicator
+    implementation ("me.relex:circleindicator:2.1.6")
+    // 이미지확대 라이브러리
+    implementation ("com.davemorrissey.labs:subsampling-scale-image-view:3.10.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

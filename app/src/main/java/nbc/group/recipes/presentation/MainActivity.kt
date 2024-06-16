@@ -49,4 +49,7 @@ class MainActivity : AppCompatActivity() {
     fun moveToMakeRecipeFragment() = navController
         .navigate(R.id.action_mainFragment_to_makeRecipeFragment)
     fun moveToBack() = navController.popBackStack()
+
+    fun moveToPrivacyPolicyFragment() = navController
+        .navigate(R.id.action_signUpFragment_to_privacyPolicyFragment)
 }

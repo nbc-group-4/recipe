@@ -139,7 +139,7 @@ class MypageFragment : Fragment() {
                 GlideApp.with(this@MypageFragment)
                     .load(Firebase.storage.reference
                         .child("userProfile/${currentUser.uid}/profile.jpg"))
-                    .error(R.drawable.img_app_name)
+                    .error(R.drawable.ic_appbar_mypage)
                     .into(binding.ivUserProfile)
                 viewModel.getUserMeta(currentUser.uid)
             }

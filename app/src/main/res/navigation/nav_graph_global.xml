@@ -36,7 +36,11 @@
         android:id="@+id/signUpFragment"
         android:name="nbc.group.recipes.presentation.fragment.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/specialtyFragment"
         android:name="nbc.group.recipes.presentation.fragment.SpecialtyFragment"
@@ -60,4 +64,9 @@
         android:name="nbc.group.recipes.presentation.fragment.RecipeDetailFragment"
         android:label="fragment_recipe_detail"
         tools:layout="@layout/fragment_recipe_detail" />
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="nbc.group.recipes.presentation.fragment.PrivacyPolicyFragment"
+        android:label="fragment_privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" />
 </navigation>

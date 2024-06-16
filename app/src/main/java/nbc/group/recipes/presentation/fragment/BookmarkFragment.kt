@@ -97,12 +97,18 @@ class BookmarkFragment : Fragment() {
             bookMarkViewModel.visibilityView.collect{
                 when(it){
                     VisibilityView.EMPTYVIEW -> {
-                        binding.tvEmpty.visibility = View.VISIBLE
-                        binding.recyclerView.visibility = View.INVISIBLE
+                        with(binding){
+                            tvEmpty.visibility = View.VISIBLE
+                            ivBookmarkEmpty.visibility = View.VISIBLE
+                            recyclerView.visibility = View.INVISIBLE
+                        }
                     }
                     VisibilityView.RECYCLERVIEW -> {
-                        binding.tvEmpty.visibility = View.INVISIBLE
-                        binding.recyclerView.visibility = View.VISIBLE
+                        with(binding){
+                            tvEmpty.visibility = View.INVISIBLE
+                            ivBookmarkEmpty.visibility = View.INVISIBLE
+                            recyclerView.visibility = View.VISIBLE
+                        }
                     }
                 }
             }
