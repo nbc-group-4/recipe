@@ -1,5 +1,8 @@
 package nbc.group.recipes.presentation.fragment
 
+import android.app.AlertDialog
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -65,6 +68,9 @@ class HomeFragment : Fragment() {
 
         // Splash 종료
         mainViewModel.homeFragmentStatusChange()
+        if(!isInternetConnection()) {
+            showDialog()
+        }
     }
 
     private fun setupRecyclerViewQuiz() {
@@ -105,10 +111,28 @@ class HomeFragment : Fragment() {
         specialtyViewModel.setSelectedKindItem(item)
     }
 
+    private fun isInternetConnection(): Boolean {
+        val cm = requireActivity()
+            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return cm.activeNetwork != null
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
         homeQuizAdapter = null
         homeKindAdapter = null
+    }
+
+    private fun showDialog() {
+        val dialog = AlertDialog.Builder(requireActivity())
+            .setTitle("인터넷이 필요한 서비스입니다.")
+            .setPositiveButton("확인") { dialogInterface, _ ->
+                dialogInterface.dismiss()
+            }
+            .setOnDismissListener {
+                requireActivity().finish()
+            }
+        dialog.show()
     }
 }

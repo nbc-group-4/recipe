@@ -18,4 +18,9 @@ interface RecipeDao {
     fun updateData(recipeEntity: RecipeEntity)
     @Delete
     fun deleteData(recipeEntity: RecipeEntity)
+    @Query("SELECT * FROM RecipeEntity WHERE id = :id")
+    fun getDataByIdForAPI(id: Int): List<RecipeEntity>
+    @Query("SELECT * FROM RecipeEntity WHERE firebaseId = :id")
+    fun getDataByIdForFirebase(id: String): List<RecipeEntity>
+
 }

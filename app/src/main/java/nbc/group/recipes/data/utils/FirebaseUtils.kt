@@ -23,3 +23,7 @@ fun getUserProfileStoragePath(uid: String): String {
 fun getUserMetaFirestorePath(uid: String): String {
     return ""
 }
+
+fun getRecipeStoragePath(recipeId: String): String {
+    return "recipeImage/$recipeId/0.jpg"
+}

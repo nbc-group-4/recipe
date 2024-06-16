@@ -1,5 +1,7 @@
 package nbc.group.recipes.presentation
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -30,10 +32,10 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.fcv_main) as NavHostFragment
         navController = navHostFragment.navController
 
+        // todo: Internet Connection Check
         splashScreen.setKeepOnScreenCondition {
             viewModel.splashFlow.value
         }
-
     }
 
     fun moveToSignInFragment() = navController

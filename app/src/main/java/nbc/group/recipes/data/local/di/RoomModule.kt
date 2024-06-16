@@ -8,8 +8,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import nbc.group.recipes.data.local.AppDatabase
+import nbc.group.recipes.data.local.dao.ContentBanDao
 import nbc.group.recipes.data.local.dao.SpecialtyDao
 import nbc.group.recipes.data.local.dao.RecipeDao
+import nbc.group.recipes.data.local.dao.UserBanDao
 import javax.inject.Singleton
 
 @Module
@@ -36,4 +38,16 @@ object RoomModule {
     fun provideRecipeDao(
         appDatabase: AppDatabase
     ): RecipeDao = appDatabase.recipeDao()
+
+    @Singleton
+    @Provides
+    fun provideContentBanDao(
+        appDatabase: AppDatabase
+    ): ContentBanDao = appDatabase.contentBanDao()
+
+    @Singleton
+    @Provides
+    fun provideUserBanDao(
+        appDatabase: AppDatabase
+    ): UserBanDao = appDatabase.userBanDao()
 }

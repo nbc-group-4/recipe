@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:ignore="ExtraText">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_recipe_img"
-        android:layout_width="142dp"
-        android:layout_height="124dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1.3f"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,35 +21,33 @@
 
     <TextView
         android:id="@+id/tv_recipe_name"
-        style="@style/top_banner_text_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="레시피명"
-        app:layout_constraintStart_toStartOf="@+id/iv_recipe_img"
-        app:layout_constraintTop_toBottomOf="@+id/iv_recipe_img" />
-
-    <TextView
-        android:id="@+id/tv_recipe_difficulty"
         style="@style/content_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:textStyle="bold"
+        android:text="레시피명"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_recipe_img"/>
+
+    <TextView
+        android:id="@+id/tv_recipe_difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:text="#초보"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/iv_recipe_img"
-        app:layout_constraintTop_toBottomOf="@+id/tv_recipe_name" />
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_recipe_name"/>
 
     <TextView
         android:id="@+id/tv_recipe_time"
-        style="@style/content_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:text="# 30분"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_recipe_difficulty" />
+        app:layout_constraintTop_toBottomOf="@id/tv_recipe_name"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
