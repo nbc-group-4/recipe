@@ -75,6 +75,7 @@ class RecipeFragment : Fragment() {
             }
         }
 
+
         viewLifecycleOwner.lifecycleScope.launch {
             recipeViewModel.firebaseRecipes.collect { nullable ->
                 Log.e("URGENT_TAG", "viewModelObserverVersionRalph: $nullable", )

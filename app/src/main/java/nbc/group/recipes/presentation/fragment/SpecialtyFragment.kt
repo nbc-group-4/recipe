@@ -56,6 +56,10 @@ class SpecialtyFragment : Fragment() {
         setRecyclerView()
         setUpListener()
         observeSelectedItem()
+
+        binding.backArrow.setOnClickListener {
+            (activity as MainActivity).moveToBack()
+        }
     }
 
     private fun setRecyclerView() {

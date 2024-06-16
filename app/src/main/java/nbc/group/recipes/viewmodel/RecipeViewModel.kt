@@ -47,6 +47,12 @@ class RecipeViewModel @Inject constructor(
     private val _firebaseRecipes = MutableStateFlow<FirebaseResult<List<Recipe>>?>(null)
     val firebaseRecipes = _firebaseRecipes.asStateFlow()
 
+    private val _contentBan = MutableStateFlow<List<ContentBanEntity>>(listOf())
+    val contentBan = _contentBan.asStateFlow()
+
+    private val _userBan = MutableStateFlow<List<UserBanEntity>>(listOf())
+    val userBan = _userBan.asStateFlow()
+
     init {
         viewModelScope.launch {
             launch {
@@ -78,10 +84,14 @@ class RecipeViewModel @Inject constructor(
         }
     }
 
+    fun recipeUpdate(recipes: List<RecipeEntity>) {
+        viewModelScope.launch {
+            _recipes.emit(recipes)
+        }
+    }
+
     fun insertContentBan(contentId: String) {
-        banRepository.insertContentBan(
-            contentId
-        )
+        banRepository.insertContentBan(contentId)
     }
 
     fun insertUserBan(userId: String) {
