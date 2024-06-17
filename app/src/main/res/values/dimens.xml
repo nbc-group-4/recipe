@@ -22,4 +22,7 @@
     <dimen name="make_recipe_image_size">108dp</dimen>
 
     <dimen name="recipe_fragment_top_banner_inter_value">12dp</dimen>
+    <dimen name="home_kind_image_size">96dp</dimen>
+
+
 </resources>

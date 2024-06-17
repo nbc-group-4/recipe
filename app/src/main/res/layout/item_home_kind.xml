@@ -18,8 +18,8 @@
 
             <ImageView
                 android:id="@+id/ivKind"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
+                android:layout_width="@dimen/home_kind_image_size"
+                android:layout_height="@dimen/home_kind_image_size"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_home_grain" />
 
