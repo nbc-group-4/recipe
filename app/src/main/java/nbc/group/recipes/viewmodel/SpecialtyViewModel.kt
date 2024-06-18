@@ -1,6 +1,7 @@
 package nbc.group.recipes.viewmodel
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,11 +36,13 @@ class SpecialtyViewModel @Inject constructor(
         viewModelScope.launch {
             val specialtyResponse = repository.getSpecialty(null, cntntsSj)
             val filteredItems = specialtyResponse.body.items.item?.filter { item ->
-                Log.e("URGENT_TAG", "searchItem: ${item.areaName}: ${item.cntntsSj}")
+                // Log.e("URGENT_TAG", "searchItem: ${item.areaName}: ${item.cntntsSj}")
                 item.cntntsSj?.contains(cntntsSj, ignoreCase = true) == true
+                        && item.cntntsSj?.contains("(주)") != true
             }
             if (filteredItems.isNullOrEmpty()) {
                 setSearchResult(emptyList())
+                // Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
             } else {
                 setSearchResult(filteredItems)
             }
