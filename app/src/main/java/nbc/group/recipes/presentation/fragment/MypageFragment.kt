@@ -1,7 +1,10 @@
 package nbc.group.recipes.presentation.fragment
 
 import android.Manifest
+import android.app.Dialog
 import android.app.ProgressDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +27,7 @@ import nbc.group.recipes.R
 import nbc.group.recipes.StorageGlideModule
 import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.databinding.CustomDialogBinding
 import nbc.group.recipes.databinding.FragmentMypageBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.MyPageRecipeAdapter
@@ -157,17 +161,58 @@ class MypageFragment : Fragment() {
     }
 
     private val resignButtonClickListener: (View) -> Unit = {
-        viewModel.resign()
-        viewModel.logout()
+        ResignDialog()
     }
 
     private val logOutButtonClickListener: (View) -> Unit = {
-        viewModel.logout()
+        LogoutDialog()
     }
 
     private val userProfileImageClickListener: (View) -> Unit = {
         pickMedia.launch(
             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
         )
+    }
+
+    private fun LogoutDialog(){
+        val dialog = Dialog(requireContext())
+        val dialogBinding = CustomDialogBinding.inflate(layoutInflater)
+        dialog.setContentView(dialogBinding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialogBinding.dialogTv.text = "로그아웃 하시겠습니까?"
+        dialogBinding.dialogCancelBtn.text = "아니오"
+        dialogBinding.dialogDeleteBtn.text = "네"
+
+        dialogBinding.dialogCancelBtn.setOnClickListener{
+            dialog.dismiss()
+        }
+        dialogBinding.dialogDeleteBtn.setOnClickListener{
+            viewModel.logout()
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+
+    private fun ResignDialog(){
+        val dialog = Dialog(requireContext())
+        val dialogBinding = CustomDialogBinding.inflate(layoutInflater)
+        dialog.setContentView(dialogBinding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialogBinding.dialogTv.text = "회원탈퇴를 하시겠습니까?"
+        dialogBinding.dialogCancelBtn.text = "아니오"
+        dialogBinding.dialogDeleteBtn.text = "네"
+
+        dialogBinding.dialogCancelBtn.setOnClickListener{
+            dialog.dismiss()
+        }
+        dialogBinding.dialogDeleteBtn.setOnClickListener{
+            viewModel.resign()
+            viewModel.logout()
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 }
