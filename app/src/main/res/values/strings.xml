@@ -63,6 +63,7 @@
     <!-- RecipeFragment -->
     <string name="recipe_fragment_top_banner_text">레시피</string>
     <string name="recipe_fragment_make_button_text">레시피 작성</string>
+    <string name="recipe_fragment_notice_text">해당 서비스는 추후에 업데이트 될 예정입니다</string>
 
     <!--region_alram_dialog-->
     <string name="region_dialog_title">특산물 데이터가 존재하는 지역</string>
