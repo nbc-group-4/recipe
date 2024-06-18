@@ -11,8 +11,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.KindItem
@@ -26,8 +24,6 @@ import nbc.group.recipes.specialties3
 import nbc.group.recipes.specialties4
 import nbc.group.recipes.specialties5
 import nbc.group.recipes.specialties6
-import nbc.group.recipes.specialties7
-import nbc.group.recipes.specialties8
 import nbc.group.recipes.viewmodel.MainViewModel
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
 
@@ -56,10 +52,6 @@ class SpecialtyFragment : Fragment() {
         setRecyclerView()
         setUpListener()
         observeSelectedItem()
-
-        binding.backArrow.setOnClickListener {
-            (activity as MainActivity).moveToBack()
-        }
     }
 
     private fun setRecyclerView() {
@@ -69,9 +61,9 @@ class SpecialtyFragment : Fragment() {
         }
     }
 
-    private fun setUpListener() = with(binding){
+    private fun setUpListener() = with(binding) {
         etSpecialtySearch.setOnEditorActionListener { v, actionId, event ->
-            if(actionId == EditorInfo.IME_ACTION_SEARCH){
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 performSearch()
                 hideKeyboard()
                 (activity as MainActivity).moveToSpecialtyDetailFragment()
@@ -79,9 +71,11 @@ class SpecialtyFragment : Fragment() {
             }
             return@setOnEditorActionListener false
         }
+
+        backArrow.setOnClickListener {
+            (activity as MainActivity).moveToBack()
+        }
     }
-
-
 
     private fun performSearch() {
         val searchQuery = binding.etSpecialtySearch.text.toString()
@@ -116,9 +110,9 @@ class SpecialtyFragment : Fragment() {
             "채소" -> specialties2
             "과일" -> specialties3
             "어류" -> specialties4
-            "고기" -> specialties6
-            "기타" -> specialties8
-            else -> specialties8
+            "고기" -> specialties5
+            "기타" -> specialties6
+            else -> specialties6
         }
     }
 
