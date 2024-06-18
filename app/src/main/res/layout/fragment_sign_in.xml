@@ -147,6 +147,7 @@
         android:layout_height="wrap_content"
         android:text="@string/sign_in_fragment_search_pw_button_text"
         android:textSize="14sp"
+        android:visibility="gone"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@+id/gl_start"
         app:layout_constraintTop_toBottomOf="@+id/tv_error" />
