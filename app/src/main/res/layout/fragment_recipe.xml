@@ -75,6 +75,7 @@
         app:layout_constraintStart_toStartOf="@id/gl_start"
         app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintTop_toBottomOf="@id/sv_chip_group"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -94,5 +95,15 @@
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recipe_fragment_notice_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
