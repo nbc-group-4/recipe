@@ -1,7 +1,6 @@
 package nbc.group.recipes.viewmodel
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +38,17 @@ class SpecialtyViewModel @Inject constructor(
                 // Log.e("URGENT_TAG", "searchItem: ${item.areaName}: ${item.cntntsSj}")
                 item.cntntsSj?.contains(cntntsSj, ignoreCase = true) == true
                         && item.cntntsSj?.contains("(주)") != true
+                        && item.cntntsSj?.contains("주식회사") != true
+                        && item.cntntsSj?.contains("법인") != true
+                        && item.cntntsSj?.contains("조합") != true
+                        && item.cntntsSj?.contains("단지") != true
+                        && item.cntntsSj?.contains("식품") != true
                         && item.cntntsSj?.contains("곤충") != true
+                        && item.cntntsSj?.contains("홍보관") != true
+                        && item.cntntsSj?.contains("농협") != true
+                        && item.cntntsSj?.contains("목장") != true
+
+
             }
             if (filteredItems.isNullOrEmpty()) {
                 setSearchResult(emptyList())
