@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.Geocoder
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -63,6 +64,7 @@ class MapFragment : Fragment() {
     private val mapSharedViewModel : MapSharedViewModel by activityViewModels()
 
     private var searchDocumentsResponse: SearchDocumentsResponse? = null
+    private var lastClickTime : Long = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -106,6 +108,12 @@ class MapFragment : Fragment() {
                 kakaoMap = kakaomap
 
                 kakaomap.setOnLabelClickListener { kakaoMap, labelLayer, label ->
+
+                    val currentTime = SystemClock.elapsedRealtime()
+                    if(currentTime - lastClickTime < 1000){
+                        return@setOnLabelClickListener
+                    }
+                    lastClickTime = currentTime
 
                     val searchText = binding.searchEt.text.toString()
                     // 특산품 데이터가 있는 지역이면
@@ -192,7 +200,7 @@ class MapFragment : Fragment() {
         kakaoMap?.setOnCameraMoveEndListener { kakaoMap, cameraPosition, gestureType ->
             val styles = kakaoMap.labelManager?.addLabelStyles(
                 LabelStyles.from(LabelStyle.from(R.drawable.ic_map_red)
-                        .setIconTransition(LabelTransition.from(Transition.Scale, Transition.Scale))
+                    .setIconTransition(LabelTransition.from(Transition.Scale, Transition.Scale))
                 )
             )
 
@@ -354,5 +362,6 @@ class MapFragment : Fragment() {
         (requireParentFragment().parentFragment as MainFragment).moveToRecipeFragment()
     }
 }
+
 
 
