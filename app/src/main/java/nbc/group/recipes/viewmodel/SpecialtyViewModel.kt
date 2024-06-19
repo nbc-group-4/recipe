@@ -39,6 +39,7 @@ class SpecialtyViewModel @Inject constructor(
                 // Log.e("URGENT_TAG", "searchItem: ${item.areaName}: ${item.cntntsSj}")
                 item.cntntsSj?.contains(cntntsSj, ignoreCase = true) == true
                         && item.cntntsSj?.contains("(주)") != true
+                        && item.cntntsSj?.contains("곤충") != true
             }
             if (filteredItems.isNullOrEmpty()) {
                 setSearchResult(emptyList())

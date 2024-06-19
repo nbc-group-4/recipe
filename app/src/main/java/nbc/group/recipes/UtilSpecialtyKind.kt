@@ -28,17 +28,6 @@ val specialtyKind = listOf(
 
 )
 
-// 더보기 아이템
-val specialtyKindMore = listOf(
-    KindItem(
-        item = "쌀",
-        imageResourceId = R.drawable.img_specialty_kind7
-    ),
-    KindItem(
-        item = "기타",
-        imageResourceId = R.drawable.img_specialty_kind8
-    )
-)
 
 data class KindItem(
     val item: String,

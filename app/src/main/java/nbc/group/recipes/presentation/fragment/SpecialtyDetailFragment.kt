@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentSpecialtyDetailBinding
+import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.SpecialtyDetailAdapter
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
 
@@ -43,6 +45,7 @@ class SpecialtyDetailFragment : Fragment() {
         binding.tvSpecialtyDetail.startAnimation(animation)
 
         setRecyclerView()
+        setUpListener()
         observeSearchResult()
     }
 
@@ -61,10 +64,16 @@ class SpecialtyDetailFragment : Fragment() {
         }
     }
 
+    private fun setUpListener() = with(binding) {
+        backArrow.setOnClickListener {
+            (activity as MainActivity).moveToBack()
+        }
+    }
+
     private fun observeSearchResult() {
         viewLifecycleOwner.lifecycleScope.launch {
             sharedViewModel.searchResult.collect { searchResult ->
-                Log.e("URGENT_TAG", "observeSearchResult: $searchResult", )
+                Log.e("URGENT_TAG", "observeSearchResult: $searchResult")
                 specialtyDetailAdapter?.submitList(searchResult)
             }
         }
