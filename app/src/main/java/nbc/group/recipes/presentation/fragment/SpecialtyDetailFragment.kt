@@ -3,6 +3,7 @@ package nbc.group.recipes.presentation.fragment
 import nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -73,9 +74,11 @@ class SpecialtyDetailFragment : Fragment() {
     private fun observeSearchResult() {
         viewLifecycleOwner.lifecycleScope.launch {
             sharedViewModel.searchResult.collect { searchResult ->
-                // Log.e("URGENT_TAG", "observeSearchResult: $searchResult")
                 if (searchResult.isEmpty()) {
-                    Toast.makeText(requireContext(), "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
+                    val toast =
+                        Toast.makeText(requireContext(), "검색 결과가 없습니다", Toast.LENGTH_SHORT)
+                    toast.setGravity(Gravity.CENTER, 0, 0)
+                    toast.show()
                 }
                 specialtyDetailAdapter?.submitList(searchResult)
             }

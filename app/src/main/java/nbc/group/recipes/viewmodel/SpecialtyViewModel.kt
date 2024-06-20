@@ -46,9 +46,13 @@ class SpecialtyViewModel @Inject constructor(
                         && item.cntntsSj?.contains("곤충") != true
                         && item.cntntsSj?.contains("홍보관") != true
                         && item.cntntsSj?.contains("농협") != true
+                        && item.cntntsSj?.contains("농장") != true
                         && item.cntntsSj?.contains("목장") != true
-
-
+                        && item.cntntsSj?.contains("파인토피아") != true
+                        && item.cntntsSj?.contains("건강원") != true
+                        && item.cntntsSj?.contains("도자기") != true
+                        && item.cntntsSj?.contains("화장품") != true
+                        && item.cntntsSj?.contains("주머니") != true
             }
             if (filteredItems.isNullOrEmpty()) {
                 setSearchResult(emptyList())
