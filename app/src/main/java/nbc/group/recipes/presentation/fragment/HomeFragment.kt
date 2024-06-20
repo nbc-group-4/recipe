@@ -20,7 +20,6 @@ import nbc.group.recipes.presentation.adapter.BannerAdpater
 import nbc.group.recipes.presentation.adapter.HomeKindAdapter
 import nbc.group.recipes.presentation.adapter.HomeQuizAdapter
 import nbc.group.recipes.specialtyKind
-import nbc.group.recipes.specialtyKindMore
 import nbc.group.recipes.viewmodel.MainViewModel
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
 
@@ -63,7 +62,7 @@ class HomeFragment : Fragment() {
 
         // Splash 종료
         mainViewModel.homeFragmentStatusChange()
-        if(!isInternetConnection()) {
+        if (!isInternetConnection()) {
             showDialog()
         }
         banner()
@@ -79,15 +78,15 @@ class HomeFragment : Fragment() {
         homeKindAdapter?.submitList(specialtyKind)
     }
 
-    private fun loadMoreItems() {
-        val currentList = homeKindAdapter?.currentList?.toMutableList()
-        if (currentList != null) {
-            if (currentList.size == specialtyKind.size) {
-                currentList.addAll(specialtyKindMore.take(2))
-            }
-        }
-        homeKindAdapter?.submitList(currentList)
-    }
+//    private fun loadMoreItems() {
+//        val currentList = homeKindAdapter?.currentList?.toMutableList()
+//        if (currentList != null) {
+//            if (currentList.size == specialtyKind.size) {
+//                currentList.addAll(specialtyKindMore.take(2))
+//            }
+//        }
+//        homeKindAdapter?.submitList(currentList)
+//    }
 
     private fun navigateToSpecialty(item: KindItem) {
         specialtyViewModel.setSelectedKindItem(item)
@@ -104,33 +103,6 @@ class HomeFragment : Fragment() {
         return cm.activeNetwork != null
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        homeQuizAdapter = null
-        homeKindAdapter = null
-    }
-
-
-    private fun banner(){
-
-        val bannerAdpater = BannerAdpater(this)
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner1))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner2))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner3))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner4))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner5))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner6))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner7))
-
-
-        with(binding){
-            homeBanner.adapter = bannerAdpater
-            homeBanner.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-            homeBannerIndicator.setViewPager(binding.homeBanner)
-        }
-    }
-
     private fun showDialog() {
         val dialog = AlertDialog.Builder(requireActivity())
             .setTitle("인터넷이 필요한 서비스입니다.")
@@ -143,4 +115,28 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
+    private fun banner() {
+
+        val bannerAdpater = BannerAdpater(this)
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner1))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner2))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner3))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner4))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner5))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner6))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner7))
+
+        with(binding) {
+            homeBanner.adapter = bannerAdpater
+            homeBanner.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            homeBannerIndicator.setViewPager(binding.homeBanner)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        homeQuizAdapter = null
+        homeKindAdapter = null
+    }
 }
