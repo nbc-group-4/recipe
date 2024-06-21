@@ -106,6 +106,9 @@ class MapFragment : Fragment() {
             override fun onMapReady(kakaomap: KakaoMap) {
 
                 kakaoMap = kakaomap
+                kakaomap.setGestureEnable(GestureType.OneFingerDoubleTap, false)
+                kakaomap.setGestureEnable(GestureType.Zoom, false)
+                kakaomap.setGestureEnable(GestureType.OneFingerZoom, false)
 
                 kakaomap.setOnLabelClickListener { kakaoMap, labelLayer, label ->
 
@@ -129,7 +132,7 @@ class MapFragment : Fragment() {
                     if (getRegionName(latitude, longitude).isNotEmpty()) {
                         mapSharedViewModel.getSpecialtie(getRegionName(latitude, longitude))
 
-                        val bottomSheetFragment = BottomSheetFragment()
+                        val bottomSheetFragment = BottomSheetFragment.newInstance(regionName)
                         bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
                     } else {
                         Snackbar.make(binding.searchEt, "해당 지역은 특산물 데이터가 없습니다", Snackbar.LENGTH_SHORT).show()
@@ -148,7 +151,6 @@ class MapFragment : Fragment() {
             if(actionId == EditorInfo.IME_ACTION_SEARCH){
 
                 val searchText = searchEt.text.toString()
-
 
                 // 검색할 수 있는 지역이 포함되어있으면
                 if (AllcontainsRegoin(searchText)){
@@ -311,9 +313,9 @@ class MapFragment : Fragment() {
 
 
     // 특산품에 대한 데이터가 있는 지역리스트
-    fun containsRegoin(searchText: String): Boolean {
-        return regions.any { searchText.contains(it) }
-    }
+//    fun containsRegoin(searchText: String): Boolean {
+//        return regions.any { searchText.contains(it) }
+//    }
 
 
     // 검색이 되는 모든 지역리스트
