@@ -42,8 +42,8 @@ class SpecialtyDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         specialtyDetailAdapter = SpecialtyDetailAdapter()
 
-        val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.text_effect)
-        binding.tvSpecialtyDetail.startAnimation(animation)
+        // val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.text_effect)
+        // binding.tvSpecialtyDetail.startAnimation(animation)
 
         setRecyclerView()
         setUpListener()
