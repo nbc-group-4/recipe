@@ -116,38 +116,28 @@ class MapFragment : Fragment() {
                     lastClickTime = currentTime
 
                     val searchText = binding.searchEt.text.toString()
-                    // 특산품 데이터가 있는 지역이면
-                    if (containsRegoin(searchText)){
+                    val latitude = label.position.latitude
+                    val longitude = label.position.longitude
 
-                        val latitude = label.position.latitude
-                        val longitude = label.position.longitude
+                    val regionName = if (searchText.isNotEmpty()) {
+                        getRegionName(latitude, longitude)
+                    } else {
+                        AllgetRegionName(latitude, longitude)
+                    }
+                    binding.searchEt.setText(regionName)
 
-                        val regionName = getRegionName(latitude, longitude)
-                        binding.searchEt.setText(regionName)
+                    if (getRegionName(latitude, longitude).isNotEmpty()) {
+                        mapSharedViewModel.getSpecialtie(getRegionName(latitude, longitude))
 
-                        if (regionName.isNotEmpty()){
-                            // 라벨이 클릭될때, 지역명을 관찰해서 특산물데이터 받아옴
-                            mapSharedViewModel.getSpecialtie(regionName)
-
-                            val bottomSheetFragment = BottomSheetFragment()
-                            bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
-                        }else{
-                            Snackbar.make(binding.searchEt, "지역명을 입력해주세요", Snackbar.LENGTH_SHORT).show()
-                        }
-
-                    }else{
-                        // 특산품 데이터가 없는 지역일경우
-                        val latitude = label.position.latitude
-                        val longitude = label.position.longitude
-                        val regionName = AllgetRegionName(latitude, longitude)
-                        binding.searchEt.setText(regionName)
-                        Snackbar.make(binding.searchEt, "해당지역은 특산물 데이터가 없습니다", Snackbar.LENGTH_SHORT).show()
+                        val bottomSheetFragment = BottomSheetFragment()
+                        bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
+                    } else {
+                        Snackbar.make(binding.searchEt, "해당 지역은 특산물 데이터가 없습니다", Snackbar.LENGTH_SHORT).show()
                     }
                 }
             }
-            override fun getZoomLevel(): Int {
-                return 8
-            }
+
+            override fun getZoomLevel() = 8
         })
     }
 
@@ -159,11 +149,6 @@ class MapFragment : Fragment() {
 
                 val searchText = searchEt.text.toString()
 
-                if (searchText.isNotEmpty()) {
-                    mapViewModel.getRegionSearch(searchText)
-                } else {
-                    Snackbar.make(searchEt, "검색어를 입력해주세요", Snackbar.LENGTH_SHORT).show()
-                }
 
                 // 검색할 수 있는 지역이 포함되어있으면
                 if (AllcontainsRegoin(searchText)){
@@ -351,6 +336,12 @@ class MapFragment : Fragment() {
         dialog.show()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.searchEt.setText("")
+        binding.chipGroup.clearCheck()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -362,6 +353,7 @@ class MapFragment : Fragment() {
         (requireParentFragment().parentFragment as MainFragment).moveToRecipeFragment()
     }
 }
+
 
 
 
