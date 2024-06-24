@@ -54,4 +54,15 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <ImageView
+        android:id="@+id/iv_specialtyDetail_empty"
+        android:layout_width="@dimen/my_page_image_size"
+        android:layout_height="@dimen/my_page_image_size"
+        android:src="@drawable/ic_empty"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyDetail" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -72,12 +72,19 @@ class SpecialtyDetailFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             sharedViewModel.searchResult.collect { searchResult ->
                 if (searchResult.isEmpty()) {
+                    binding.recyclerViewSpecialtyDetail.visibility = View.GONE
+                    binding.ivSpecialtyDetailEmpty.visibility = View.VISIBLE
+
                     val toast =
                         Toast.makeText(requireContext(), "검색 결과가 없습니다", Toast.LENGTH_SHORT)
                     toast.setGravity(Gravity.CENTER, 0, 0)
                     toast.show()
+
+                } else {
+                    binding.recyclerViewSpecialtyDetail.visibility = View.VISIBLE
+                    binding.ivSpecialtyDetailEmpty.visibility = View.GONE
+                    specialtyDetailAdapter?.submitList(searchResult)
                 }
-                specialtyDetailAdapter?.submitList(searchResult)
             }
         }
     }
