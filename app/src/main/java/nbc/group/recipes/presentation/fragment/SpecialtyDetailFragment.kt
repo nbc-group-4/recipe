@@ -74,15 +74,17 @@ class SpecialtyDetailFragment : Fragment() {
                 if (searchResult.isEmpty()) {
                     binding.recyclerViewSpecialtyDetail.visibility = View.GONE
                     binding.ivSpecialtyDetailEmpty.visibility = View.VISIBLE
+                    binding.tvSpecialtyDetailEmpty.visibility = View.VISIBLE
 
-                    val toast =
-                        Toast.makeText(requireContext(), "검색 결과가 없습니다", Toast.LENGTH_SHORT)
-                    toast.setGravity(Gravity.CENTER, 0, 0)
-                    toast.show()
+//                    val toast =
+//                        Toast.makeText(requireContext(), "검색 결과가 없습니다", Toast.LENGTH_SHORT)
+//                    toast.setGravity(Gravity.CENTER, 0, 0)
+//                    toast.show()
 
                 } else {
                     binding.recyclerViewSpecialtyDetail.visibility = View.VISIBLE
                     binding.ivSpecialtyDetailEmpty.visibility = View.GONE
+                    binding.tvSpecialtyDetailEmpty.visibility = View.GONE
                     specialtyDetailAdapter?.submitList(searchResult)
                 }
             }

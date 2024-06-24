@@ -65,4 +65,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyDetail" />
 
+    <TextView
+        android:id="@+id/tv_specialtyDetail_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:text="검색된 특산품이 없습니다"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_specialtyDetail_empty" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
