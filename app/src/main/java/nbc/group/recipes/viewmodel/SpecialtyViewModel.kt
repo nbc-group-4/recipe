@@ -1,6 +1,5 @@
 package nbc.group.recipes.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,6 +9,7 @@ import kotlinx.coroutines.launch
 import nbc.group.recipes.KindItem
 import nbc.group.recipes.data.model.dto.Item
 import nbc.group.recipes.data.repository.RecipeSpecialtyRepository
+import nbc.group.recipes.specialties
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,7 +31,7 @@ class SpecialtyViewModel @Inject constructor(
         _searchResult.value = result
     }
 
-    fun searchItem(cntntsSj: String) {
+    fun searchItem(cntntsSj: String, specialties: List<String>) {
         viewModelScope.launch {
             val specialtyResponse = repository.getSpecialty(null, cntntsSj)
             val filteredItems = specialtyResponse.body.items.item?.filter { item ->
@@ -53,6 +53,7 @@ class SpecialtyViewModel @Inject constructor(
                         && item.cntntsSj?.contains("도자기") != true
                         && item.cntntsSj?.contains("화장품") != true
                         && item.cntntsSj?.contains("주머니") != true
+                        && specialties.contains(cntntsSj)
             }
             if (filteredItems.isNullOrEmpty()) {
                 setSearchResult(emptyList())

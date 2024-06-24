@@ -24,7 +24,6 @@ import nbc.group.recipes.specialties3
 import nbc.group.recipes.specialties4
 import nbc.group.recipes.specialties5
 import nbc.group.recipes.specialties6
-import nbc.group.recipes.viewmodel.MainViewModel
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
 
 @AndroidEntryPoint
@@ -79,7 +78,17 @@ class SpecialtyFragment : Fragment() {
 
     private fun performSearch() {
         val searchQuery = binding.etSpecialtySearch.text.toString()
-        sharedViewModel.searchItem(searchQuery)
+        val selectedKind = binding.tvSpecialtyKind.text.toString()
+        val specialties = when (selectedKind) {
+            "곡물" -> specialties1
+            "채소" -> specialties2
+            "과일" -> specialties3
+            "어류" -> specialties4
+            "고기" -> specialties5
+            "기타" -> specialties6
+            else -> specialties6
+        }
+        sharedViewModel.searchItem(searchQuery, specialties)
     }
 
     private fun hideKeyboard() {
