@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -35,6 +37,9 @@ class HomeFragment : Fragment() {
     private var homeKindAdapter: HomeKindAdapter? = null
     private val specialtyViewModel: SpecialtyViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val bannerScroll = autoBannerScroll()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -110,6 +115,7 @@ class HomeFragment : Fragment() {
         _binding = null
         homeQuizAdapter = null
         homeKindAdapter = null
+        handler.removeCallbacks(bannerScroll)
     }
 
 
@@ -132,6 +138,8 @@ class HomeFragment : Fragment() {
             homeBanner.offscreenPageLimit = 3
             homeBanner.setPageTransformer(MarginPageTransformer(30))
         }
+
+        handler.postDelayed(bannerScroll, 2000)
     }
 
     private fun showDialog() {
@@ -144,6 +152,13 @@ class HomeFragment : Fragment() {
                 requireActivity().finish()
             }
         dialog.show()
+    }
+
+    private fun autoBannerScroll() = object  : Runnable{
+            override fun run() {
+                binding.homeBanner.currentItem = (binding.homeBanner.currentItem + 1) % (binding.homeBanner.adapter?.itemCount ?: 1)
+                handler.postDelayed(this, 2000)
+            }
     }
 
 }
