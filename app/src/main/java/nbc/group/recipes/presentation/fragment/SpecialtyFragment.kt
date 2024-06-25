@@ -15,6 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.KindItem
 import nbc.group.recipes.R
+import nbc.group.recipes.StringsSearch
+import nbc.group.recipes.StringsSpecialty
 import nbc.group.recipes.databinding.FragmentSpecialtyBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.SpecialtyAdapter
@@ -80,12 +82,12 @@ class SpecialtyFragment : Fragment() {
         val searchQuery = binding.etSpecialtySearch.text.toString()
         val selectedKind = binding.tvSpecialtyKind.text.toString()
         val specialties = when (selectedKind) {
-            "곡물" -> specialties1
-            "채소" -> specialties2
-            "과일" -> specialties3
-            "어류" -> specialties4
-            "고기" -> specialties5
-            "기타" -> specialties6
+            StringsSpecialty.KIND1 -> specialties1
+            StringsSpecialty.KIND2 -> specialties2
+            StringsSpecialty.KIND3 -> specialties3
+            StringsSpecialty.KIND4 -> specialties4
+            StringsSpecialty.KIND5 -> specialties5
+            StringsSpecialty.KIND6 -> specialties6
             else -> specialties6
         }
         sharedViewModel.searchItem(searchQuery, specialties)
@@ -115,24 +117,24 @@ class SpecialtyFragment : Fragment() {
 
     private fun displaySpecialtyItems(kind: String): List<String> {
         return when (kind) {
-            "곡물" -> specialties1
-            "채소" -> specialties2
-            "과일" -> specialties3
-            "어류" -> specialties4
-            "고기" -> specialties5
-            "기타" -> specialties6
+            StringsSpecialty.KIND1 -> specialties1
+            StringsSpecialty.KIND2 -> specialties2
+            StringsSpecialty.KIND3 -> specialties3
+            StringsSpecialty.KIND4 -> specialties4
+            StringsSpecialty.KIND5 -> specialties5
+            StringsSpecialty.KIND6 -> specialties6
             else -> specialties6
         }
     }
 
     private fun getImageResourceId(specialty: String): Int {
         return when (specialty) {
-            "곡물" -> R.drawable.ic_home_grain
-            "채소" -> R.drawable.ic_home_vegetable
-            "과일" -> R.drawable.ic_home_fruit
-            "어류" -> R.drawable.ic_home_fish
-            "고기" -> R.drawable.ic_home_meat
-            "기타" -> R.drawable.ic_home_etc
+            StringsSpecialty.KIND1 -> R.drawable.ic_home_grain
+            StringsSpecialty.KIND2 -> R.drawable.ic_home_vegetable
+            StringsSpecialty.KIND3 -> R.drawable.ic_home_fruit
+            StringsSpecialty.KIND4 -> R.drawable.ic_home_fish
+            StringsSpecialty.KIND5 -> R.drawable.ic_home_meat
+            StringsSpecialty.KIND6 -> R.drawable.ic_home_etc
             else -> R.drawable.ic_home_etc
         }
     }
