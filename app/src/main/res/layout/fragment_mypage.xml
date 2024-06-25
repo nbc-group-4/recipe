@@ -152,6 +152,7 @@
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="24dp"
+                style="@style/content_text_style"
                 android:background="@drawable/corner_button"
                 android:text="@string/mypage_fragment_top_banner_button"
                 android:textColor="@color/black"
