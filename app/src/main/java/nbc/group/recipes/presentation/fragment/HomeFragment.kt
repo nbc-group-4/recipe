@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import nbc.group.recipes.databinding.FragmentHomeBinding
@@ -127,7 +128,9 @@ class HomeFragment : Fragment() {
         with(binding){
             homeBanner.adapter = bannerAdpater
             homeBanner.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-            homeBannerIndicator.setViewPager(binding.homeBanner)
+            homeBannerIndicator.setViewPager(homeBanner)
+            homeBanner.offscreenPageLimit = 3
+            homeBanner.setPageTransformer(MarginPageTransformer(30))
         }
     }
 
