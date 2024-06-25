@@ -1,21 +1,48 @@
 <resources>
     <string name="app_name">Recipes</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="search_text">지역명을 입력해주세요</string>
-    <string name="region_first">통영</string>
-    <string name="region_second">대전</string>
-    <string name="region_three">안성</string>
-    <string name="region_four">파주</string>
-    <string name="region_five">서산</string>
-    <string name="region_six">세종</string>
+
+    <!-- HomeFragment -->
+    <string name="home_fragment_app_name">맛고</string>
+    <string name="home_fragment_season_specialty">6월 제철 특산물</string>
+    <string name="home_fragment_specialty_kind">우리나라 특산물의 종류</string>
+
+    <!-- SpecialtyFragment -->
+    <string name="specialty_fragment_kind_search">아래 특산품 종류 중에서 검색해주세요</string>
+    <string name="specialty_fragment_kind">종류</string>
+
+    <!-- SpecialtyDetailFragment -->
+    <string name="specialty_detail_fragment_search_result">찾으신 특산품 리스트입니다!</string>
+    <string name="specialty_detail_fragment_search_null">검색된 특산품이 없습니다</string>
+
+    <!-- MapFragment -->
+    <string name="map_fragment_hello_blank_fragment">Hello blank fragment</string>
+    <string name="map_fragment_search_text">지역명을 입력해주세요</string>
+    <string name="map_fragment_region_first">통영</string>
+    <string name="map_fragment_region_second">대전</string>
+    <string name="map_fragment_region_three">안성</string>
+    <string name="map_fragment_region_four">파주</string>
+    <string name="map_fragment_region_five">서산</string>
+    <string name="map_fragment_region_six">세종</string>
+
+    <!-- BottomsheetFragment -->
+    <string name="bottom_sheet_fragment_specialty">특산물</string>
 
     <!-- RecipeDetailFragment -->
-    <string name="recipe_base_explain">레시피 간단 설명</string>
-    <string name="recipe_difficulty">난이도</string>
-    <string name="recipe_cooking_time">소요 시간</string>
-    <string name="recipe_ingredient_title">주요 재료</string>
-    <string name="recipe_steps">조리 방법</string>
+    <string name="recipe_detail_fragment_base_explain">레시피 간단 설명</string>
+    <string name="recipe_detail_fragment_difficulty">난이도</string>
+    <string name="recipe_detail_fragment_cooking_time">소요 시간</string>
+    <string name="recipe_detail_fragment_ingredient_title">주요 재료</string>
+    <string name="recipe_detail_fragment_steps">조리 방법</string>
+    <string name="recipe_detail_fragment_top">레시피</string>
+    <string name="recipe_detail_fragment_name">레시피명</string>
+    <string name="recipe_detail_fragment_user">작성자</string>
+    <string name="recipe_detail_fragment_time">30분</string>
+    <string name="recipe_detail_fragment_textview">TextView</string>
+    <string name="recipe_detail_fragment_textview2">TextView</string>
+
+    <!-- BottomsheetFragment_recipe_detail -->
+    <string name="bottom_sheet_fragment_recipe_detail_ban_content">게시물 신고</string>
+    <string name="bottom_sheet_fragment_recipe_detail_ban_user">사용자 신고</string>
 
     <!-- SignInFragment -->
     <string name="sign_in_fragment_top_banner_text">로그인</string>
@@ -26,6 +53,8 @@
     <string name="sign_in_fragment_sign_up_button_text">회원가입</string>
     <string name="sign_in_fragment_search_pw_button_text">비밀번호 찾기</string>
     <string name="sign_in_fragment_sign_in_other_way_text">다른 계정으로 로그인</string>
+    <string name="sign_in_fragment_welcome">맛고에 오신것을\n환영합니다</string>
+    <string name="sign_in_fragment_user_service">회원 서비스 이용을 위해 로그인을 해주세요.</string>
 
     <!-- SignUpFragment -->
     <string name="sign_up_fragment_top_banner_text">회원가입</string>
@@ -35,6 +64,10 @@
     <string name="sign_up_fragment_nickname_hint">닉네임</string>
     <string name="sign_up_fragment_id_duplication_check_indic_text">중복확인</string>
     <string name="sign_up_fragment_confirm_button_text">회원가입</string>
+    <string name="sign_up_fragment_terms">맛고 서비스 이용약관에 동의해주세요</string>
+    <string name="sign_up_fragment_checkbox_all">약관에 모두 동의</string>
+    <string name="sign_up_fragment_age">[필수] 만 14세 이상</string>
+    <string name="sign_up_fragment_privacy">[필수] 개인정보 수집 및 이용동의</string>
 
     <!-- MypageFragment -->
     <string name="mypage_fragment_top_banner_text">마이페이지</string>
@@ -65,8 +98,44 @@
     <string name="recipe_fragment_make_button_text">레시피 작성</string>
     <string name="recipe_fragment_notice_text">해당 서비스는 추후에 업데이트 될 예정입니다</string>
 
-    <!--region_alram_dialog-->
+    <!-- BookmarkFragment -->
+    <string name="bookmark_fragment_top_banner_text">북마크한 레시피</string>
+    <string name="bookmark_fragment_count">총 0개</string>
+    <string name="bookmark_fragment_empty">북마크한 레시피가 없어요</string>
+
+    <!-- region_alram_dialog -->
     <string name="region_dialog_title">특산물 데이터가 존재하는 지역</string>
     <string name="region_dialog_content">해당하는 지역에만 특산물 데이터가 존재합니다</string>
+
+    <!-- custom_dialog -->
+    <string name="dialog_bookmark_delete">북마크를 삭제하시겠습니까?</string>
+    <string name="dialog_cancel">취소</string>
+    <string name="dialog_delete">삭제</string>
+
+    <!-- home_banner -->
+    <string name="home_banner">6월의 달콤한 선물,\n신선한 제철 옥수수!</string>
+
+    <!-- home_kind_item -->
+    <string name="item_home_kind">곡물</string>
+
+    <!-- specialty_item -->
+    <string name="item_specialty">참외</string>
+
+    <!-- specialty_detail_item -->
+    <string name="item_specialty_name">특산품명</string>
+    <string name="item_specialty_region">지역</string>
+
+    <!-- bottomsheet_item -->
+    <string name="item_bottomsheet_recipe_name">레시피명</string>
+
+    <!-- recipe_item -->
+    <string name="item_recipe_name">레시피명</string>
+    <string name="item_recipe_difficulty">#초보</string>
+
+    <!-- bookmark_item -->
+    <string name="item_bookmark_recipe_name">레시피명</string>
+    <string name="item_bookmark_recipe_description">레시피 기본설명</string>
+    <string name="item_bookmark_recipe_difficulty">초보</string>
+    <string name="item_bookmark_recipe_time">30분</string>
 
 </resources>
