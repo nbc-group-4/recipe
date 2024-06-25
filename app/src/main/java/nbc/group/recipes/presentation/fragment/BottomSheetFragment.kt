@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 import nbc.group.recipes.presentation.adapter.BottomSheetAdapter
 import nbc.group.recipes.databinding.FragmentBottomsheetBinding
 import nbc.group.recipes.presentation.MainActivity
+import nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import nbc.group.recipes.viewmodel.MapSharedViewModel
 
 @AndroidEntryPoint
@@ -39,6 +41,18 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
+    companion object{
+        private const val SEARCH_TEXT = "search_text"
+        fun newInstance(searchText : String) : BottomSheetFragment{
+            val fragment = BottomSheetFragment()
+            val args = Bundle().apply {
+                putString(SEARCH_TEXT, searchText)
+            }
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +67,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
         setRecyclerView()
         observeSpecialtyData()
+        searchText()
     }
 
 
@@ -80,6 +95,11 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
             }
         }
+    }
+
+    private fun searchText(){
+        val searchText = arguments?.getString(SEARCH_TEXT) ?: ""
+        binding.bottomSheetTitle.text = "\"${searchText}\"의 특산물"
     }
 
     override fun onDestroyView() {
