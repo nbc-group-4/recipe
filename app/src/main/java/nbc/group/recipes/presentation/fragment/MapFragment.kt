@@ -113,7 +113,7 @@ class MapFragment : Fragment() {
                 kakaomap.setOnLabelClickListener { kakaoMap, labelLayer, label ->
 
                     val currentTime = SystemClock.elapsedRealtime()
-                    if(currentTime - lastClickTime < 1000){
+                    if(currentTime - lastClickTime < 3000){
                         return@setOnLabelClickListener
                     }
                     lastClickTime = currentTime
@@ -355,7 +355,3 @@ class MapFragment : Fragment() {
         (requireParentFragment().parentFragment as MainFragment).moveToRecipeFragment()
     }
 }
-
-
-
-
