@@ -16,7 +16,7 @@ import nbc.group.recipes.databinding.FragmentHomeBinding
 import nbc.group.recipes.KindItem
 import nbc.group.recipes.R
 import nbc.group.recipes.presentation.MainActivity
-import nbc.group.recipes.presentation.adapter.BannerAdpater
+import nbc.group.recipes.presentation.adapter.BannerAdapter
 import nbc.group.recipes.presentation.adapter.HomeKindAdapter
 import nbc.group.recipes.presentation.adapter.HomeQuizAdapter
 import nbc.group.recipes.specialtyKind
@@ -114,18 +114,18 @@ class HomeFragment : Fragment() {
 
     private fun banner(){
 
-        val bannerAdpater = BannerAdpater(this)
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner1))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner2))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner3))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner4))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner5))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner6))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner7))
+        val bannerAdapter = BannerAdapter(this)
+        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner1, "https://terms.naver.com/search.naver?query=%EC%98%A5%EC%88%98%EC%88%98&searchType=&dicType=&subject="))
+        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner2, "https://terms.naver.com/search.naver?query=%EA%B0%90%EC%9E%90&searchType=text&dicType=&subject="))
+        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner3, "https://terms.naver.com/search.naver?query=%EA%B0%80%EB%A6%AC%EB%B9%84&searchType=text&dicType=&subject="))
+        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner4, "https://terms.naver.com/search.naver?query=%ED%99%8D%EA%B2%8C&searchType=text&dicType=&subject="))
+        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner5, "https://terms.naver.com/search.naver?query=%EC%83%88%EA%BC%AC%EB%A7%89&searchType=text&dicType=&subject="))
+        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner6, "https://terms.naver.com/search.naver?query=%EC%88%98%EB%B0%95&searchType=text&dicType=&subject="))
+        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner7, "https://terms.naver.com/search.naver?query=%EB%B0%A4%ED%98%B8%EB%B0%95&searchType=text&dicType=&subject="))
 
 
         with(binding){
-            homeBanner.adapter = bannerAdpater
+            homeBanner.adapter = bannerAdapter
             homeBanner.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             homeBannerIndicator.setViewPager(binding.homeBanner)
         }

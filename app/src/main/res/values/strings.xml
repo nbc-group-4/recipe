@@ -69,4 +69,9 @@
     <string name="region_dialog_title">특산물 데이터가 존재하는 지역</string>
     <string name="region_dialog_content">해당하는 지역에만 특산물 데이터가 존재합니다</string>
 
+    <!--BannerFragment-->
+    <string name="banner_fragment_link_confirm">외부 브라우저로 연결됩니다.\n연결하시겠습니까?</string>
+    <string name="banner_fragment_dialog_stay">머무르기</string>
+    <string name="banner_fragment_dialog_move">이동하기</string>
+
 </resources>
