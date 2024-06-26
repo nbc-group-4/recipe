@@ -51,7 +51,7 @@ class SpecialtyDetailFragment : Fragment() {
         binding.recyclerViewSpecialtyDetail.apply {
             adapter = specialtyDetailAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
-            // 아이템 데코레이션
+
             addItemDecoration(
                 GridSpacingItemDecoration(
                     2,

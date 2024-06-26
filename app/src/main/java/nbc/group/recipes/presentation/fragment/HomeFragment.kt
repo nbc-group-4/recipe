@@ -19,6 +19,7 @@ import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.BannerAdpater
 import nbc.group.recipes.presentation.adapter.HomeKindAdapter
 import nbc.group.recipes.presentation.adapter.HomeQuizAdapter
+import nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import nbc.group.recipes.specialtyKind
 import nbc.group.recipes.viewmodel.MainViewModel
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
@@ -55,11 +56,6 @@ class HomeFragment : Fragment() {
 
         setupRecyclerViewKind()
 
-//        // 더보기 클릭
-//        binding.btnHomeKindMore.setOnClickListener {
-//            loadMoreItems()
-//        }
-
         // Splash 종료
         mainViewModel.homeFragmentStatusChange()
         if (!isInternetConnection()) {
@@ -72,21 +68,10 @@ class HomeFragment : Fragment() {
         binding.recyclerViewHomeKind.apply {
             adapter = homeKindAdapter
             layoutManager =
-                GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
-
+                GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
         }
         homeKindAdapter?.submitList(specialtyKind)
     }
-
-//    private fun loadMoreItems() {
-//        val currentList = homeKindAdapter?.currentList?.toMutableList()
-//        if (currentList != null) {
-//            if (currentList.size == specialtyKind.size) {
-//                currentList.addAll(specialtyKindMore.take(2))
-//            }
-//        }
-//        homeKindAdapter?.submitList(currentList)
-//    }
 
     private fun navigateToSpecialty(item: KindItem) {
         specialtyViewModel.setSelectedKindItem(item)

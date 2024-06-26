@@ -15,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.KindItem
 import nbc.group.recipes.R
-import nbc.group.recipes.StringsSearch
 import nbc.group.recipes.StringsSpecialty
 import nbc.group.recipes.databinding.FragmentSpecialtyBinding
 import nbc.group.recipes.presentation.MainActivity

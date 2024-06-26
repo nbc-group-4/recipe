@@ -24,16 +24,16 @@ val specialtyKind = listOf(
     KindItem(
         item = "기타",
         imageResourceId = R.drawable.ic_home_etc
-    ),
+    )
 )
 
 data class KindItem(
     val item: String,
     val imageResourceId: Int,
-    val isMore: Boolean = false // 더보기 여부 속성
+    // val isMore: Boolean = false
 )
 
 data class RecipeItem(
     val item: String,
-    val imageResourceId: Int,
+    val imageResourceId: Int
 )
