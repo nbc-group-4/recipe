@@ -40,18 +40,27 @@ class MainActivity : AppCompatActivity() {
 
     fun moveToSignInFragment() = navController
         .navigate(R.id.action_mainFragment_to_signInFragment)
+
     fun moveToSignUpFragment() = navController
         .navigate(R.id.action_signInFragment_to_signUpFragment)
+
     fun moveToRecipeDetailFragment(bundle: Bundle) = navController
         .navigate(R.id.action_mainFragment_to_recipeDetailFragment, bundle)
+
     fun moveToSpecialtyFragment() = navController
         .navigate(R.id.action_mainFragment_to_specialtyFragment)
+
     fun moveToSpecialtyDetailFragment() = navController
         .navigate(R.id.action_specialtyFragment_to_specialtyDetailFragment)
+
     fun moveToMakeRecipeFragment() = navController
         .navigate(R.id.action_mainFragment_to_makeRecipeFragment)
+
     fun moveToBack() = navController.popBackStack()
 
     fun moveToPrivacyPolicyFragment() = navController
         .navigate(R.id.action_signUpFragment_to_privacyPolicyFragment)
+
+    fun moveToRecipeDetailFragment() = navController
+        .navigate(R.id.action_mypageFragment_to_recipeDetailFragment)
 }
