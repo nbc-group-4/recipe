@@ -76,7 +76,11 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
         with(binding.bottomSheetRecyclerView){
             adapter = bottomSheetAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager = GridLayoutManager(requireContext(), 2)
+
+            addItemDecoration(
+                GridSpacingItemDecoration(spanCount = 2, spacing = 120 , includeEdge = false)
+            )
         }
     }
 
