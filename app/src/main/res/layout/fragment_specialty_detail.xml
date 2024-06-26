@@ -15,7 +15,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="150dp"
-        android:text="찾으신 특산품 리스트입니다!"
+        android:text="@string/specialty_detail_fragment_search_result"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/recyclerContainer"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvSpecialtyDetail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvSpecialtyDetail"
-        app:srcCompat="@drawable/ic_back_arrows" />
+        app:srcCompat="@drawable/ic_back" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/recyclerContainer"
@@ -72,7 +72,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="50dp"
         android:gravity="center"
-        android:text="검색된 특산품이 없습니다"
+        android:text="@string/specialty_detail_fragment_search_null"
         android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="gone"

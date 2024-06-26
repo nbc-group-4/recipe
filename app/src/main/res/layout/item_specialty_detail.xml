@@ -31,7 +31,7 @@
         app:layout_constraintWidth_percent="1"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="특산품명"
+        android:text="@string/item_specialty_name"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/cardViewSpecialty"
         app:layout_constraintTop_toBottomOf="@+id/cardViewSpecialty" />
@@ -45,7 +45,7 @@
         app:layout_constraintWidth_percent="1"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="지역"
+        android:text="@string/item_specialty_region"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tvSpecialtyName"
         app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyName" />

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,54 +12,53 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="56dp"/>
+        app:layout_constraintGuide_begin="56dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/fragment_horizontal_margin"/>
+        app:layout_constraintGuide_begin="@dimen/fragment_horizontal_margin" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/fragment_horizontal_margin"/>
+        app:layout_constraintGuide_end="@dimen/fragment_horizontal_margin" />
 
 
-    <ImageView
-        android:id="@+id/app_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/gl_top"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_appbar" />
+    <!--    <ImageView-->
+    <!--        android:id="@+id/app_bar"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="20dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/gl_top"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:srcCompat="@drawable/ic_appbar" />-->
 
     <TextView
         android:id="@+id/tv_bookmark"
         style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="북마크한 레시피"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="20dp"
+        android:text="@string/bookmark_fragment_top_banner_text"
         app:layout_constraintBottom_toBottomOf="@id/gl_top"
-        app:layout_constraintStart_toEndOf="@+id/app_bar"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/tv_bookmark_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="총 0개"
-        android:textSize="15sp"
-        android:textStyle="bold"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
+        android:text="@string/bookmark_fragment_count"
+        android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_bookmark" />
 
@@ -106,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="북마크한 레시피가 없어요"
+            android:text="@string/bookmark_fragment_empty"
             android:textSize="20sp"
             android:textStyle="bold"
             android:visibility="visible"

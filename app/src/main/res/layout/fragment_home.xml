@@ -37,7 +37,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -59,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="맛고"
+                android:text="@string/home_fragment_app_name"
                 android:textColor="@color/green1"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -70,8 +69,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
-
-
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -90,55 +87,51 @@
                 android:id="@+id/home_banner_specialty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="6월 제철 특산물"
-                android:layout_marginTop="30dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/home_fragment_season_specialty"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardview"
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
-                app:cardCornerRadius="10dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="20dp"
+                app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_banner_specialty">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/home_banner"
-                android:layout_width="match_parent"
-                android:layout_height="190dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="@+id/parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_banner_specialty" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/home_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="@+id/parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/home_banner_specialty" />
 
             </androidx.cardview.widget.CardView>
-
 
             <me.relex.circleindicator.CircleIndicator3
                 android:id="@+id/home_banner_indicator"
                 android:layout_width="match_parent"
-                android:layout_marginTop="15dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginEnd="20dp"
-                app:ci_drawable_unselected="@drawable/indicator_radius"
-                app:ci_drawable="@drawable/indicator_select_radius"
                 app:ci_animator="@animator/scale_with_alpha"
-                app:layout_constraintTop_toBottomOf="@id/cardview"
+                app:ci_drawable="@drawable/indicator_select_radius"
+                app:ci_drawable_unselected="@drawable/indicator_radius"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-
+                app:layout_constraintTop_toBottomOf="@id/cardview" />
 
             <TextView
                 android:id="@+id/tvHomeKind"
@@ -146,29 +139,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="64dp"
-                android:text="우리나라 특산물의 종류"
+                android:text="@string/home_fragment_specialty_kind"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_banner_indicator" />
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewHomeKind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="20dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvHomeKind"
-                tools:listitem="@layout/item_home_kind"
-                app:spanCount="2"/>
+                app:spanCount="3"
+                tools:listitem="@layout/item_home_kind" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

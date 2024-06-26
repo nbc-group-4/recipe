@@ -131,6 +131,7 @@
     <!-- recipe_item -->
     <string name="item_recipe_name">레시피명</string>
     <string name="item_recipe_difficulty">#초보</string>
+    <string name="item_recipe_time"># 30분</string>
 
     <!-- bookmark_item -->
     <string name="item_bookmark_recipe_name">레시피명</string>
