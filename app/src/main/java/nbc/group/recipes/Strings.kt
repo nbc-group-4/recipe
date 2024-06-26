@@ -27,17 +27,3 @@ object StringsSearch {
     const val ITEM15 = "화장품"
     const val ITEM16 = "주머니"
 }
-
-object StringsRegion {
-    const val CITY1 = ""
-    const val CITY2 = ""
-    const val CITY3 = ""
-    const val CITY4 = ""
-    const val CITY5 = ""
-    const val CITY6 = ""
-    const val CITY7 = ""
-    const val CITY8 = ""
-    const val CITY9 = ""
-    const val CITY10 = ""
-
-}

@@ -29,8 +29,7 @@ val specialtyKind = listOf(
 
 data class KindItem(
     val item: String,
-    val imageResourceId: Int,
-    // val isMore: Boolean = false
+    val imageResourceId: Int
 )
 
 data class RecipeItem(
