@@ -1,11 +1,8 @@
 package nbc.group.recipes.presentation.fragment
 
-import android.Manifest
 import android.app.Dialog
-import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -24,8 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.GlideApp
 import nbc.group.recipes.R
-import nbc.group.recipes.StorageGlideModule
-import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.network.FirebaseResult
 import nbc.group.recipes.databinding.CustomDialogBinding
 import nbc.group.recipes.databinding.FragmentMypageBinding
@@ -33,10 +28,10 @@ import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.MyPageRecipeAdapter
 import nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import nbc.group.recipes.viewmodel.MainViewModel
-import java.io.File
+import nbc.group.recipes.viewmodel.MypageSharedViewModel
 
 @AndroidEntryPoint
-class MypageFragment : Fragment() {
+class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
 
     companion object {
         const val TAG = "MypageFragment"
@@ -49,11 +44,12 @@ class MypageFragment : Fragment() {
     private val adapter get() = _adapter!!
 
     private val viewModel: MainViewModel by activityViewModels()
+    private val sharedViewModel: MypageSharedViewModel by activityViewModels() // 레시피 디테일 전달
 
     private val pickMedia = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri ->
-        if(uri != null) {
+        if (uri != null) {
             viewLifecycleOwner.lifecycleScope.launch {
                 val inputStream = requireActivity().contentResolver.openInputStream(uri)
                 viewModel.putImage(inputStream!!)
@@ -73,7 +69,7 @@ class MypageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _adapter = MyPageRecipeAdapter(this)
+        _adapter = MyPageRecipeAdapter(this, this)
 
         with(binding) {
             btSignIn.setOnClickListener(signInButtonClickListener)
@@ -93,21 +89,23 @@ class MypageFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.signInFlow.collect { nullable ->
-                if(nullable == null) {
+                if (nullable == null) {
                     binding.clUser.visibility = View.GONE
                     binding.clNonUser.visibility = View.VISIBLE
                 }
                 nullable?.let { nonNull ->
-                    when(nonNull) {
+                    when (nonNull) {
                         is FirebaseResult.Success -> {
                             binding.clNonUser.visibility = View.GONE
                             binding.clUser.visibility = View.VISIBLE
                             initUser()
                         }
+
                         is FirebaseResult.Failure -> {
                             binding.clUser.visibility = View.GONE
                             binding.clNonUser.visibility = View.VISIBLE
                         }
+
                         is FirebaseResult.Loading -> {
 
                         }
@@ -119,16 +117,21 @@ class MypageFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.userMetaData.collect { nullable ->
                 nullable?.let { nonNull ->
-                    when(nonNull) {
+                    when (nonNull) {
                         is FirebaseResult.Success -> {
-                            Log.e(TAG, "onViewCreated: get recipeIds: Success", )
+                            Log.e(TAG, "onViewCreated: get recipeIds: Success")
                             adapter.submitList(nonNull.result.recipeIds)
                         }
+
                         is FirebaseResult.Failure -> {
-                            Log.e(TAG, "onViewCreated: get recipeIds: Failure: ${nonNull.exception}", )
+                            Log.e(
+                                TAG,
+                                "onViewCreated: get recipeIds: Failure: ${nonNull.exception}",
+                            )
                         }
+
                         is FirebaseResult.Loading -> {
-                            Log.e(TAG, "onViewCreated: get recipeIds: Loading", )
+                            Log.e(TAG, "onViewCreated: get recipeIds: Loading")
                         }
                     }
                 }
@@ -141,13 +144,21 @@ class MypageFragment : Fragment() {
             viewModel.currentUser?.let { currentUser ->
                 binding.tvUserName.text = currentUser.displayName
                 GlideApp.with(this@MypageFragment)
-                    .load(Firebase.storage.reference
-                        .child("userProfile/${currentUser.uid}/profile.jpg"))
+                    .load(
+                        Firebase.storage.reference
+                            .child("userProfile/${currentUser.uid}/profile.jpg")
+                    )
                     .error(R.drawable.ic_appbar_mypage)
                     .into(binding.ivUserProfile)
                 viewModel.getUserMeta(currentUser.uid)
             }
         }
+    }
+
+    // 작성한 레시피 클릭
+    override fun onClick(recipeId: String) {
+        sharedViewModel.selectRecipe(recipeId)
+        (activity as MainActivity).moveToRecipeDetailFragment()
     }
 
     override fun onDestroyView() {
@@ -174,7 +185,7 @@ class MypageFragment : Fragment() {
         )
     }
 
-    private fun LogoutDialog(){
+    private fun LogoutDialog() {
         val dialog = Dialog(requireContext())
         val dialogBinding = CustomDialogBinding.inflate(layoutInflater)
         dialog.setContentView(dialogBinding.root)
@@ -184,10 +195,10 @@ class MypageFragment : Fragment() {
         dialogBinding.dialogCancelBtn.text = "아니오"
         dialogBinding.dialogDeleteBtn.text = "네"
 
-        dialogBinding.dialogCancelBtn.setOnClickListener{
+        dialogBinding.dialogCancelBtn.setOnClickListener {
             dialog.dismiss()
         }
-        dialogBinding.dialogDeleteBtn.setOnClickListener{
+        dialogBinding.dialogDeleteBtn.setOnClickListener {
             viewModel.logout()
             dialog.dismiss()
         }
@@ -195,7 +206,7 @@ class MypageFragment : Fragment() {
     }
 
 
-    private fun ResignDialog(){
+    private fun ResignDialog() {
         val dialog = Dialog(requireContext())
         val dialogBinding = CustomDialogBinding.inflate(layoutInflater)
         dialog.setContentView(dialogBinding.root)
@@ -205,10 +216,10 @@ class MypageFragment : Fragment() {
         dialogBinding.dialogCancelBtn.text = "아니오"
         dialogBinding.dialogDeleteBtn.text = "네"
 
-        dialogBinding.dialogCancelBtn.setOnClickListener{
+        dialogBinding.dialogCancelBtn.setOnClickListener {
             dialog.dismiss()
         }
-        dialogBinding.dialogDeleteBtn.setOnClickListener{
+        dialogBinding.dialogDeleteBtn.setOnClickListener {
             viewModel.resign()
             viewModel.logout()
             dialog.dismiss()
