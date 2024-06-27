@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.data.network.NetworkResult
 import nbc.group.recipes.databinding.CustomDialogBinding
 import nbc.group.recipes.databinding.FindPasswordDialogBinding
 import nbc.group.recipes.presentation.MainActivity
@@ -71,15 +71,15 @@ class SignInFragment : Fragment() {
             viewModel.signInFlow.collect { nullable ->
                 nullable?.let { nonNull ->
                     when(nonNull) {
-                        is FirebaseResult.Success -> {
+                        is NetworkResult.Success -> {
                             (activity as MainActivity).moveToBack()
                         }
-                        is FirebaseResult.Failure -> {
+                        is NetworkResult.Failure -> {
                             Log.e(TAG, "onViewCreated: Failure", )
                             binding.tvError.text = nonNull.exception.message
 
                         }
-                        is FirebaseResult.Loading -> {
+                        is NetworkResult.Loading -> {
 
                         }
                     }

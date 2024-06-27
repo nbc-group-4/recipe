@@ -74,8 +74,7 @@ class HomeFragment : Fragment() {
         binding.recyclerViewHomeKind.apply {
             adapter = homeKindAdapter
             layoutManager =
-                GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
-
+                GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
         }
         homeKindAdapter?.submitList(specialtyKind)
     }
