@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.Geocoder
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -53,6 +54,18 @@ import java.util.Locale
 @AndroidEntryPoint
 class MapFragment : Fragment() {
 
+    /**
+     *
+     * 검색어를 입력하고 확인을 누르면
+     * 뷰모델의 stateflow에 값을 emit한다.
+     *
+     * 해당 stateflow를 관찰하고 있다가
+     * 값이 emit되면 collect의 람다에서 마커를 지도에 그리는 로직을 수행한다.
+     * stateflow의 값이 null이면 지도에 있는 마커를 제거한다.
+     *
+     *
+     * */
+
     private val binding get() = _binding!!
     private var _binding: FragmentMapBinding? = null
 
@@ -63,6 +76,7 @@ class MapFragment : Fragment() {
     private val mapSharedViewModel : MapSharedViewModel by activityViewModels()
 
     private var searchDocumentsResponse: SearchDocumentsResponse? = null
+    private var lastClickTime : Long = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -104,42 +118,41 @@ class MapFragment : Fragment() {
             override fun onMapReady(kakaomap: KakaoMap) {
 
                 kakaoMap = kakaomap
+                kakaomap.setGestureEnable(GestureType.OneFingerDoubleTap, false)
+                kakaomap.setGestureEnable(GestureType.Zoom, false)
+                kakaomap.setGestureEnable(GestureType.OneFingerZoom, false)
 
                 kakaomap.setOnLabelClickListener { kakaoMap, labelLayer, label ->
 
+                    val currentTime = SystemClock.elapsedRealtime()
+                    if(currentTime - lastClickTime < 3000){
+                        return@setOnLabelClickListener
+                    }
+                    lastClickTime = currentTime
+
                     val searchText = binding.searchEt.text.toString()
-                    // 특산품 데이터가 있는 지역이면
-                    if (containsRegoin(searchText)){
+                    val latitude = label.position.latitude
+                    val longitude = label.position.longitude
 
-                        val latitude = label.position.latitude
-                        val longitude = label.position.longitude
+                    val regionName = if (searchText.isNotEmpty()) {
+                        getRegionName(latitude, longitude)
+                    } else {
+                        AllgetRegionName(latitude, longitude)
+                    }
+                    binding.searchEt.setText(regionName)
 
-                        val regionName = getRegionName(latitude, longitude)
-                        binding.searchEt.setText(regionName)
+                    if (getRegionName(latitude, longitude).isNotEmpty()) {
+                        mapSharedViewModel.getSpecialtie(getRegionName(latitude, longitude))
 
-                        if (regionName.isNotEmpty()){
-                            // 라벨이 클릭될때, 지역명을 관찰해서 특산물데이터 받아옴
-                            mapSharedViewModel.getSpecialtie(regionName)
-
-                            val bottomSheetFragment = BottomSheetFragment()
-                            bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
-                        }else{
-                            Snackbar.make(binding.searchEt, "지역명을 입력해주세요", Snackbar.LENGTH_SHORT).show()
-                        }
-
-                    }else{
-                        // 특산품 데이터가 없는 지역일경우
-                        val latitude = label.position.latitude
-                        val longitude = label.position.longitude
-                        val regionName = AllgetRegionName(latitude, longitude)
-                        binding.searchEt.setText(regionName)
-                        Snackbar.make(binding.searchEt, "해당지역은 특산물 데이터가 없습니다", Snackbar.LENGTH_SHORT).show()
+                        val bottomSheetFragment = BottomSheetFragment.newInstance(regionName)
+                        bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
+                    } else {
+                        Snackbar.make(binding.searchEt, "해당 지역은 특산물 데이터가 없습니다", Snackbar.LENGTH_SHORT).show()
                     }
                 }
             }
-            override fun getZoomLevel(): Int {
-                return 8
-            }
+
+            override fun getZoomLevel() = 8
         })
     }
 
@@ -150,12 +163,6 @@ class MapFragment : Fragment() {
             if(actionId == EditorInfo.IME_ACTION_SEARCH){
 
                 val searchText = searchEt.text.toString()
-
-                if (searchText.isNotEmpty()) {
-                    mapViewModel.getRegionSearch(searchText)
-                } else {
-                    Snackbar.make(searchEt, "검색어를 입력해주세요", Snackbar.LENGTH_SHORT).show()
-                }
 
                 // 검색할 수 있는 지역이 포함되어있으면
                 if (AllcontainsRegoin(searchText)){
@@ -192,7 +199,7 @@ class MapFragment : Fragment() {
         kakaoMap?.setOnCameraMoveEndListener { kakaoMap, cameraPosition, gestureType ->
             val styles = kakaoMap.labelManager?.addLabelStyles(
                 LabelStyles.from(LabelStyle.from(R.drawable.ic_map_red)
-                        .setIconTransition(LabelTransition.from(Transition.Scale, Transition.Scale))
+                    .setIconTransition(LabelTransition.from(Transition.Scale, Transition.Scale))
                 )
             )
 
@@ -318,9 +325,9 @@ class MapFragment : Fragment() {
 
 
     // 특산품에 대한 데이터가 있는 지역리스트
-    fun containsRegoin(searchText: String): Boolean {
-        return regions.any { searchText.contains(it) }
-    }
+//    fun containsRegoin(searchText: String): Boolean {
+//        return regions.any { searchText.contains(it) }
+//    }
 
 
     // 검색이 되는 모든 지역리스트
@@ -343,6 +350,12 @@ class MapFragment : Fragment() {
         dialog.show()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.searchEt.setText("")
+        binding.chipGroup.clearCheck()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -353,6 +366,8 @@ class MapFragment : Fragment() {
     fun moveToRecipeFragment() {
         (requireParentFragment().parentFragment as MainFragment).moveToRecipeFragment()
     }
+
+    fun moveToRecipeGraphFragment() {
+        (requireParentFragment().parentFragment as MainFragment).moveToRecipeGraphFragment()
+    }
 }
-
-

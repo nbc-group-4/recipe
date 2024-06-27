@@ -1,18 +1,23 @@
 package nbc.group.recipes.presentation.fragment
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.R
-import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.data.network.NetworkResult
 import nbc.group.recipes.databinding.FragmentSignUpBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.viewmodel.MainViewModel
@@ -46,13 +51,18 @@ class SignUpFragment : Fragment() {
             ivCheckbox2Arrow.setOnClickListener {
                 (activity as MainActivity).moveToPrivacyPolicyFragment()
             }
+
+            etId.addTextChangedListener(textWatcher)
+            etPw.addTextChangedListener(textWatcher)
+            etPwCheck.addTextChangedListener(textWatcher)
+            etNickname.addTextChangedListener(textWatcher)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.signUpFlow.collect { nullable ->
                 nullable?.let { nonNull -> with(binding){
                         when (nonNull) {
-                            is FirebaseResult.Success -> {
+                            is NetworkResult.Success -> {
                                 if (checkboxAll.isChecked){
                                     findNavController().popBackStack()
                                 }else{
@@ -60,12 +70,12 @@ class SignUpFragment : Fragment() {
                                 }
                             }
 
-                            is FirebaseResult.Failure -> {
+                            is NetworkResult.Failure -> {
                                 clLoading.visibility = View.GONE
                                 tvErrorIndic.text = nonNull.exception.message
                             }
 
-                            is FirebaseResult.Loading -> {
+                            is NetworkResult.Loading -> {
                                 clLoading.visibility = View.VISIBLE
                             }
                         }
@@ -124,6 +134,35 @@ class SignUpFragment : Fragment() {
                 }else -> {
                 checkboxAll.isChecked = (checkbox1.isChecked && checkbox2.isChecked)
                 }
+            }
+        }
+    }
+
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            updateButton()
+        }
+        override fun afterTextChanged(s: Editable?) {
+        }
+    }
+
+    private fun updateButton() {
+        with(binding) {
+            val emailFlag = etId.text.toString().isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(etId.text.toString()).matches()
+            val passFlag = etPw.text.toString().length >= 6
+            val passCheckFlag = etPw.text.toString() == etPwCheck.text.toString()
+            val nicknameFlag = etNickname.text.toString().isNotEmpty()
+
+            val allFieldsValid = emailFlag && passFlag && passCheckFlag && nicknameFlag
+
+            if (allFieldsValid) {
+                btSignUp.isEnabled = true
+                btSignUp.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.green1))
+            } else {
+                btSignUp.isEnabled = false
+                btSignUp.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.unclick_btn))
             }
         }
     }

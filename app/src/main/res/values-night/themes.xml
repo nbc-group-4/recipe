@@ -3,5 +3,19 @@
     <style name="Base.Theme.Recipes" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">#14870C</item>
+        <item name="chipStyle">@style/Widget.recipe.Chip</item>
+    </style>
+
+    <style name="Theme.Recipes" parent="Base.Theme.Recipes" />
+
+    <style name="RoundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="CustomFabShape" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 </resources>

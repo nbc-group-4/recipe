@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,7 +18,9 @@ import kotlinx.coroutines.launch
 import nbc.group.recipes.presentation.adapter.BottomSheetAdapter
 import nbc.group.recipes.databinding.FragmentBottomsheetBinding
 import nbc.group.recipes.presentation.MainActivity
+import nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import nbc.group.recipes.viewmodel.MapSharedViewModel
+import nbc.group.recipes.viewmodel.RecipeGraphViewModel
 
 @AndroidEntryPoint
 class BottomSheetFragment : BottomSheetDialogFragment() {
@@ -25,6 +28,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentBottomsheetBinding? = null
 
     private val mapSharedViewModel : MapSharedViewModel by activityViewModels()
+    private val recipeGraphViewModel: RecipeGraphViewModel by activityViewModels()
 
     private val bottomSheetAdapter : BottomSheetAdapter by lazy {
         BottomSheetAdapter{ item, position ->
@@ -33,9 +37,23 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             mapSharedViewModel.getSelectedSpecialty(item)
             Log.d("click_specialtyData__",item.toString())
 
+            recipeGraphViewModel.setCurrentSpecialty(item)
+
             // RecipeFragment로 이동
             // (activity as MainActivity).moveToRecipeFragment() todo: bottom navigation 이동
-            (parentFragment as MapFragment).moveToRecipeFragment()
+            (parentFragment as MapFragment).moveToRecipeGraphFragment()
+        }
+    }
+
+    companion object{
+        private const val SEARCH_TEXT = "search_text"
+        fun newInstance(searchText : String) : BottomSheetFragment{
+            val fragment = BottomSheetFragment()
+            val args = Bundle().apply {
+                putString(SEARCH_TEXT, searchText)
+            }
+            fragment.arguments = args
+            return fragment
         }
     }
 
@@ -53,6 +71,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
         setRecyclerView()
         observeSpecialtyData()
+        searchText()
     }
 
 
@@ -61,7 +80,11 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
         with(binding.bottomSheetRecyclerView){
             adapter = bottomSheetAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager = GridLayoutManager(requireContext(), 2)
+
+            addItemDecoration(
+                GridSpacingItemDecoration(spanCount = 2, spacing = 120 , includeEdge = false)
+            )
         }
     }
 
@@ -80,6 +103,11 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
             }
         }
+    }
+
+    private fun searchText(){
+        val searchText = arguments?.getString(SEARCH_TEXT) ?: ""
+        binding.bottomSheetTitle.text = "\"${searchText}\"의 특산물"
     }
 
     override fun onDestroyView() {
