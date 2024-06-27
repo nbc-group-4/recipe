@@ -6,20 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.firebase.ktx.Firebase
-import nbc.group.recipes.R
 import nbc.group.recipes.databinding.FragmentSignInBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.data.network.NetworkResult
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.viewmodel.MainViewModel
 
@@ -57,15 +49,15 @@ class SignInFragment : Fragment() {
             viewModel.signInFlow.collect { nullable ->
                 nullable?.let { nonNull ->
                     when(nonNull) {
-                        is FirebaseResult.Success -> {
+                        is NetworkResult.Success -> {
                             (activity as MainActivity).moveToBack()
                         }
-                        is FirebaseResult.Failure -> {
+                        is NetworkResult.Failure -> {
                             Log.e(TAG, "onViewCreated: Failure", )
                             binding.tvError.text = nonNull.exception.message
 
                         }
-                        is FirebaseResult.Loading -> {
+                        is NetworkResult.Loading -> {
 
                         }
                     }

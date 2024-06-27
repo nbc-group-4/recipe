@@ -54,6 +54,18 @@ import java.util.Locale
 @AndroidEntryPoint
 class MapFragment : Fragment() {
 
+    /**
+     *
+     * 검색어를 입력하고 확인을 누르면
+     * 뷰모델의 stateflow에 값을 emit한다.
+     *
+     * 해당 stateflow를 관찰하고 있다가
+     * 값이 emit되면 collect의 람다에서 마커를 지도에 그리는 로직을 수행한다.
+     * stateflow의 값이 null이면 지도에 있는 마커를 제거한다.
+     *
+     *
+     * */
+
     private val binding get() = _binding!!
     private var _binding: FragmentMapBinding? = null
 
@@ -353,5 +365,9 @@ class MapFragment : Fragment() {
 
     fun moveToRecipeFragment() {
         (requireParentFragment().parentFragment as MainFragment).moveToRecipeFragment()
+    }
+
+    fun moveToRecipeGraphFragment() {
+        (requireParentFragment().parentFragment as MainFragment).moveToRecipeGraphFragment()
     }
 }

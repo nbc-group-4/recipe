@@ -1,16 +1,12 @@
 package nbc.group.recipes.data.repository
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.model.firebase.UserMetaData
-import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.data.network.NetworkResult
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -21,41 +17,41 @@ class FirebaseRepositoryImpl @Inject constructor(
     override suspend fun putImage(
         storagePath: String,
         inputStream: InputStream,
-    ): FirebaseResult<Boolean> {
+    ): NetworkResult<Boolean> {
         return try {
             val profileRef = storage.reference
                 .child(storagePath)
             val result = profileRef.putStream(inputStream).await()
-            FirebaseResult.Success(true)
+            NetworkResult.Success(true)
         } catch (e: Exception) {
-            FirebaseResult.Failure(e)
+            NetworkResult.Failure(e)
         }
     }
 
-    override suspend fun getRecipes(): FirebaseResult<List<Recipe>> {
+    override suspend fun getRecipes(): NetworkResult<List<Recipe>> {
         return try {
             val result = firestore.collection("recipes").get().await()
-            FirebaseResult.Success(result.toObjects(Recipe::class.java))
+            NetworkResult.Success(result.toObjects(Recipe::class.java))
         } catch (e: Exception) {
-            FirebaseResult.Failure(e)
+            NetworkResult.Failure(e)
         }
     }
 
-    override suspend fun getRecipesByIngredient(ingredient: String): FirebaseResult<List<Recipe>> {
+    override suspend fun getRecipesByIngredient(ingredient: String): NetworkResult<List<Recipe>> {
         return try {
             val result = firestore
                 .collection("recipes")
                 .whereEqualTo("ingredientCode", ingredient)
                 .get().await()
-            FirebaseResult.Success(result.toObjects(Recipe::class.java))
+            NetworkResult.Success(result.toObjects(Recipe::class.java))
         } catch (e: Exception) {
-            FirebaseResult.Failure(e)
+            NetworkResult.Failure(e)
         }
     }
 
     override suspend fun getRecipeForTest(
         ingredient: String
-    ): FirebaseResult<List<Recipe>> {
+    ): NetworkResult<List<Recipe>> {
         return try {
             val result = firestore.collection("recipes").get().await()
             val temp = mutableListOf<Recipe>()
@@ -76,40 +72,40 @@ class FirebaseRepositoryImpl @Inject constructor(
                     )
                 }
             }
-            FirebaseResult.Success(temp)
+            NetworkResult.Success(temp)
         } catch (e: Exception) {
-            FirebaseResult.Failure(e)
+            NetworkResult.Failure(e)
         }
     }
 
-    override suspend fun putRecipe(recipe: Recipe): FirebaseResult<Boolean> {
+    override suspend fun putRecipe(recipe: Recipe): NetworkResult<Boolean> {
         return try {
             val result = firestore.collection("recipes").add(recipe).await()
-            FirebaseResult.Success(true)
+            NetworkResult.Success(true)
         } catch (e: Exception) {
-            FirebaseResult.Failure(e)
+            NetworkResult.Failure(e)
         }
     }
 
-    override suspend fun getUserMeta(uid: String): FirebaseResult<UserMetaData> {
+    override suspend fun getUserMeta(uid: String): NetworkResult<UserMetaData> {
         return try {
             val result = firestore.collection("userMeta").document(uid).get().await()
-            FirebaseResult.Success(result.toObject<UserMetaData>() ?: UserMetaData())
+            NetworkResult.Success(result.toObject<UserMetaData>() ?: UserMetaData())
         } catch (e: Exception) {
-            FirebaseResult.Failure(e)
+            NetworkResult.Failure(e)
         }
     }
 
     override suspend fun putUserMeta(
         uid: String,
         userMetaData: UserMetaData,
-    ): FirebaseResult<Boolean> {
+    ): NetworkResult<Boolean> {
         return try {
             val result = firestore.collection("userMeta/$uid").add(userMetaData).await()
             val temp = firestore.collection("userMeta")
-            FirebaseResult.Success(true)
+            NetworkResult.Success(true)
         } catch (e: Exception) {
-            FirebaseResult.Failure(e)
+            NetworkResult.Failure(e)
         }
     }
 
@@ -117,7 +113,7 @@ class FirebaseRepositoryImpl @Inject constructor(
         uid: String,
         recipe: Recipe,
         imageStreamList: List<InputStream>,
-    ): FirebaseResult<Boolean> {
+    ): NetworkResult<Boolean> {
         return try {
             val result1 = firestore.collection("recipes").add(recipe).await()
             val result2 = firestore.collection("userMeta").document(uid).get().await()
@@ -130,9 +126,9 @@ class FirebaseRepositoryImpl @Inject constructor(
                 val recipeRef = storage.reference.child("recipeImage/${result1.id}/$i.jpg")
                 val result4 = recipeRef.putStream(imageStreamList[i]).await()
             }
-            FirebaseResult.Success(true)
+            NetworkResult.Success(true)
         } catch (e: Exception) {
-            FirebaseResult.Failure(e)
+            NetworkResult.Failure(e)
         }
     }
 }

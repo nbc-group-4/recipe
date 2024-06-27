@@ -34,7 +34,7 @@ class RecipeDetailFragment : Fragment() {
 
     private val recipeViewModel: RecipeViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
-    private val sharedViewModel: MypageSharedViewModel by activityViewModels() //
+ //   private val sharedViewModel: MypageSharedViewModel by activityViewModels() //
 
     private var _binding: FragmentRecipeDetailBinding? = null
     private val binding: FragmentRecipeDetailBinding
@@ -79,17 +79,17 @@ class RecipeDetailFragment : Fragment() {
         }
 
         // 마이페이지에서 클릭한 레시피 데이터
-        viewLifecycleOwner.lifecycleScope.launch {
-            sharedViewModel.selectedRecipe.collect { recipeId ->
-                recipeId?.let {
-                    binding.tvDetailWriter.text = recipeDetail?.writerName
-                    binding.tvDetailTitle.text = recipeDetail?.recipeName
-                    binding.tvTime.text = recipeDetail?.time
-                    binding.tvDetailIngredients.text = recipeDetail?.ingredient
-                    binding.tvRecipeSteps.text = recipeDetail?.step
-                }
-            }
-        }
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            sharedViewModel.selectedRecipe.collect { recipeId ->
+//                recipeId?.let {
+//                    binding.tvDetailWriter.text = recipeDetail?.writerName
+//                    binding.tvDetailTitle.text = recipeDetail?.recipeName
+//                    binding.tvTime.text = recipeDetail?.time
+//                    binding.tvDetailIngredients.text = recipeDetail?.ingredient
+//                    binding.tvRecipeSteps.text = recipeDetail?.step
+//                }
+//            }
+//        }
 
 //        recipeDetail?.let { recipe ->
 //            recipeViewModel.getRecipeDetails(

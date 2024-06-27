@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.R
-import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.data.network.NetworkResult
 import nbc.group.recipes.databinding.FragmentSignUpBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.viewmodel.MainViewModel
@@ -52,7 +52,7 @@ class SignUpFragment : Fragment() {
             viewModel.signUpFlow.collect { nullable ->
                 nullable?.let { nonNull -> with(binding){
                         when (nonNull) {
-                            is FirebaseResult.Success -> {
+                            is NetworkResult.Success -> {
                                 if (checkboxAll.isChecked){
                                     findNavController().popBackStack()
                                 }else{
@@ -60,12 +60,12 @@ class SignUpFragment : Fragment() {
                                 }
                             }
 
-                            is FirebaseResult.Failure -> {
+                            is NetworkResult.Failure -> {
                                 clLoading.visibility = View.GONE
                                 tvErrorIndic.text = nonNull.exception.message
                             }
 
-                            is FirebaseResult.Loading -> {
+                            is NetworkResult.Loading -> {
                                 clLoading.visibility = View.VISIBLE
                             }
                         }
