@@ -8,8 +8,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -38,7 +43,6 @@ class MakeRecipeFragment : Fragment() {
     private val adapter get() = _adapter!!
 
     private val viewModel: MainViewModel by activityViewModels()
-
 
     private val imageUriList = mutableListOf<Uri>()
     private val imageStreamList = mutableListOf<InputStream>()
@@ -83,6 +87,8 @@ class MakeRecipeFragment : Fragment() {
                 LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             rvImages.addItemDecoration(itemDecoration)
             rvImages.adapter = adapter
+
+            setupSpinner(spinnerCookingTime)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -121,7 +127,7 @@ class MakeRecipeFragment : Fragment() {
             summary = binding.etRecipeDescription.text.toString(),
             nationCode = "custom",
             nationName = viewModel.currentUser!!.uid,
-            cookingTime = binding.etCookingTime.text.toString(),
+            cookingTime = binding.spinnerCookingTime.selectedItem.toString(),
             typeCode = "user",
             typeName = viewModel.currentUser!!.uid,
             levelName = "",
@@ -161,5 +167,31 @@ class MakeRecipeFragment : Fragment() {
         imageStreamList[it].close()
         imageStreamList.removeAt(it)
         adapter.notifyDataSetChanged()
+    }
+
+    private fun setupSpinner(spinner: Spinner) {
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.cooking_time_options,
+            R.layout.spinner_make_recipe
+        ).also { adapter ->
+            adapter.setDropDownViewResource(R.layout.spinner_drop_down)
+            spinner.adapter = adapter
+        }
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
     }
 }

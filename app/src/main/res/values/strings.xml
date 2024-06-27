@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Recipes</string>
+    <string name="app_name">맛고</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_text">지역명을 입력해주세요</string>
@@ -52,13 +52,21 @@
     <string name="make_recipe_fragment_recipe_description_indic">레시피 소개</string>
     <string name="make_recipe_fragment_recipe_description_hint">레시피를 간단하게 소개해 주세요.</string>
     <string name="make_recipe_fragment_recipe_level_indic">레시피 난이도</string>
-    <string name="make_recipe_fragment_recipe_cooking_time_indic">예상 소요 시간</string>
+    <string name="make_recipe_fragment_recipe_cooking_time_indic">소요 시간</string>
     <string name="make_recipe_fragment_recipe_cooking_time_hint">예상 소요 시간을 입력해 주세요.</string>
     <string name="make_recipe_fragment_recipe_ingredient_indic">주요 재료</string>
     <string name="make_recipe_fragment_recipe_ingredient_hint">재료를 선택해 주세요.</string>
     <string name="make_recipe_fragment_recipe_cooking_process_indic">조리방법</string>
     <string name="make_recipe_fragment_recipe_cooking_process_hint">조리방법을 입력해 주세요.</string>
     <string name="make_recipe_fragment_recipe_photo_indic">사진 등록</string>
+    <string-array name="cooking_time_options">
+        <item>레시피 소요 시간을 선택해 주세요.</item>
+        <item>30분 이내</item>
+        <item>30분</item>
+        <item>1시간</item>
+        <item>1시간 ~ 2시간</item>
+        <item>2시간 이상</item>
+    </string-array>
 
     <!-- RecipeFragment -->
     <string name="recipe_fragment_top_banner_text">레시피</string>
@@ -73,5 +81,4 @@
     <string name="banner_fragment_link_confirm">외부 브라우저로 연결됩니다.\n연결하시겠습니까?</string>
     <string name="banner_fragment_dialog_stay">머무르기</string>
     <string name="banner_fragment_dialog_move">이동하기</string>
-
 </resources>
