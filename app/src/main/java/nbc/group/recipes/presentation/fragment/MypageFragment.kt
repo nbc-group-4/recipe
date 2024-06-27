@@ -13,7 +13,6 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -21,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.GlideApp
 import nbc.group.recipes.R
-import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.data.network.NetworkResult
 import nbc.group.recipes.databinding.CustomDialogBinding
 import nbc.group.recipes.databinding.FragmentMypageBinding
 import nbc.group.recipes.presentation.MainActivity
@@ -95,18 +94,18 @@ class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
                 }
                 nullable?.let { nonNull ->
                     when (nonNull) {
-                        is FirebaseResult.Success -> {
+                        is NetworkResult.Success -> {
                             binding.clNonUser.visibility = View.GONE
                             binding.clUser.visibility = View.VISIBLE
                             initUser()
                         }
 
-                        is FirebaseResult.Failure -> {
+                        is NetworkResult.Failure -> {
                             binding.clUser.visibility = View.GONE
                             binding.clNonUser.visibility = View.VISIBLE
                         }
 
-                        is FirebaseResult.Loading -> {
+                        is NetworkResult.Loading -> {
 
                         }
                     }
@@ -118,19 +117,19 @@ class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
             viewModel.userMetaData.collect { nullable ->
                 nullable?.let { nonNull ->
                     when (nonNull) {
-                        is FirebaseResult.Success -> {
+                        is NetworkResult.Success -> {
                             Log.e(TAG, "onViewCreated: get recipeIds: Success")
                             adapter.submitList(nonNull.result.recipeIds)
                         }
 
-                        is FirebaseResult.Failure -> {
+                        is NetworkResult.Failure -> {
                             Log.e(
                                 TAG,
                                 "onViewCreated: get recipeIds: Failure: ${nonNull.exception}",
                             )
                         }
 
-                        is FirebaseResult.Loading -> {
+                        is NetworkResult.Loading -> {
                             Log.e(TAG, "onViewCreated: get recipeIds: Loading")
                         }
                     }

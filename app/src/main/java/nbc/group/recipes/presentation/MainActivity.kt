@@ -15,6 +15,8 @@ import nbc.group.recipes.R
 import nbc.group.recipes.databinding.ActivityMainBinding
 import nbc.group.recipes.viewmodel.MainViewModel
 
+
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
