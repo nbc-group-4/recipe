@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     tools:context=".presentation.fragment.MypageFragment">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/gl_top"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_appbar" />
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="20dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/gl_top"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:srcCompat="@drawable/ic_appbar" />-->
 
     <TextView
         android:id="@+id/tv_top_banner"
         style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:text="@string/mypage_fragment_top_banner_text"
-        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@id/gl_top"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -34,65 +33,64 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="56dp"/>
+        app:layout_constraintGuide_begin="56dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/fragment_horizontal_margin"/>
+        app:layout_constraintGuide_begin="@dimen/fragment_horizontal_margin" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/fragment_horizontal_margin"/>
-
+        app:layout_constraintGuide_end="@dimen/fragment_horizontal_margin" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_non_user"
-        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/gl_end"
-        app:layout_constraintTop_toTopOf="@id/gl_top"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toTopOf="@id/gl_top">
 
         <TextView
             android:id="@+id/tv_indic"
+            style="@style/content_text_style_high_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mypage_fragment_sign_in_indic_text"
-            style="@style/content_text_style_high_light"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:layout_width="@dimen/my_page_image_size"
             android:layout_height="@dimen/my_page_image_size"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_indic"
             android:layout_margin="@dimen/default_margin_20"
-            android:src="@drawable/ic_empty"/>
+            android:src="@drawable/ic_empty"
+            app:layout_constraintBottom_toTopOf="@id/tv_indic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/bt_sign_in"
             android:layout_width="match_parent"
             android:layout_height="@dimen/small_button_height"
+            android:layout_margin="@dimen/default_margin_20"
+            android:background="@drawable/button_shape"
             android:text="@string/mypage_fragment_sign_in_button_text"
             android:textSize="16sp"
-            android:background="@drawable/button_shape"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_indic"
-            android:layout_margin="@dimen/default_margin_20"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_indic" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -102,10 +100,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/gl_end"
-        app:layout_constraintTop_toTopOf="@id/gl_top"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toTopOf="@id/gl_top">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_user_profile"
@@ -122,8 +120,8 @@
             style="@style/content_text_style_high_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nickname"
             android:layout_marginTop="16dp"
+            android:text="Nickname"
             app:layout_constraintEnd_toEndOf="@+id/iv_user_profile"
             app:layout_constraintStart_toStartOf="@+id/iv_user_profile"
             app:layout_constraintTop_toBottomOf="@+id/iv_user_profile" />
@@ -167,33 +165,33 @@
             android:id="@+id/v_line"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mypage_constraintLayout"
             android:layout_marginTop="32dp"
-            android:background="#BDBDBD"/>
+            android:background="#BDBDBD"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mypage_constraintLayout" />
 
         <TextView
             android:id="@+id/tv_recipe_indic"
+            style="@style/content_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mypage_fragment_user_recipe_indic_text"
-            style="@style/content_text_style"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_marginTop="20dp"
+            android:text="@string/mypage_fragment_user_recipe_indic_text"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/v_line"/>
+            app:layout_constraintTop_toBottomOf="@+id/v_line" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_user_recipe"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/default_margin_20"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_recipe_indic"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_recipe_indic" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

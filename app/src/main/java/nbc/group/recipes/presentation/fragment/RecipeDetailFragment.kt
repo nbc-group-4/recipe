@@ -23,15 +23,19 @@ import nbc.group.recipes.databinding.FragmentBottomSheetRecipeDetailBinding
 import nbc.group.recipes.databinding.FragmentRecipeDetailBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.viewmodel.MainViewModel
+import nbc.group.recipes.viewmodel.MypageSharedViewModel
 import nbc.group.recipes.viewmodel.RecipeViewModel
 
 
 private const val ARG_PARAM1 = "param1"
+
 @AndroidEntryPoint
 class RecipeDetailFragment : Fragment() {
 
     private val recipeViewModel: RecipeViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
+    private val sharedViewModel: MypageSharedViewModel by activityViewModels() //
+
     private var _binding: FragmentRecipeDetailBinding? = null
     private val binding: FragmentRecipeDetailBinding
         get() = _binding!!
@@ -51,6 +55,7 @@ class RecipeDetailFragment : Fragment() {
             (activity as MainActivity).moveToBack()
         }
     )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -69,8 +74,21 @@ class RecipeDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(recipeDetail == null) {
+        if (recipeDetail == null) {
             (activity as MainActivity).moveToBack()
+        }
+
+        // 마이페이지에서 클릭한 레시피 데이터
+        viewLifecycleOwner.lifecycleScope.launch {
+            sharedViewModel.selectedRecipe.collect { recipeId ->
+                recipeId?.let {
+                    binding.tvDetailWriter.text = recipeDetail?.writerName
+                    binding.tvDetailTitle.text = recipeDetail?.recipeName
+                    binding.tvTime.text = recipeDetail?.time
+                    binding.tvDetailIngredients.text = recipeDetail?.ingredient
+                    binding.tvRecipeSteps.text = recipeDetail?.step
+                }
+            }
         }
 
 //        recipeDetail?.let { recipe ->
@@ -107,7 +125,7 @@ class RecipeDetailFragment : Fragment() {
     private fun bindRecipeDetail(recipeDetail: RecipeEntity) {
 
         with(binding) {
-            if(recipeDetail.from == FROM_FIREBASE) {
+            if (recipeDetail.from == FROM_FIREBASE) {
                 GlideApp.with(this@RecipeDetailFragment)
                     .load(
                         Firebase.storage.reference.child(recipeDetail.recipeImg)
@@ -131,7 +149,7 @@ class RecipeDetailFragment : Fragment() {
                 modalBottomSheet.show(parentFragmentManager, "")
             }
 
-            if(recipeDetail.from != FROM_FIREBASE) {
+            if (recipeDetail.from != FROM_FIREBASE) {
                 ivMoreButton.visibility = View.GONE
             }
 
@@ -152,14 +170,16 @@ class RecipeDetailFragment : Fragment() {
 //    }
 
     private fun setStars(difficulty: String) {
-        when(difficulty) {
+        when (difficulty) {
             "초보환영" -> {
 //                binding.ivStar1.visibility = View.VISIBLE
             }
+
             "보통" -> {
 //                binding.ivStar1.visibility = View.VISIBLE
 //                binding.ivStar2.visibility = View.VISIBLE
             }
+
             "어려움" -> {
 //                binding.ivStar1.visibility = View.VISIBLE
 //                binding.ivStar2.visibility = View.VISIBLE
@@ -176,7 +196,7 @@ class RecipeDetailFragment : Fragment() {
 
 
     private fun getRecipeDetailWriter(nickname: String?): String {
-        return if(nickname == null) {
+        return if (nickname == null) {
             "이 레시피는 공공데이터포털에서 제공합니다."
         } else {
             "이 레시피는 ${nickname}님이 작성하셨습니다."
@@ -199,11 +219,10 @@ class RecipeDetailFragment : Fragment() {
     }
 
 
-
     class ModalBottomSheet(
         private val contentBanClickListener: () -> Unit,
         private val userBanClickListener: () -> Unit,
-    ): BottomSheetDialogFragment() {
+    ) : BottomSheetDialogFragment() {
 
         private var _bottomSheetBinding: FragmentBottomSheetRecipeDetailBinding? = null
         private val bottomSheetBinding get() = _bottomSheetBinding!!
@@ -227,7 +246,7 @@ class RecipeDetailFragment : Fragment() {
                     contentBanClickListener()
                     dismiss()
                 }
-                tvBanUser.setOnClickListener{
+                tvBanUser.setOnClickListener {
                     userBanClickListener()
                     dismiss()
                 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/specialtyFragment"
@@ -27,20 +26,21 @@
         android:id="@+id/etSpecialtySearch"
         android:layout_width="0dp"
         android:layout_height="44dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/corner_edittext"
         android:drawableStart="@drawable/ic_searches"
         android:drawablePadding="12dp"
-        android:hint="아래 특산품 종류중에서 검색해주세요"
+        android:hint="@string/specialty_fragment_kind_search"
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:maxLines="1"
         android:padding="8dp"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@id/back_arrow"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/back_arrow"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -51,29 +51,18 @@
         app:layout_constraintBottom_toBottomOf="@+id/etSpecialtySearch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/etSpecialtySearch"
-        app:srcCompat="@drawable/ic_back_arrows" />
-
-    <!--    <ImageView-->
-    <!--        android:id="@+id/ivSearch"-->
-    <!--        android:layout_width="@dimen/small_button_size"-->
-    <!--        android:layout_height="@dimen/small_button_size"-->
-    <!--        android:layout_marginTop="50dp"-->
-    <!--        android:layout_marginEnd="16dp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:srcCompat="@drawable/search" />-->
+        app:srcCompat="@drawable/ic_back" />
 
     <TextView
         android:id="@+id/tvSpecialtyKind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="종류"
         android:layout_marginTop="37dp"
+        android:text="@string/specialty_fragment_kind"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline_begin20"
         app:layout_constraintTop_toBottomOf="@+id/etSpecialtySearch" />
-
 
     <!--    <androidx.core.widget.NestedScrollView-->
     <!--        android:id="@+id/recyclerContainer"-->
@@ -92,10 +81,10 @@
         android:layout_marginBottom="20dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyKind"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:spanCount="3"
         tools:listitem="@layout/item_specialty" />
 

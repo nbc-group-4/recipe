@@ -31,7 +31,6 @@ class HomeQuizAdapter :
                     .load(items.imageResourceId)
                     .into(ivQuiz)
             }
-
         }
     }
 

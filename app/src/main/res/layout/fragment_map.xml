@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -50,19 +49,19 @@
         android:id="@+id/search_et"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:hint="@string/search_text"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:padding="8dp"
-        android:inputType="text"
-        android:maxLines="1"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
-        android:imeOptions="actionSearch"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/corner_edittext"
         android:drawableStart="@drawable/ic_searches"
         android:drawablePadding="12dp"
+        android:hint="@string/map_fragment_search_text"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -102,66 +101,65 @@
             android:id="@+id/chip_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="12dp"
             app:chipSpacingHorizontal="8dp"
             app:chipSpacingVertical="7dp"
+            app:selectionRequired="true"
             app:singleLine="true"
-            app:singleSelection="true"
-            android:paddingHorizontal="12dp"
-            app:selectionRequired="true">
+            app:singleSelection="true">
 
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/fist_type"
+                style="@style/Widget.recipe.Chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.recipe.Chip"
-                android:text="@string/region_first"
+                android:text="@string/map_fragment_region_first"
                 app:chipIconEnabled="true" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/second_type"
+                style="@style/Widget.recipe.Chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.recipe.Chip"
-                android:text="@string/region_second"
+                android:text="@string/map_fragment_region_second"
                 app:chipIconEnabled="true" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/three_type"
+                style="@style/Widget.recipe.Chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.recipe.Chip"
-                android:text="@string/region_three"
+                android:text="@string/map_fragment_region_three"
                 app:chipIconEnabled="true" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/four_type"
+                style="@style/Widget.recipe.Chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.recipe.Chip"
-                android:text="@string/region_four"
+                android:text="@string/map_fragment_region_four"
                 app:chipIconEnabled="true" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/five_type"
+                style="@style/Widget.recipe.Chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.recipe.Chip"
-                android:text="@string/region_five"
+                android:text="@string/map_fragment_region_five"
                 app:chipIconEnabled="true" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/six_type"
+                style="@style/Widget.recipe.Chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.recipe.Chip"
-                android:text="@string/region_six"
+                android:text="@string/map_fragment_region_six"
                 app:chipIconEnabled="true" />
 
         </com.google.android.material.chip.ChipGroup>
 
     </HorizontalScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
