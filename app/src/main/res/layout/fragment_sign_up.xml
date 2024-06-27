@@ -284,6 +284,7 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/button_shape"
         android:text="@string/sign_up_fragment_confirm_button_text"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

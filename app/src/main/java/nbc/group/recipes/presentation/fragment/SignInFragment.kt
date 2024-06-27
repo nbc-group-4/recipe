@@ -1,12 +1,16 @@
 package nbc.group.recipes.presentation.fragment
 
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -51,6 +55,9 @@ class SignInFragment : Fragment() {
             tvSignUpButton.setOnClickListener(signUpButtonClickListener)
             tvSearchPwButton.setOnClickListener(searchPwButtonClickListener)
             ivBackButton.setOnClickListener(backButtonClickListener)
+
+            etId.addTextChangedListener(textWatcher)
+            etPw.addTextChangedListener(textWatcher)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -100,4 +107,30 @@ class SignInFragment : Fragment() {
         (activity as MainActivity).moveToBack()
     }
 
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            updateButton()
+        }
+        override fun afterTextChanged(s: Editable?) {
+        }
+    }
+
+    private fun updateButton() {
+        with(binding) {
+            val emailFlag = etId.text.toString().isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(etId.text.toString()).matches()
+            val passFlag = etPw.text.toString().length >= 6
+
+            val allFieldsValid = emailFlag && passFlag
+
+            if (allFieldsValid) {
+                btSignIn.isEnabled = true
+                btSignIn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.green1))
+            } else {
+                btSignIn.isEnabled = false
+                btSignIn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.unclick_btn))
+            }
+        }
+    }
 }

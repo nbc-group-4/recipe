@@ -180,6 +180,7 @@
         android:text="@string/sign_in_fragment_sign_in_button_text"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_shape"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintStart_toStartOf="@id/gl_start"/>

@@ -84,10 +84,9 @@
 
         <Button
             android:id="@+id/bt_sign_in"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/small_button_height"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/default_button_height"
             android:text="@string/mypage_fragment_sign_in_button_text"
-            android:textSize="16sp"
             android:background="@drawable/button_shape"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

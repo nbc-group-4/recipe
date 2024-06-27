@@ -1,8 +1,11 @@
 package nbc.group.recipes.presentation.fragment
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -83,6 +87,12 @@ class MakeRecipeFragment : Fragment() {
                 LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             rvImages.addItemDecoration(itemDecoration)
             rvImages.adapter = adapter
+
+            etRecipeName.addTextChangedListener(textWatcher)
+            etRecipeDescription.addTextChangedListener(textWatcher)
+            etCookingTime.addTextChangedListener(textWatcher)
+            etIngredient.addTextChangedListener(textWatcher)
+            etCookingProcess.addTextChangedListener(textWatcher)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -161,5 +171,35 @@ class MakeRecipeFragment : Fragment() {
         imageStreamList[it].close()
         imageStreamList.removeAt(it)
         adapter.notifyDataSetChanged()
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            updateButton()
+        }
+        override fun afterTextChanged(s: Editable?) {
+        }
+    }
+
+    private fun updateButton() {
+        with(binding) {
+            val isRecipeName = etRecipeName.text.toString().isNotEmpty()
+            val isRecipeDescription = etRecipeDescription.text.toString().isNotEmpty()
+            val isCookingTime = etCookingTime.text.toString().isNotEmpty()
+            val isIngredient = etIngredient.text.toString().isNotEmpty()
+            val isCookingProcess = etCookingProcess.text.toString().isNotEmpty()
+            val isImageAdded = imageUriList.isNotEmpty()
+
+            val allFieldsValid = isRecipeName && isRecipeDescription && isCookingTime && isIngredient && isCookingProcess && isImageAdded
+
+            if(allFieldsValid){
+                btMakeRecipe.isEnabled = true
+                btMakeRecipe.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.green1))
+            }else{
+                btMakeRecipe.isEnabled = false
+                btMakeRecipe.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.unclick_btn))
+            }
+        }
     }
 }
