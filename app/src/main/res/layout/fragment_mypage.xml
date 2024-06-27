@@ -82,15 +82,14 @@
 
         <Button
             android:id="@+id/bt_sign_in"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/small_button_height"
-            android:layout_margin="@dimen/default_margin_20"
-            android:background="@drawable/button_shape"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/default_button_height"
             android:text="@string/mypage_fragment_sign_in_button_text"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/button_shape"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_indic" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_indic"
+            android:layout_margin="@dimen/default_margin_20"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -145,7 +145,6 @@
         android:id="@+id/tv_search_pw_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:text="@string/sign_in_fragment_search_pw_button_text"
         android:textSize="14sp"
         android:layout_marginTop="16dp"
@@ -180,6 +179,7 @@
         android:text="@string/sign_in_fragment_sign_in_button_text"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_shape"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintStart_toStartOf="@id/gl_start"/>

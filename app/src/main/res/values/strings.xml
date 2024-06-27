@@ -59,7 +59,7 @@
     <!-- SignUpFragment -->
     <string name="sign_up_fragment_top_banner_text">회원가입</string>
     <string name="sign_up_fragment_id_hint">이메일 주소</string>
-    <string name="sign_up_fragment_pw_hint">비밀번호</string>
+    <string name="sign_up_fragment_pw_hint">비밀번호(6자리 이상)</string>
     <string name="sign_up_fragment_pw_check_hint">비밀번호 확인</string>
     <string name="sign_up_fragment_nickname_hint">닉네임</string>
     <string name="sign_up_fragment_id_duplication_check_indic_text">중복확인</string>

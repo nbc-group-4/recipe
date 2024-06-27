@@ -4,12 +4,15 @@ import android.app.AlertDialog
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import nbc.group.recipes.databinding.FragmentHomeBinding
@@ -19,7 +22,6 @@ import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.BannerAdpater
 import nbc.group.recipes.presentation.adapter.HomeKindAdapter
 import nbc.group.recipes.presentation.adapter.HomeQuizAdapter
-import nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import nbc.group.recipes.specialtyKind
 import nbc.group.recipes.viewmodel.MainViewModel
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
@@ -34,6 +36,9 @@ class HomeFragment : Fragment() {
     private var homeKindAdapter: HomeKindAdapter? = null
     private val specialtyViewModel: SpecialtyViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val bannerScroll = autoBannerScroll()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,9 +61,10 @@ class HomeFragment : Fragment() {
 
         setupRecyclerViewKind()
 
+
         // Splash 종료
         mainViewModel.homeFragmentStatusChange()
-        if (!isInternetConnection()) {
+        if(!isInternetConnection()) {
             showDialog()
         }
         banner()
@@ -88,6 +94,38 @@ class HomeFragment : Fragment() {
         return cm.activeNetwork != null
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        homeQuizAdapter = null
+        homeKindAdapter = null
+        handler.removeCallbacks(bannerScroll)
+    }
+
+
+    private fun banner(){
+
+        val bannerAdpater = BannerAdpater(this)
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner1))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner2))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner3))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner4))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner5))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner6))
+        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner7))
+
+
+        with(binding){
+            homeBanner.adapter = bannerAdpater
+            homeBanner.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            homeBannerIndicator.setViewPager(homeBanner)
+            homeBanner.offscreenPageLimit = 3
+            homeBanner.setPageTransformer(MarginPageTransformer(30))
+        }
+
+        handler.postDelayed(bannerScroll, 2000)
+    }
+
     private fun showDialog() {
         val dialog = AlertDialog.Builder(requireActivity())
             .setTitle("인터넷이 필요한 서비스입니다.")
@@ -100,28 +138,11 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
-    private fun banner() {
-
-        val bannerAdpater = BannerAdpater(this)
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner1))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner2))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner3))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner4))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner5))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner6))
-        bannerAdpater.addImg(BannerFragment(R.drawable.img_banner7))
-
-        with(binding) {
-            homeBanner.adapter = bannerAdpater
-            homeBanner.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-            homeBannerIndicator.setViewPager(binding.homeBanner)
-        }
+    private fun autoBannerScroll() = object  : Runnable{
+            override fun run() {
+                binding.homeBanner.currentItem = (binding.homeBanner.currentItem + 1) % (binding.homeBanner.adapter?.itemCount ?: 1)
+                handler.postDelayed(this, 2000)
+            }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        homeQuizAdapter = null
-        homeKindAdapter = null
-    }
 }
