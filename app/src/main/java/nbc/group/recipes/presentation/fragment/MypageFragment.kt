@@ -157,7 +157,9 @@ class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
     // 작성한 레시피 클릭
     override fun onClick(recipeId: String) {
         sharedViewModel.selectRecipe(recipeId)
-        (activity as MainActivity).moveToRecipeDetailFragment()
+
+//        val bundle = Bundle().apply { putParcelable("recipeDetail", )}
+//        (activity as MainActivity).moveToRecipeDetailFragment(bundle)
     }
 
     override fun onDestroyView() {
