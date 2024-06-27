@@ -8,10 +8,10 @@
         android:id="@+id/mapFragment"
         android:name="nbc.group.recipes.presentation.fragment.MapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" >
+        tools:layout="@layout/fragment_map">
         <action
-            android:id="@+id/action_mapFragment_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
+            android:id="@+id/action_mapFragment_to_recipeGraphFragment"
+            app:destination="@id/recipeGraphFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"
@@ -22,15 +22,19 @@
         android:id="@+id/mypageFragment"
         android:name="nbc.group.recipes.presentation.fragment.MypageFragment"
         android:label="fragment_mypage"
-        tools:layout="@layout/fragment_mypage" />
+        tools:layout="@layout/fragment_mypage">
+        <action
+            android:id="@+id/action_mypageFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="nbc.group.recipes.presentation.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/recipeFragment"
-        android:name="nbc.group.recipes.presentation.fragment.RecipeFragment"
-        android:label="fragment_recipe"
-        tools:layout="@layout/fragment_recipe" />
+        android:id="@+id/recipeGraphFragment"
+        android:name="nbc.group.recipes.presentation.fragment.RecipeGraphFragment"
+        android:label="fragment_recipe_graph"
+        tools:layout="@layout/fragment_recipe_graph" />
 </navigation>

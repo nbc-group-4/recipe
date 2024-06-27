@@ -53,6 +53,10 @@ class MainFragment : Fragment() {
     }
 
     fun moveToRecipeFragment() {
-        binding.bottomNavBar.selectedItemId = R.id.recipeFragment
+        // binding.bottomNavBar.selectedItemId = R.id.recipeFragment
+    }
+
+    fun moveToRecipeGraphFragment() {
+        binding.bottomNavBar.selectedItemId = R.id.recipeGraphFragment
     }
 }

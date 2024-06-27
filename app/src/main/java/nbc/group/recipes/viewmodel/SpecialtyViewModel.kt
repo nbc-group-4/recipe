@@ -1,7 +1,5 @@
 package nbc.group.recipes.viewmodel
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -9,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nbc.group.recipes.KindItem
+import nbc.group.recipes.StringsSearch
 import nbc.group.recipes.data.model.dto.Item
 import nbc.group.recipes.data.repository.RecipeSpecialtyRepository
 import javax.inject.Inject
@@ -32,17 +31,32 @@ class SpecialtyViewModel @Inject constructor(
         _searchResult.value = result
     }
 
-    fun searchItem(cntntsSj: String) {
+    fun searchItem(cntntsSj: String, specialties: List<String>) {
         viewModelScope.launch {
             val specialtyResponse = repository.getSpecialty(null, cntntsSj)
             val filteredItems = specialtyResponse.body.items.item?.filter { item ->
                 // Log.e("URGENT_TAG", "searchItem: ${item.areaName}: ${item.cntntsSj}")
                 item.cntntsSj?.contains(cntntsSj, ignoreCase = true) == true
-                        && item.cntntsSj?.contains("(주)") != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM1) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM2) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM3) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM4) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM5) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM6) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM7) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM8) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM9) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM10) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM11) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM12) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM13) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM14) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM15) != true
+                        && item.cntntsSj?.contains(StringsSearch.ITEM16) != true
+                        && specialties.contains(cntntsSj)
             }
             if (filteredItems.isNullOrEmpty()) {
                 setSearchResult(emptyList())
-                // Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
             } else {
                 setSearchResult(filteredItems)
             }

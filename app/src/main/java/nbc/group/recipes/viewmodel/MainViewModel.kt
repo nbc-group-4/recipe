@@ -9,9 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nbc.group.recipes.data.model.dto.Recipe
-import nbc.group.recipes.data.model.dto.SpecialtyResponse
 import nbc.group.recipes.data.model.firebase.UserMetaData
-import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.data.network.NetworkResult
 import nbc.group.recipes.data.repository.AuthRepository
 import nbc.group.recipes.data.repository.FirebaseRepository
 import nbc.group.recipes.data.repository.RecipeSpecialtyRepository
@@ -36,13 +35,13 @@ class MainViewModel @Inject constructor(
     private val _splashFlow = MutableStateFlow(true)
     val splashFlow = _splashFlow.asStateFlow()
 
-    private val _signInFlow = MutableStateFlow<FirebaseResult<FirebaseUser>?>(null)
+    private val _signInFlow = MutableStateFlow<NetworkResult<FirebaseUser>?>(null)
     val signInFlow = _signInFlow.asStateFlow()
 
-    private val _signUpFlow = MutableStateFlow<FirebaseResult<FirebaseUser>?>(null)
+    private val _signUpFlow = MutableStateFlow<NetworkResult<FirebaseUser>?>(null)
     val signUpFlow = _signUpFlow.asStateFlow()
 
-    private val _makeRecipeFlow = MutableStateFlow<FirebaseResult<Boolean>?>(null)
+    private val _makeRecipeFlow = MutableStateFlow<NetworkResult<Boolean>?>(null)
     val makeRecipeFlow = _makeRecipeFlow.asStateFlow()
 
     private val _user = MutableStateFlow<FirebaseUser?>(null)
@@ -50,19 +49,19 @@ class MainViewModel @Inject constructor(
     val currentUser: FirebaseUser?
         get() = authRepository.currentUser
 
-    private val _recipes = MutableStateFlow<FirebaseResult<List<Recipe>>?>(null)
+    private val _recipes = MutableStateFlow<NetworkResult<List<Recipe>>?>(null)
     val recipes = _recipes.asStateFlow()
 
-    private val _putRecipeFlow = MutableStateFlow<FirebaseResult<Boolean>?>(null)
+    private val _putRecipeFlow = MutableStateFlow<NetworkResult<Boolean>?>(null)
     val putRecipeFlow = _putRecipeFlow.asStateFlow()
 
-    private val _userMetaData = MutableStateFlow<FirebaseResult<UserMetaData>?>(null)
+    private val _userMetaData = MutableStateFlow<NetworkResult<UserMetaData>?>(null)
     val userMetaData = _userMetaData.asStateFlow()
 
     init {
         if(authRepository.currentUser != null) {
             viewModelScope.launch {
-                _signInFlow.emit(FirebaseResult.Success(authRepository.currentUser!!))
+                _signInFlow.emit(NetworkResult.Success(authRepository.currentUser!!))
             }
         }
     }

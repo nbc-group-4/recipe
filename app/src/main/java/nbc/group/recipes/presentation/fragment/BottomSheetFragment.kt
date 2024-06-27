@@ -20,6 +20,7 @@ import nbc.group.recipes.databinding.FragmentBottomsheetBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import nbc.group.recipes.viewmodel.MapSharedViewModel
+import nbc.group.recipes.viewmodel.RecipeGraphViewModel
 
 @AndroidEntryPoint
 class BottomSheetFragment : BottomSheetDialogFragment() {
@@ -27,6 +28,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentBottomsheetBinding? = null
 
     private val mapSharedViewModel : MapSharedViewModel by activityViewModels()
+    private val recipeGraphViewModel: RecipeGraphViewModel by activityViewModels()
 
     private val bottomSheetAdapter : BottomSheetAdapter by lazy {
         BottomSheetAdapter{ item, position ->
@@ -35,9 +37,11 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             mapSharedViewModel.getSelectedSpecialty(item)
             Log.d("click_specialtyData__",item.toString())
 
+            recipeGraphViewModel.setCurrentSpecialty(item)
+
             // RecipeFragment로 이동
             // (activity as MainActivity).moveToRecipeFragment() todo: bottom navigation 이동
-            (parentFragment as MapFragment).moveToRecipeFragment()
+            (parentFragment as MapFragment).moveToRecipeGraphFragment()
         }
     }
 

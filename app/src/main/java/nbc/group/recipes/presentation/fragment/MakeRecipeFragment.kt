@@ -15,16 +15,14 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import nbc.group.recipes.R
 import nbc.group.recipes.data.model.dto.Recipe
-import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.data.network.NetworkResult
 import nbc.group.recipes.databinding.FragmentMakeRecipeBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.MakeRecipeImageAdapter
@@ -99,15 +97,15 @@ class MakeRecipeFragment : Fragment() {
             viewModel.makeRecipeFlow.collectLatest {
                 it?.let { result ->
                     when (result) {
-                        is FirebaseResult.Success -> {
+                        is NetworkResult.Success -> {
                             (activity as MainActivity).moveToBack()
                         }
 
-                        is FirebaseResult.Failure -> {
+                        is NetworkResult.Failure -> {
 
                         }
 
-                        is FirebaseResult.Loading -> {
+                        is NetworkResult.Loading -> {
                             Log.e("MakeRecipeFragment", "onViewCreated: Loading ~")
                         }
                     }
