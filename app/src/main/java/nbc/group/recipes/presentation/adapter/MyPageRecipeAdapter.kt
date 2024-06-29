@@ -18,7 +18,7 @@ class MyPageRecipeAdapter(
 ) : ListAdapter<String, MyPageRecipeAdapter.MyRecipeViewHolder>(RecipeDiffUtil()) {
 
     interface OnItemClickListener {
-        fun onClick(recipeId: String)
+        fun onClick(recipe: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyRecipeViewHolder {
