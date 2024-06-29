@@ -12,7 +12,7 @@
 
     <!-- SpecialtyDetailFragment -->
     <string name="specialty_detail_fragment_search_result">찾으신 특산품 리스트입니다!</string>
-    <string name="specialty_detail_fragment_search_null">검색된 특산품이 없습니다</string>
+    <string name="specialty_detail_fragment_search_null">검색한 특산품을 찾을수없어요.</string>
 
     <!-- MapFragment -->
     <string name="map_fragment_hello_blank_fragment">Hello blank fragment</string>

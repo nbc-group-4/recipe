@@ -54,31 +54,40 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <ImageView
-        android:id="@+id/iv_specialtyDetail_empty"
-        android:layout_width="@dimen/my_page_image_size"
-        android:layout_height="@dimen/my_page_image_size"
-        android:src="@drawable/ic_empty"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSpecialtyDetail" />
 
-    <TextView
-        android:id="@+id/tv_specialtyDetail_empty"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="50dp"
-        android:gravity="center"
-        android:text="@string/specialty_detail_fragment_search_null"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_specialtyDetail_empty" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_specialtyDetail_empty"
+            android:layout_width="@dimen/my_page_image_size"
+            android:layout_height="@dimen/my_page_image_size"
+            android:src="@drawable/ic_empty"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/tv_specialtyDetail_empty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_specialtyDetail_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/specialty_detail_fragment_search_null"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/iv_specialtyDetail_empty"
+            app:layout_constraintStart_toStartOf="@+id/iv_specialtyDetail_empty"
+            app:layout_constraintTop_toBottomOf="@+id/iv_specialtyDetail_empty" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

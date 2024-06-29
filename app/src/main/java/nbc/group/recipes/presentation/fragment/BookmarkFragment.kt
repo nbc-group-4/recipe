@@ -90,6 +90,8 @@ class BookmarkFragment : Fragment() {
                 }
                 bookMarkAdapter.submitList(recipeList)
                 bookMarkViewModel.checkVisiblityView()
+
+                binding.tvBookmarkCount.text = "총 ${recipeEntityList.size}개"
             }
         }
 
