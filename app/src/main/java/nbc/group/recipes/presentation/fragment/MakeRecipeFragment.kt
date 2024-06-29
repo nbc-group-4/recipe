@@ -11,12 +11,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -40,7 +46,6 @@ class MakeRecipeFragment : Fragment() {
     private val adapter get() = _adapter!!
 
     private val viewModel: MainViewModel by activityViewModels()
-
 
     private val imageUriList = mutableListOf<Uri>()
     private val imageStreamList = mutableListOf<InputStream>()
@@ -88,9 +93,10 @@ class MakeRecipeFragment : Fragment() {
 
             etRecipeName.addTextChangedListener(textWatcher)
             etRecipeDescription.addTextChangedListener(textWatcher)
-            etCookingTime.addTextChangedListener(textWatcher)
             etIngredient.addTextChangedListener(textWatcher)
             etCookingProcess.addTextChangedListener(textWatcher)
+
+            setupSpinner(spinnerCookingTime)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -129,7 +135,7 @@ class MakeRecipeFragment : Fragment() {
             summary = binding.etRecipeDescription.text.toString(),
             nationCode = "custom",
             nationName = viewModel.currentUser!!.uid,
-            cookingTime = binding.etCookingTime.text.toString(),
+            cookingTime = binding.spinnerCookingTime.selectedItem.toString(),
             typeCode = "user",
             typeName = viewModel.currentUser!!.uid,
             levelName = "",
@@ -171,6 +177,32 @@ class MakeRecipeFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
+    private fun setupSpinner(spinner: Spinner) {
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.cooking_time_options,
+            R.layout.spinner_make_recipe
+        ).also { adapter ->
+            adapter.setDropDownViewResource(R.layout.spinner_drop_down)
+            spinner.adapter = adapter
+        }
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+    }
+
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -184,12 +216,10 @@ class MakeRecipeFragment : Fragment() {
         with(binding) {
             val isRecipeName = etRecipeName.text.toString().isNotEmpty()
             val isRecipeDescription = etRecipeDescription.text.toString().isNotEmpty()
-            val isCookingTime = etCookingTime.text.toString().isNotEmpty()
             val isIngredient = etIngredient.text.toString().isNotEmpty()
             val isCookingProcess = etCookingProcess.text.toString().isNotEmpty()
-            val isImageAdded = imageUriList.isNotEmpty()
 
-            val allFieldsValid = isRecipeName && isRecipeDescription && isCookingTime && isIngredient && isCookingProcess && isImageAdded
+            val allFieldsValid = isRecipeName && isRecipeDescription && isIngredient && isCookingProcess
 
             if(allFieldsValid){
                 btMakeRecipe.isEnabled = true
@@ -200,4 +230,5 @@ class MakeRecipeFragment : Fragment() {
             }
         }
     }
+
 }

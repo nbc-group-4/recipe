@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Recipes</string>
+    <string name="app_name">맛고</string>
 
     <!-- HomeFragment -->
     <string name="home_fragment_app_name">맛고</string>
@@ -12,7 +12,7 @@
 
     <!-- SpecialtyDetailFragment -->
     <string name="specialty_detail_fragment_search_result">찾으신 특산품 리스트입니다!</string>
-    <string name="specialty_detail_fragment_search_null">검색된 특산품이 없습니다</string>
+    <string name="specialty_detail_fragment_search_null">검색한 특산품을 찾을수없어요.</string>
 
     <!-- MapFragment -->
     <string name="map_fragment_hello_blank_fragment">Hello blank fragment</string>
@@ -92,6 +92,14 @@
     <string name="make_recipe_fragment_recipe_cooking_process_indic">조리방법</string>
     <string name="make_recipe_fragment_recipe_cooking_process_hint">조리방법을 입력해 주세요.</string>
     <string name="make_recipe_fragment_recipe_photo_indic">사진 등록</string>
+    <string-array name="cooking_time_options">
+        <item>레시피 소요 시간을 선택해 주세요.</item>
+        <item>30분 이내</item>
+        <item>30분</item>
+        <item>1시간</item>
+        <item>1시간 ~ 2시간</item>
+        <item>2시간 이상</item>
+    </string-array>
 
     <!-- RecipeFragment -->
     <string name="recipe_fragment_top_banner_text">레시피</string>
@@ -138,5 +146,10 @@
     <string name="item_bookmark_recipe_description">레시피 기본설명</string>
     <string name="item_bookmark_recipe_difficulty">초보</string>
     <string name="item_bookmark_recipe_time">30분</string>
+
+    <!--BannerFragment-->
+    <string name="banner_fragment_link_confirm">외부 브라우저로 연결됩니다.\n연결하시겠습니까?</string>
+    <string name="banner_fragment_dialog_stay">머무르기</string>
+    <string name="banner_fragment_dialog_move">이동하기</string>
 
 </resources>
