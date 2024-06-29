@@ -12,5 +12,6 @@
     <color name="indicator_grey">#D9D9D9</color>
     <color name="background_search">#EEEEEE</color>
     <color name="background_edittext">#F5F5F5</color>
+    <color name="unclick_btn">#DCDCDC</color>
 
 </resources>

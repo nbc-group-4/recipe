@@ -8,6 +8,7 @@ import nbc.group.recipes.data.model.dto.RecipeProcedureWrapper
 import nbc.group.recipes.data.model.dto.RecipeResponse
 import nbc.group.recipes.data.model.dto.RecipeWrapper
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RecipeService {
@@ -34,6 +35,12 @@ interface RecipeService {
         @Query("RECIPE_ID") recipeId: Int,
     ): RecipeResponse<RecipeIngredient>
 
+    @GET("Grid_20150827000000000226_1/{START_INDEX}/{END_INDEX}")
+    suspend fun getRecipeV3(
+        @Path("START_INDEX") startIndex: Int,
+        @Path("END_INDEX") endIndex: Int,
+        @Query("RECIPE_ID") recipeId: Int,
+    ): RecipeWrapper
 
     @GET(RECIPE_API)
     suspend fun getRecipeV2(
@@ -42,6 +49,13 @@ interface RecipeService {
 
     @GET(RECIPE_INGREDIENT_API)
     suspend fun getRecipeIngredientV2(
+        @Query("IRDNT_NM") ingredientName: String,
+    ): RecipeIngredientWrapper
+
+    @GET("Grid_20150827000000000227_1/{START_INDEX}/{END_INDEX}")
+    suspend fun getRecipeIngredientV3(
+        @Path("START_INDEX") startIndex: Int,
+        @Path("END_INDEX") endIndex: Int,
         @Query("IRDNT_NM") ingredientName: String,
     ): RecipeIngredientWrapper
 

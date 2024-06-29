@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.fragment.SignUpFragment">
 
     <androidx.constraintlayout.widget.Guideline
@@ -13,21 +12,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="56dp"/>
+        app:layout_constraintGuide_begin="56dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/fragment_horizontal_margin"/>
+        app:layout_constraintGuide_begin="@dimen/fragment_horizontal_margin" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/fragment_horizontal_margin"/>
+        app:layout_constraintGuide_end="@dimen/fragment_horizontal_margin" />
 
 
     <View
@@ -35,39 +34,39 @@
         android:layout_width="wrap_content"
         android:layout_height="56dp"
         android:background="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_top_banner"
+        style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_up_fragment_top_banner_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/top_banner_view"
-        style="@style/top_banner_text_style"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/iv_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/top_banner_left_icon_margin"
         android:src="@drawable/ic_back_arrows"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/top_banner_view"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="@dimen/top_banner_left_icon_margin"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_banner_view"
-        app:layout_constraintBottom_toTopOf="@id/view">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_banner_view">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,11 +79,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="45dp">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sign_up_fragment_id_hint"/>
+                    android:hint="@string/sign_up_fragment_id_hint" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -92,11 +92,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin_20">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_pw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sign_up_fragment_pw_hint"/>
+                    android:hint="@string/sign_up_fragment_pw_hint" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -105,22 +106,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin_20"
                 app:errorEnabled="true">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_pw_check"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sign_up_fragment_pw_check_hint"/>
+                    android:hint="@string/sign_up_fragment_pw_check_hint" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/et_nickname_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_nickname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sign_up_fragment_nickname_hint"/>
+                    android:hint="@string/sign_up_fragment_nickname_hint" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -141,13 +144,13 @@
                     android:id="@+id/animationView"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:lottie_rawRes="@raw/lottie"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:lottie_autoPlay="true"
-                    app:lottie_loop="true"/>
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/lottie" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -156,18 +159,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:text="맛고 서비스 이용약관에 동의해주세요"
+                android:text="@string/sign_up_fragment_terms"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/checkbox_all_linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_marginTop="30dp">
+                android:orientation="horizontal">
 
                 <CheckBox
                     android:id="@+id/checkbox_all"
@@ -181,20 +184,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="약관에 모두 동의"
+                    android:text="@string/sign_up_fragment_checkbox_all"
                     android:textColor="#808080"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <View
                 android:id="@+id/terms_view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#BDBDBD"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"/>
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="#BDBDBD" />
 
             <LinearLayout
                 android:id="@+id/checkbox_linearLayout1"
@@ -219,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="[필수] 만 14세 이상"
+                    android:text="@string/sign_up_fragment_age"
                     android:textColor="#808080"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -245,7 +248,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="[필수] 개인정보 수집 및 이용동의"
+                    android:text="@string/sign_up_fragment_privacy"
                     android:textColor="#808080"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -279,11 +282,12 @@
         android:id="@+id/bt_sign_up"
         android:layout_width="0dp"
         android:layout_height="@dimen/default_button_height"
-        android:layout_marginBottom="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_shape"
         android:text="@string/sign_up_fragment_confirm_button_text"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

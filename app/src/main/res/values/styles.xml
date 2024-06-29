@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="top_banner_text_style" parent="Widget.AppCompat.TextView">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
@@ -27,6 +28,13 @@
     <style name="ShapeAppearanceOverlayExtended" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">30dp</item>
+    </style>
+
+    <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxStrokeColor">@color/background_edittext</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="backgroundColor">@color/background_edittext</item>
     </style>
 
 

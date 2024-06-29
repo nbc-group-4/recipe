@@ -1,9 +1,8 @@
 package nbc.group.recipes.data.repository
 
 import nbc.group.recipes.data.model.dto.Recipe
-import nbc.group.recipes.data.model.dto.RecipeIngredient
 import nbc.group.recipes.data.model.firebase.UserMetaData
-import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.data.network.NetworkResult
 import java.io.InputStream
 
 interface FirebaseRepository {
@@ -11,14 +10,14 @@ interface FirebaseRepository {
     suspend fun putImage(
         storagePath: String,
         inputStream: InputStream
-    ): FirebaseResult<Boolean>
+    ): NetworkResult<Boolean>
 
-    suspend fun getRecipes(): FirebaseResult<List<Recipe>>
-    suspend fun getRecipesByIngredient(ingredient: String): FirebaseResult<List<Recipe>>
-    suspend fun putRecipe(recipe: Recipe): FirebaseResult<Boolean>
-    suspend fun getUserMeta(uid: String): FirebaseResult<UserMetaData>
-    suspend fun putUserMeta(uid: String, userMetaData: UserMetaData): FirebaseResult<Boolean>
-    suspend fun putRecipeTransaction(uid: String, recipe: Recipe, imageStreamList: List<InputStream>): FirebaseResult<Boolean>
+    suspend fun getRecipes(): NetworkResult<List<Recipe>>
+    suspend fun getRecipesByIngredient(ingredient: String): NetworkResult<List<Recipe>>
+    suspend fun putRecipe(recipe: Recipe): NetworkResult<Boolean>
+    suspend fun getUserMeta(uid: String): NetworkResult<UserMetaData>
+    suspend fun putUserMeta(uid: String, userMetaData: UserMetaData): NetworkResult<Boolean>
+    suspend fun putRecipeTransaction(uid: String, recipe: Recipe, imageStreamList: List<InputStream>): NetworkResult<Boolean>
 
-    suspend fun getRecipeForTest(ingredient: String): FirebaseResult<List<Recipe>>
+    suspend fun getRecipeForTest(ingredient: String): NetworkResult<List<Recipe>>
 }
