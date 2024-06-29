@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="20dp">
+
+    <TextView
+        android:id="@+id/dialog_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/banner_fragment_link_confirm"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dialog_stay_btn"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/corner_dialog1"
+            android:text="@string/banner_fragment_dialog_stay"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dialog_move_btn"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="@drawable/corner_dialog2"
+            android:text="@string/banner_fragment_dialog_move"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -18,4 +18,14 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="MakeRecipeButton">
+        <item name="backgroundColor">@color/green3</item>
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="CustomInputEditText">
+        <item name="boxStrokeColor">#888888</item>
+    </style>
+
 </resources>
