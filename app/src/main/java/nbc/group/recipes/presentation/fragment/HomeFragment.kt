@@ -139,10 +139,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun autoBannerScroll() = object  : Runnable{
-            override fun run() {
-                binding.homeBanner.currentItem = (binding.homeBanner.currentItem + 1) % (binding.homeBanner.adapter?.itemCount ?: 1)
-                handler.postDelayed(this, 2000)
-            }
+        override fun run() {
+            binding.homeBanner.currentItem = (binding.homeBanner.currentItem + 1) % (binding.homeBanner.adapter?.itemCount ?: 1)
+            handler.postDelayed(this, 2000)
+        }
     }
 
 }
