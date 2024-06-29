@@ -43,9 +43,9 @@ class BookmarkFragment : Fragment() {
                     recipeImg = recipeEntity.recipeImg,
                     recipeName = recipeEntity.recipeName,
                     explain = recipeEntity.explain,
-                    step = "",
+                    step = recipeEntity.step,
                     ingredient = recipeEntity.ingredient,
-                    difficulty = recipeEntity.step,
+                    difficulty = recipeEntity.difficulty,
                     time = recipeEntity.time
                 )
                 navigateToRecipeDetail(recipeEntity)
@@ -59,9 +59,9 @@ class BookmarkFragment : Fragment() {
                     recipeImg = recipeEntity.recipeImg,
                     recipeName = recipeEntity.recipeName,
                     explain = recipeEntity.explain,
-                    step = "",
+                    step = recipeEntity.step,
                     ingredient = recipeEntity.ingredient,
-                    difficulty = recipeEntity.step,
+                    difficulty = recipeEntity.difficulty,
                     time = recipeEntity.time
                 ))
             }
