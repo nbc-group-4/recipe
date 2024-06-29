@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.fragment.MakeRecipeFragment">
 
 
     <TextView
         android:id="@+id/tv_top_banner"
-        style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/make_recipe_fragment_top_banner_text"
-        app:layout_constraintBottom_toBottomOf="@id/gl_top"
-        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/top_banner_text_style"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/gl_top"/>
 
     <ImageView
         android:id="@+id/iv_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/top_banner_left_icon_margin"
         android:src="@drawable/ic_back"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/gl_top"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="@dimen/top_banner_left_icon_margin"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="795dp" />
+        app:layout_constraintGuide_begin="@dimen/top_banner_height"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/fragment_horizontal_margin" />
+        app:layout_constraintGuide_begin="@dimen/fragment_horizontal_margin"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/fragment_horizontal_margin" />
+        app:layout_constraintGuide_end="@dimen/fragment_horizontal_margin"/>
 
     <Button
         android:id="@+id/bt_make_recipe"
         android:layout_width="0dp"
-        android:layout_height="@dimen/default_button_height"
+        android:layout_height="48dp"
         android:layout_marginBottom="@dimen/default_margin_20"
         android:background="@drawable/button_shape"
         android:text="@string/make_recipe_fragment_make_button_text"
@@ -65,10 +65,10 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         android:scrollbars="none"
-        app:layout_constraintBottom_toTopOf="@id/bt_make_recipe"
-        app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintTop_toTopOf="@id/gl_top">
+        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintTop_toTopOf="@id/gl_top"
+        app:layout_constraintBottom_toTopOf="@id/bt_make_recipe">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,52 +76,50 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/content_text_style_high_light_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin_20"
-                android:text="@string/make_recipe_fragment_recipe_name_indic" />
+                android:text="@string/make_recipe_fragment_recipe_name_indic"
+                style="@style/content_text_style_high_light_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/CustomInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
+                android:background="@color/background_edittext"
                 android:layout_marginTop="@dimen/default_padding">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_recipe_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/background_edittext"
-                    android:hint="@string/make_recipe_fragment_recipe_name_indic" />
+                    android:hint="@string/make_recipe_fragment_recipe_name_indic"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                style="@style/content_text_style_high_light_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin_20"
-                android:text="@string/make_recipe_fragment_recipe_description_indic" />
+                android:text="@string/make_recipe_fragment_recipe_description_indic"
+                style="@style/content_text_style_high_light_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
+                android:background="@color/background_edittext"
+                app:boxStrokeColor="@color/background_edittext"
                 android:layout_marginTop="@dimen/default_padding">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_recipe_description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/background_edittext"
-                    android:hint="@string/make_recipe_fragment_recipe_description_hint" />
+                    android:hint="@string/make_recipe_fragment_recipe_description_hint"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                style="@style/content_text_style_high_light_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin_20"
-                android:text="@string/make_recipe_fragment_recipe_cooking_time_indic" />
+                android:text="@string/make_recipe_fragment_recipe_cooking_time_indic"
+                style="@style/content_text_style_high_light_small"/>
 
             <Spinner
                 android:id="@+id/spinner_cooking_time"
@@ -131,53 +129,32 @@
                 android:dropDownWidth="230dp"
                 android:background="@color/background_edittext"/>
 
-
             <TextView
-                style="@style/content_text_style_high_light_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin_20"
-                android:text="@string/make_recipe_fragment_recipe_ingredient_indic" />
+                android:text="@string/make_recipe_fragment_recipe_ingredient_indic"
+                style="@style/content_text_style_high_light_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
+                android:background="@color/background_edittext"
+                app:boxStrokeColor="@color/background_edittext"
                 android:layout_marginTop="@dimen/default_padding">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_ingredient"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/background_edittext"
-                    android:hint="@string/make_recipe_fragment_recipe_ingredient_hint" />
+                    android:hint="@string/make_recipe_fragment_recipe_ingredient_hint"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                style="@style/content_text_style_high_light_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin_20"
-                android:text="@string/make_recipe_fragment_recipe_cooking_process_indic" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:layout_marginTop="@dimen/default_padding">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_cooking_process"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/background_edittext"
-                    android:hint="@string/make_recipe_fragment_recipe_cooking_process_hint" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                style="@style/content_text_style_high_light_small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin_20"
-                android:text="@string/make_recipe_fragment_recipe_photo_indic" />
+                android:text="@string/make_recipe_fragment_recipe_photo_indic"
+                style="@style/content_text_style_high_light_small"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -191,19 +168,42 @@
                     android:layout_width="108dp"
                     android:layout_height="108dp"
                     android:layout_gravity="bottom"
-                    android:src="@drawable/ic_image_add" />
+                    app:boxStrokeColor="@color/background_edittext"
+                    android:src="@drawable/ic_image_add"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_images"
+                    android:layout_marginStart="@dimen/default_margin_20"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    android:layout_marginStart="@dimen/default_margin_20"
-                    android:orientation="horizontal" />
-
+                    android:orientation="horizontal"/>
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/make_recipe_fragment_recipe_cooking_process_indic"
+                style="@style/content_text_style_high_light_small"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/background_edittext"
+                app:boxStrokeColor="@color/background_edittext"
+                android:layout_marginTop="@dimen/default_padding">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_cooking_process"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:hint="@string/make_recipe_fragment_recipe_cooking_process_hint"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
 
+
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

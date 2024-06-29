@@ -8,26 +8,26 @@
     tools:context=".presentation.fragment.RecipeFragment">
 
 
-    <ImageView
-        android:id="@+id/iv_banner_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/top_banner_left_icon_margin"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/gl_top"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/ic_top_bar"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_banner_icon"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/top_banner_left_icon_margin"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/gl_top"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:src="@drawable/ic_top_bar"/>-->
 
     <TextView
         android:id="@+id/tv_top_banner"
         style="@style/top_banner_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
         android:text="@string/recipe_fragment_top_banner_text"
-        android:layout_marginStart="@dimen/recipe_fragment_top_banner_inter_value"
-        app:layout_constraintStart_toEndOf="@id/iv_banner_icon"
-        app:layout_constraintTop_toTopOf="@id/iv_banner_icon"
-        app:layout_constraintBottom_toBottomOf="@id/iv_banner_icon"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"

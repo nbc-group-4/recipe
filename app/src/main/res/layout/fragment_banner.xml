@@ -5,22 +5,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-        <ImageView
-            android:id="@+id/home_bakground_iv"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/img_banner1"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/home_bakground_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_banner1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/home_banner_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="6월의 달콤한 선물,\n신선한 제철 옥수수!"
+            android:text="@string/home_banner"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"

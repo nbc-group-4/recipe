@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -16,11 +15,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import nbc.group.recipes.convertToOfficial
 import nbc.group.recipes.data.model.entity.RecipeEntity
-import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.data.network.NetworkResult
 import nbc.group.recipes.data.utils.getRecipeStoragePath
 import nbc.group.recipes.databinding.FragmentRecipeBinding
 import nbc.group.recipes.presentation.MainActivity
@@ -81,7 +79,7 @@ class RecipeFragment : Fragment() {
                 Log.e("URGENT_TAG", "viewModelObserverVersionRalph: $nullable", )
                 nullable?.let { nonNull ->
                     when(nonNull) {
-                        is FirebaseResult.Success -> {
+                        is NetworkResult.Success -> {
                             val temp = recipeAdapter.currentList.toMutableList()
                             nonNull.result.forEach {
                                 val temp1 = it.recipeName.split("/")
@@ -107,10 +105,10 @@ class RecipeFragment : Fragment() {
                                 recipeViewModel.fetchRecipe(it.cntntsSj!!)
                             }
                         }
-                        is FirebaseResult.Failure -> {
+                        is NetworkResult.Failure -> {
                             Log.e("URGENT_TAG", "viewModelObserverVersionRalph: failure", )
                         }
-                        is FirebaseResult.Loading -> {
+                        is NetworkResult.Loading -> {
                             Log.e("URGENT_TAG", "viewModelObserverVersionRalph: loading", )
                         }
                     }

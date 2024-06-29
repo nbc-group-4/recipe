@@ -7,27 +7,21 @@ import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import nbc.group.recipes.convertToOfficial
 import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.model.entity.ContentBanEntity
 import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.data.model.entity.UserBanEntity
-import nbc.group.recipes.data.network.FirebaseResult
+import nbc.group.recipes.data.network.NetworkResult
 import nbc.group.recipes.data.repository.BanRepository
 import nbc.group.recipes.data.repository.FirebaseRepository
 import nbc.group.recipes.data.repository.NaverSearchRepository
 import nbc.group.recipes.data.repository.RecipeRepository
-import nbc.group.recipes.data.utils.getRecipeStoragePath
 import nbc.group.recipes.getRecipeImageUrl
-import nbc.group.recipes.presentation.fragment.FROM_FIREBASE
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import javax.inject.Inject
@@ -44,7 +38,7 @@ class RecipeViewModel @Inject constructor(
     private val _recipes = MutableStateFlow<List<RecipeEntity>?>(null)
     val recipes = _recipes.asStateFlow()
 
-    private val _firebaseRecipes = MutableStateFlow<FirebaseResult<List<Recipe>>?>(null)
+    private val _firebaseRecipes = MutableStateFlow<NetworkResult<List<Recipe>>?>(null)
     val firebaseRecipes = _firebaseRecipes.asStateFlow()
 
     private val _contentBan = MutableStateFlow<List<ContentBanEntity>>(listOf())

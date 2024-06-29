@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_map"
         android:title="지도"/>
     <item
-        android:id="@+id/recipeFragment"
+        android:id="@+id/recipeGraphFragment"
         android:icon="@drawable/ic_gnb_recipe"
         android:title="레시피"/>
     <item
