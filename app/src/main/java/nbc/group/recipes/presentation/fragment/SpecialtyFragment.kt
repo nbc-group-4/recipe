@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -51,6 +52,7 @@ class SpecialtyFragment : Fragment() {
 
         setRecyclerView()
         setUpListener()
+        setUpAutoComplete()
         observeSelectedItem()
     }
 
@@ -90,6 +92,23 @@ class SpecialtyFragment : Fragment() {
             else -> specialties6
         }
         sharedViewModel.searchItem(searchQuery, specialties)
+    }
+
+    private fun setUpAutoComplete() {
+        val specialties = listOf(
+            specialties1, specialties2, specialties3, specialties4, specialties5, specialties6
+        ).flatten()
+
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            specialties
+        )
+
+        binding.etSpecialtySearch.apply {
+            setAdapter(adapter)
+            threshold = 1
+        }
     }
 
     private fun hideKeyboard() {

@@ -20,6 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import nbc.group.recipes.GlideApp
 import nbc.group.recipes.R
+import nbc.group.recipes.data.model.dto.Recipe
+import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.data.network.NetworkResult
 import nbc.group.recipes.databinding.CustomDialogBinding
 import nbc.group.recipes.databinding.FragmentMypageBinding
@@ -27,7 +29,6 @@ import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.MyPageRecipeAdapter
 import nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import nbc.group.recipes.viewmodel.MainViewModel
-import nbc.group.recipes.viewmodel.MypageSharedViewModel
 
 @AndroidEntryPoint
 class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
@@ -43,7 +44,8 @@ class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
     private val adapter get() = _adapter!!
 
     private val viewModel: MainViewModel by activityViewModels()
-    private val sharedViewModel: MypageSharedViewModel by activityViewModels() // 레시피 디테일 전달
+
+    private lateinit var recipe: Recipe
 
     private val pickMedia = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -155,11 +157,20 @@ class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
     }
 
     // 작성한 레시피 클릭
-    override fun onClick(recipeId: String) {
-        sharedViewModel.selectRecipe(recipeId)
-
-//        val bundle = Bundle().apply { putParcelable("recipeDetail", )}
-//        (activity as MainActivity).moveToRecipeDetailFragment(bundle)
+    override fun onClick(recipe: String) {
+        val recipeEntity = RecipeEntity(
+            id = this.recipe.recipeId,
+            recipeImg = this.recipe.calorie,
+            recipeName = this.recipe.recipeName,
+            explain = this.recipe.summary,
+            step = "",
+            ingredient = "",
+            difficulty = this.recipe.levelName,
+            time = this.recipe.cookingTime
+        )
+        // val bundle = Bundle().apply { putParcelable("recipeDetail", )}
+        val bundle = Bundle().apply { putParcelable("recipe", recipeEntity) }
+        (activity as? MainActivity)?.moveToRecipeDetailFragment(bundle)
     }
 
     override fun onDestroyView() {
