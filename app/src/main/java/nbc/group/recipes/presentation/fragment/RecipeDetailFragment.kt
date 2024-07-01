@@ -233,15 +233,15 @@ class RecipeDetailFragment : Fragment() {
         _binding = null
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: RecipeEntity) =
-            RecipeDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(ARG_PARAM1, param1)
-                }
-            }
-    }
+//    companion object {
+//        @JvmStatic
+//        fun newInstance(param1: RecipeEntity) =
+//            RecipeDetailFragment().apply {
+//                arguments = Bundle().apply {
+//                    putParcelable(ARG_PARAM1, param1)
+//                }
+//            }
+//    }
 
 
     class ModalBottomSheet(

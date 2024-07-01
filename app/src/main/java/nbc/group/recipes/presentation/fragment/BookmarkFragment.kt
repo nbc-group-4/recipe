@@ -32,37 +32,37 @@ class BookmarkFragment : Fragment() {
 
     private val bookMarkViewModel : BookMarkViewModel by viewModels()
 
-    private lateinit var recipe : Recipe
+    private lateinit var recipeEntity : RecipeEntity
 
     private val bookMarkAdapter : BookMarkAdapter by lazy {
         BookMarkAdapter(
             onClick = { item, position ->
-                recipe = item
+                recipeEntity = item
                 val recipeEntity = RecipeEntity(
-                    id = recipe.recipeId,
-                    recipeImg = recipe.calorie,
-                    recipeName = recipe.recipeName,
-                    explain = recipe.summary,
-                    step = "",
-                    ingredient = "",
-                    difficulty = recipe.levelName,
-                    time = recipe.cookingTime
+                    id = recipeEntity.id,
+                    recipeImg = recipeEntity.recipeImg,
+                    recipeName = recipeEntity.recipeName,
+                    explain = recipeEntity.explain,
+                    step = recipeEntity.step,
+                    ingredient = recipeEntity.ingredient,
+                    difficulty = recipeEntity.difficulty,
+                    time = recipeEntity.time
                 )
                 navigateToRecipeDetail(recipeEntity)
             },
             onLongClick = { item, position ->
-                recipe = item
+                recipeEntity = item
 
                 CustomDialog(recipeEntity =
                 RecipeEntity(
-                    id = recipe.recipeId,
-                    recipeImg = recipe.calorie,
-                    recipeName = recipe.recipeName,
-                    explain = recipe.summary,
-                    step = "",
-                    ingredient = "",
-                    difficulty = recipe.levelName,
-                    time = recipe.cookingTime
+                    id = recipeEntity.id,
+                    recipeImg = recipeEntity.recipeImg,
+                    recipeName = recipeEntity.recipeName,
+                    explain = recipeEntity.explain,
+                    step = recipeEntity.step,
+                    ingredient = recipeEntity.ingredient,
+                    difficulty = recipeEntity.difficulty,
+                    time = recipeEntity.time
                 ))
             }
         )
@@ -101,7 +101,7 @@ class BookmarkFragment : Fragment() {
                 val recipeList = recipeEntityList.map {
                     it.toRecipe()
                 }
-                bookMarkAdapter.submitList(recipeList)
+                bookMarkAdapter.submitList(recipeEntityList)
                 bookMarkViewModel.checkVisiblityView()
 
                 binding.tvBookmarkCount.text = "총 ${recipeEntityList.size}개"
@@ -151,7 +151,7 @@ class BookmarkFragment : Fragment() {
 
     private fun navigateToRecipeDetail(recipeEntity: RecipeEntity) {
         val bundle = Bundle().apply {
-            putParcelable("recipe", recipeEntity)
+            putParcelable("recipeDetail", recipeEntity)
         }
         (activity as? MainActivity)?.moveToRecipeDetailFragment(bundle)
     }

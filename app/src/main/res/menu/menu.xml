@@ -10,7 +10,7 @@
         android:title="지도"/>
     <item
         android:id="@+id/recipeGraphFragment"
-        android:icon="@drawable/ic_gnb_recipe"
+        android:icon="@drawable/ic_gnb_recipe2"
         android:title="레시피"/>
     <item
         android:id="@+id/bookmarkFragment"

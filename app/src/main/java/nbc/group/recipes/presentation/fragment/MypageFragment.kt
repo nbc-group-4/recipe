@@ -31,7 +31,7 @@ import nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecorati
 import nbc.group.recipes.viewmodel.MainViewModel
 
 @AndroidEntryPoint
-class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
+class MypageFragment : Fragment(){
 
     companion object {
         const val TAG = "MypageFragment"
@@ -42,6 +42,8 @@ class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
 
     private var _adapter: MyPageRecipeAdapter? = null
     private val adapter get() = _adapter!!
+
+    private lateinit var recipeEntity: RecipeEntity
 
     private val viewModel: MainViewModel by activityViewModels()
 
@@ -70,7 +72,23 @@ class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _adapter = MyPageRecipeAdapter(this, this)
+        _adapter = MyPageRecipeAdapter(this,
+            onClick = {item, position ->
+                recipeEntity = item
+
+                val recipeEntity = RecipeEntity(
+                    id = recipeEntity.id,
+                    recipeImg = recipeEntity.recipeImg,
+                    recipeName = recipeEntity.recipeName,
+                    explain = recipeEntity.explain,
+                    step = recipeEntity.step,
+                    ingredient = recipeEntity.ingredient,
+                    difficulty = recipeEntity.difficulty,
+                    time = recipeEntity.time
+                )
+                navigateToRecipeDetail(recipeEntity)
+            }
+        )
 
         with(binding) {
             btSignIn.setOnClickListener(signInButtonClickListener)
@@ -121,7 +139,8 @@ class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
                     when (nonNull) {
                         is NetworkResult.Success -> {
                             Log.e(TAG, "onViewCreated: get recipeIds: Success")
-                            adapter.submitList(nonNull.result.recipeIds)
+                            // 수정필요
+//                            adapter.submitList(nonNull.result.recipeIds)
                         }
 
                         is NetworkResult.Failure -> {
@@ -157,19 +176,10 @@ class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
     }
 
     // 작성한 레시피 클릭
-    override fun onClick(recipe: String) {
-        val recipeEntity = RecipeEntity(
-            id = this.recipe.recipeId,
-            recipeImg = this.recipe.calorie,
-            recipeName = this.recipe.recipeName,
-            explain = this.recipe.summary,
-            step = "",
-            ingredient = "",
-            difficulty = this.recipe.levelName,
-            time = this.recipe.cookingTime
-        )
-        // val bundle = Bundle().apply { putParcelable("recipeDetail", )}
-        val bundle = Bundle().apply { putParcelable("recipe", recipeEntity) }
+    private fun navigateToRecipeDetail(recipeEntity: RecipeEntity) {
+        val bundle = Bundle().apply {
+            putParcelable("recipeDetail", recipeEntity)
+        }
         (activity as? MainActivity)?.moveToRecipeDetailFragment(bundle)
     }
 
