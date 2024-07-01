@@ -42,8 +42,8 @@
     <style name="Widget.recipe.Chip" parent="@style/Widget.MaterialComponents.Chip.Filter">
         <item name="chipBackgroundColor">@color/background_chip_color</item>
         <item name="android:textColor">@color/text_chip_color</item>
-        <item name="chipStrokeWidth">1dp</item>
-        <item name="chipStrokeColor">@color/green3</item>
+        <item name="chipStrokeWidth">0.8dp</item>
+        <item name="chipStrokeColor">@color/green1</item>
         <item name="android:textStyle">bold</item>
         <item name="chipIconSize">12dp</item>
         <item name="iconStartPadding">6dp</item>
