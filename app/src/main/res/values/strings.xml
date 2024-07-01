@@ -37,6 +37,7 @@
     <string name="recipe_detail_fragment_name">레시피명</string>
     <string name="recipe_detail_fragment_user">작성자</string>
     <string name="recipe_detail_fragment_time">30분</string>
+    <string name="recipe_detail_fragment_simple_description">간단설명</string>
     <string name="recipe_detail_fragment_textview">TextView</string>
     <string name="recipe_detail_fragment_textview2">TextView</string>
 
