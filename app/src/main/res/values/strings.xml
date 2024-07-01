@@ -3,7 +3,7 @@
 
     <!-- HomeFragment -->
     <string name="home_fragment_app_name">맛고</string>
-    <string name="home_fragment_season_specialty">6월 제철 특산물</string>
+    <string name="home_fragment_season_specialty">추천 제철 특산물</string>
     <string name="home_fragment_specialty_kind">우리나라 특산물의 종류</string>
 
     <!-- SpecialtyFragment -->
@@ -37,6 +37,7 @@
     <string name="recipe_detail_fragment_name">레시피명</string>
     <string name="recipe_detail_fragment_user">작성자</string>
     <string name="recipe_detail_fragment_time">30분</string>
+    <string name="recipe_detail_fragment_simple_description">간단설명</string>
     <string name="recipe_detail_fragment_textview">TextView</string>
     <string name="recipe_detail_fragment_textview2">TextView</string>
 
@@ -151,5 +152,12 @@
     <string name="banner_fragment_link_confirm">외부 브라우저로 연결됩니다.\n연결하시겠습니까?</string>
     <string name="banner_fragment_dialog_stay">머무르기</string>
     <string name="banner_fragment_dialog_move">이동하기</string>
+    <string name="banner_text_1">여름의 달콤한 선물,\n신선한 제철 옥수수!</string>
+    <string name="banner_text_2">제철감자로 즐기는,\n여름의 맛있는 순간!</string>
+    <string name="banner_text_3">여름의 바다향기,\n신선한 제철 홍가리비!</string>
+    <string name="banner_text_4">여름의 진미,\n제철 홍게로 풍성하게!</string>
+    <string name="banner_text_5">여름의 풍성함,\n제철 새꼬막으로!</string>
+    <string name="banner_text_6">제철수박으로 즐기는,\n시원한 여름휴가!</string>
+    <string name="banner_text_7">여름의 달콤한 감동,\n제철 밤호박을 만나보세요!</string>
 
 </resources>

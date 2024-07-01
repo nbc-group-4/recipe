@@ -171,6 +171,7 @@ class RecipeRepositoryImpl @Inject constructor(
                                 ingredient = ingredientName,
                                 difficulty = recipe.levelName,
                                 time = recipe.cookingTime,
+                                firebaseId = it.recipeId.toString()
                             )
                         )
                     } catch(e: Exception) {

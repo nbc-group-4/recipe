@@ -17,9 +17,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import nbc.group.recipes.GlideApp
 import nbc.group.recipes.R
+import nbc.group.recipes.data.model.dto.Recipe
+import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.data.network.NetworkResult
 import nbc.group.recipes.databinding.CustomDialogBinding
 import nbc.group.recipes.databinding.FragmentMypageBinding
@@ -27,10 +31,9 @@ import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.MyPageRecipeAdapter
 import nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import nbc.group.recipes.viewmodel.MainViewModel
-import nbc.group.recipes.viewmodel.MypageSharedViewModel
 
 @AndroidEntryPoint
-class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
+class MypageFragment : Fragment(){
 
     companion object {
         const val TAG = "MypageFragment"
@@ -43,7 +46,8 @@ class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
     private val adapter get() = _adapter!!
 
     private val viewModel: MainViewModel by activityViewModels()
-    private val sharedViewModel: MypageSharedViewModel by activityViewModels() // 레시피 디테일 전달
+
+    private val recipeEntities = mutableListOf<RecipeEntity>()
 
     private val pickMedia = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -68,7 +72,24 @@ class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _adapter = MyPageRecipeAdapter(this, this)
+        _adapter = MyPageRecipeAdapter(this,
+            onClick = {item, position ->
+//                recipeEntity = item
+//
+//                val recipeEntity = RecipeEntity(
+//                    id = recipeEntity.id,
+//                    recipeImg = recipeEntity.recipeImg,
+//                    recipeName = recipeEntity.recipeName,
+//                    explain = recipeEntity.explain,
+//                    step = recipeEntity.step,
+//                    ingredient = recipeEntity.ingredient,
+//                    difficulty = recipeEntity.difficulty,
+//                    time = recipeEntity.time
+//                )
+//                navigateToRecipeDetail(recipeEntity)
+                navigateToRecipeDetail(item)
+            }
+        )
 
         with(binding) {
             btSignIn.setOnClickListener(signInButtonClickListener)
@@ -114,12 +135,22 @@ class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.userMetaData.collect { nullable ->
+            viewModel.userMetaData.collectLatest { nullable ->
                 nullable?.let { nonNull ->
                     when (nonNull) {
                         is NetworkResult.Success -> {
                             Log.e(TAG, "onViewCreated: get recipeIds: Success")
-                            adapter.submitList(nonNull.result.recipeIds)
+                            val recipeIds = nonNull.result.recipeIds
+                            recipeIds.forEach { recipeId ->
+                                val temp = viewModel.getRecipeFromFirebaseById(recipeId)
+                                if(temp is NetworkResult.Success) {
+                                    recipeEntities.add(temp.result)
+                                    adapter.submitList(recipeEntities)
+                                    adapter.notifyItemInserted(adapter.itemCount - 1)
+                                }
+                            }
+                            // 수정필요
+//                            adapter.submitList(nonNull.result.recipeIds)
                         }
 
                         is NetworkResult.Failure -> {
@@ -155,17 +186,19 @@ class MypageFragment : Fragment(), MyPageRecipeAdapter.OnItemClickListener {
     }
 
     // 작성한 레시피 클릭
-    override fun onClick(recipeId: String) {
-        sharedViewModel.selectRecipe(recipeId)
-
-//        val bundle = Bundle().apply { putParcelable("recipeDetail", )}
-//        (activity as MainActivity).moveToRecipeDetailFragment(bundle)
+    private fun navigateToRecipeDetail(recipeEntity: RecipeEntity) {
+        val bundle = Bundle().apply {
+            putParcelable("recipeDetail", recipeEntity)
+        }
+        (activity as? MainActivity)?.moveToRecipeDetailFragment(bundle)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
         _adapter = null
+
+        recipeEntities.clear()
     }
 
     private val signInButtonClickListener: (View) -> Unit = {

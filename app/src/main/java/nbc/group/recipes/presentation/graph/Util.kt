@@ -22,9 +22,13 @@ private fun centerCropImage(source: Bitmap): Bitmap {
         Bitmap.createBitmap(
             source, (width - height) / 2, 0, height, height
         )
+    } else if(width < height) {
+        Bitmap.createBitmap(
+            source, 0, (height - width) / 2, width, width
+        )
     } else {
         Bitmap.createBitmap(
-            source, (height - width) / 2, 0, width, width
+            source, 0, 0, width, width
         )
     }
 }

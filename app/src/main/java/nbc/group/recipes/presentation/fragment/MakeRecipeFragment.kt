@@ -19,8 +19,10 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +36,7 @@ import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.MakeRecipeImageAdapter
 import nbc.group.recipes.presentation.adapter.decoration.ListSpacingItemDecoration
 import nbc.group.recipes.viewmodel.MainViewModel
+import nbc.group.recipes.viewmodel.RecipeGraphViewModel
 import java.io.InputStream
 
 @AndroidEntryPoint
@@ -46,6 +49,7 @@ class MakeRecipeFragment : Fragment() {
     private val adapter get() = _adapter!!
 
     private val viewModel: MainViewModel by activityViewModels()
+    private val recipeGraphViewModel: RecipeGraphViewModel by activityViewModels()
 
     private val imageUriList = mutableListOf<Uri>()
     private val imageStreamList = mutableListOf<InputStream>()
@@ -93,26 +97,44 @@ class MakeRecipeFragment : Fragment() {
 
             etRecipeName.addTextChangedListener(textWatcher)
             etRecipeDescription.addTextChangedListener(textWatcher)
-            etIngredient.addTextChangedListener(textWatcher)
+            tvIngredient.addTextChangedListener(textWatcher)
             etCookingProcess.addTextChangedListener(textWatcher)
 
             setupSpinner(spinnerCookingTime)
         }
 
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.makeRecipeFlow.collectLatest {
-                it?.let { result ->
-                    when (result) {
-                        is NetworkResult.Success -> {
-                            (activity as MainActivity).moveToBack()
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    recipeGraphViewModel.currentSpecialty.collectLatest { nullable ->
+                        // todo: 재료 부분 뷰 인에디터블하게 변경 후에 해당 값 삽입 하도록 코드 작성
+                        nullable?.let {
+                            binding.tvIngredient.text = it.cntntsSj
                         }
+                    }
+                }
 
-                        is NetworkResult.Failure -> {
+                launch {
+                    viewModel.makeRecipeFlow.collectLatest {
+                        it?.let { result ->
+                            when (result) {
+                                is NetworkResult.Success -> {
+                                    viewModel.resetMakeRecipeFlow()
+                                    (activity as MainActivity).moveToBack()
+                                }
 
-                        }
+                                is NetworkResult.Failure -> {
+                                    viewModel.resetMakeRecipeFlow()
+                                }
 
-                        is NetworkResult.Loading -> {
-                            Log.e("MakeRecipeFragment", "onViewCreated: Loading ~")
+                                is NetworkResult.Loading -> {
+                                    Log.e("MakeRecipeFragment", "onViewCreated: Loading ~")
+                                }
+                            }
                         }
                     }
                 }
@@ -139,7 +161,7 @@ class MakeRecipeFragment : Fragment() {
             typeCode = "user",
             typeName = viewModel.currentUser!!.uid,
             levelName = "",
-            ingredientCode = binding.etIngredient.text.toString(),
+            ingredientCode = binding.tvIngredient.text.toString(),
         )
     }
 
@@ -216,7 +238,7 @@ class MakeRecipeFragment : Fragment() {
         with(binding) {
             val isRecipeName = etRecipeName.text.toString().isNotEmpty()
             val isRecipeDescription = etRecipeDescription.text.toString().isNotEmpty()
-            val isIngredient = etIngredient.text.toString().isNotEmpty()
+            val isIngredient = tvIngredient.text.toString().isNotEmpty()
             val isCookingProcess = etCookingProcess.text.toString().isNotEmpty()
 
             val allFieldsValid = isRecipeName && isRecipeDescription && isIngredient && isCookingProcess

@@ -1,6 +1,7 @@
 package nbc.group.recipes.presentation.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem.OnMenuItemClickListener
@@ -26,7 +27,6 @@ import nbc.group.recipes.databinding.FragmentRecipeDetailBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.viewmodel.BookMarkViewModel
 import nbc.group.recipes.viewmodel.MainViewModel
-import nbc.group.recipes.viewmodel.MypageSharedViewModel
 import nbc.group.recipes.viewmodel.RecipeViewModel
 
 
@@ -37,8 +37,7 @@ class RecipeDetailFragment : Fragment() {
 
     private val recipeViewModel: RecipeViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
-    private val bookMarkViewModel : BookMarkViewModel by viewModels()
-    //   private val sharedViewModel: MypageSharedViewModel by activityViewModels() //
+    private val bookMarkViewModel: BookMarkViewModel by viewModels()
 
     private var _binding: FragmentRecipeDetailBinding? = null
     private val binding: FragmentRecipeDetailBinding
@@ -79,21 +78,20 @@ class RecipeDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e("URGENT_TAG", "onViewCreated: $recipeDetail", )
+
         if (recipeDetail == null) {
             (activity as MainActivity).moveToBack()
         }
 
         // 마이페이지에서 클릭한 레시피 데이터
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            sharedViewModel.selectedRecipe.collect { recipeId ->
-//                recipeId?.let {
-//                    binding.tvDetailWriter.text = recipeDetail?.writerName
-//                    binding.tvDetailTitle.text = recipeDetail?.recipeName
-//                    binding.tvTime.text = recipeDetail?.time
-//                    binding.tvDetailIngredients.text = recipeDetail?.ingredient
-//                    binding.tvRecipeSteps.text = recipeDetail?.step
-//                }
-//            }
+//        val recipeDetail = arguments?.getParcelable("recipe", recipeEntity)
+//        let {
+//            binding.tvDetailWriter.text = recipeDetail.recipeName
+//            binding.tvDetailTitle.text = recipeDetail.name
+//            binding.tvTime.text = recipeDetail.time
+//            binding.tvDetailIngredients.text = recipeDetail.ingredient
+//            binding.tvRecipeSteps.text = recipeDetail.step
 //        }
 
 //        recipeDetail?.let { recipe ->
@@ -128,14 +126,14 @@ class RecipeDetailFragment : Fragment() {
             if (recipeDetail != null && bookmarkClick) {
                 recipeViewModel.putRecipeEntity(recipeDetail!!)
                 binding.ivBookmark.setImageResource(R.drawable.ic_fill_bookmark)
-            }else{
+            } else {
                 bookMarkViewModel.deleteData(recipeDetail!!)
                 binding.ivBookmark.setImageResource(R.drawable.ic_empty_bookmark)
             }
         }
     }
 
-    private fun bookMarked(){
+    private fun bookMarked() {
         viewLifecycleOwner.lifecycleScope.launch {
             bookMarkViewModel.recipeEntity.collect { bookmarkedRecipe ->
                 // id가 일치하는지 확인(id로 북마크 여부확인)
@@ -153,7 +151,7 @@ class RecipeDetailFragment : Fragment() {
     }
 
     private fun bindRecipeDetail(recipeDetail: RecipeEntity) {
-
+        Log.e("URGENT_TAG", "bindRecipeDetail: $recipeDetail", )
         with(binding) {
             if (recipeDetail.from == FROM_FIREBASE) {
                 GlideApp.with(this@RecipeDetailFragment)
@@ -178,14 +176,32 @@ class RecipeDetailFragment : Fragment() {
             ivMoreButton.setOnClickListener {
                 modalBottomSheet.show(parentFragmentManager, "")
             }
+            tvSimpleDescription.text = recipeDetail.explain
 
             if (recipeDetail.from != FROM_FIREBASE) {
                 ivMoreButton.visibility = View.GONE
+                //recipeViewModel.getRecipeProcedure(recipeDetail)
+
+
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val temp = recipeViewModel.getRecipeStep(recipeDetail)
+                    val temp1 = temp.recipeProcedure
+                    var result = ""
+                    temp1.row.forEach {
+                        result += "${it.cookingDescription}\n"
+                    }
+                    tvRecipeSteps.text = result
+                }
             }
+
+
+
 
 
             // todo: Room에 id로 서치하도록 만든 함수를 통해서 북마크 여부 확인
         }
+
+        setStars(recipeDetail.difficulty)
     }
 
 //    private fun observeDifficulty() {
@@ -202,18 +218,18 @@ class RecipeDetailFragment : Fragment() {
     private fun setStars(difficulty: String) {
         when (difficulty) {
             "초보환영" -> {
-//                binding.ivStar1.visibility = View.VISIBLE
+                binding.ivStarEmpty1.setImageResource(R.drawable.ic_star_fill)
             }
 
             "보통" -> {
-//                binding.ivStar1.visibility = View.VISIBLE
-//                binding.ivStar2.visibility = View.VISIBLE
+                binding.ivStarEmpty1.setImageResource(R.drawable.ic_star_fill)
+                binding.ivStarEmpty2.setImageResource(R.drawable.ic_star_fill)
             }
 
             "어려움" -> {
-//                binding.ivStar1.visibility = View.VISIBLE
-//                binding.ivStar2.visibility = View.VISIBLE
-//                binding.ivStar3.visibility = View.VISIBLE
+                binding.ivStarEmpty1.setImageResource(R.drawable.ic_star_fill)
+                binding.ivStarEmpty2.setImageResource(R.drawable.ic_star_fill)
+                binding.ivStarEmpty3.setImageResource(R.drawable.ic_star_fill)
             }
         }
     }
@@ -238,15 +254,15 @@ class RecipeDetailFragment : Fragment() {
         _binding = null
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: RecipeEntity) =
-            RecipeDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(ARG_PARAM1, param1)
-                }
-            }
-    }
+//    companion object {
+//        @JvmStatic
+//        fun newInstance(param1: RecipeEntity) =
+//            RecipeDetailFragment().apply {
+//                arguments = Bundle().apply {
+//                    putParcelable(ARG_PARAM1, param1)
+//                }
+//            }
+//    }
 
 
     class ModalBottomSheet(
