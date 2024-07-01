@@ -18,6 +18,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import nbc.group.recipes.GlideApp
 import nbc.group.recipes.R
@@ -134,7 +135,7 @@ class MypageFragment : Fragment(){
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.userMetaData.collect { nullable ->
+            viewModel.userMetaData.collectLatest { nullable ->
                 nullable?.let { nonNull ->
                     when (nonNull) {
                         is NetworkResult.Success -> {
@@ -196,6 +197,8 @@ class MypageFragment : Fragment(){
         super.onDestroyView()
         _binding = null
         _adapter = null
+
+        recipeEntities.clear()
     }
 
     private val signInButtonClickListener: (View) -> Unit = {
