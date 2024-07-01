@@ -61,7 +61,13 @@ class RecipeGraphFragment : Fragment() {
                 launch {
                     recipeGraphViewModel.currentSpecialty.collectLatest {
                         it?.let { currentSpecialty ->
-                            binding.gv.addNode(currentSpecialty, null)
+                            if(recipeGraphViewModel.history != currentSpecialty) {
+                                binding.gv.setValue(emptyList(), emptyList())
+                            }
+                            if(binding.gv.getNodes().size == 0) {
+                                binding.gv.addNode(currentSpecialty, null)
+                                recipeGraphViewModel.history = recipeGraphViewModel.currentSpecialty.value
+                            }
                         }
                     }
                 }
@@ -75,6 +81,7 @@ class RecipeGraphFragment : Fragment() {
                                         binding.gv.addNode(it, targetIndex)
                                     }
                                     binding.lav.visibility = View.GONE
+                                    recipeGraphViewModel.initRecipeFlow()
                                 }
                                 is NetworkResult.Failure -> {
 
@@ -83,6 +90,22 @@ class RecipeGraphFragment : Fragment() {
 
                                 }
                             }
+                        }
+                    }
+                }
+
+                launch {
+                    recipeGraphViewModel.nodes.collect { nodes ->
+                        if(nodes.isNotEmpty()) {
+                            binding.gv.setNodes(nodes)
+                        }
+                    }
+                }
+
+                launch {
+                    recipeGraphViewModel.edges.collect { edges ->
+                        if(edges.isNotEmpty()) {
+                            binding.gv.setEdges(edges)
                         }
                     }
                 }
@@ -106,6 +129,13 @@ class RecipeGraphFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+
+        recipeGraphViewModel.storeGraphElem(
+            binding.gv.getNodes(),
+            binding.gv.getEdges()
+        )
+
+
         _binding = null
     }
 

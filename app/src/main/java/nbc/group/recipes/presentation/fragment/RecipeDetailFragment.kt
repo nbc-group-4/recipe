@@ -1,6 +1,7 @@
 package nbc.group.recipes.presentation.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem.OnMenuItemClickListener
@@ -77,6 +78,8 @@ class RecipeDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e("URGENT_TAG", "onViewCreated: $recipeDetail", )
+
         if (recipeDetail == null) {
             (activity as MainActivity).moveToBack()
         }
@@ -148,7 +151,7 @@ class RecipeDetailFragment : Fragment() {
     }
 
     private fun bindRecipeDetail(recipeDetail: RecipeEntity) {
-
+        Log.e("URGENT_TAG", "bindRecipeDetail: $recipeDetail", )
         with(binding) {
             if (recipeDetail.from == FROM_FIREBASE) {
                 GlideApp.with(this@RecipeDetailFragment)
@@ -176,11 +179,28 @@ class RecipeDetailFragment : Fragment() {
 
             if (recipeDetail.from != FROM_FIREBASE) {
                 ivMoreButton.visibility = View.GONE
+                //recipeViewModel.getRecipeProcedure(recipeDetail)
+
+
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val temp = recipeViewModel.getRecipeStep(recipeDetail)
+                    val temp1 = temp.recipeProcedure
+                    var result = ""
+                    temp1.row.forEach {
+                        result += "${it.cookingDescription}\n"
+                    }
+                    tvRecipeSteps.text = result
+                }
             }
+
+
+
 
 
             // todo: Room에 id로 서치하도록 만든 함수를 통해서 북마크 여부 확인
         }
+
+        setStars(recipeDetail.difficulty)
     }
 
 //    private fun observeDifficulty() {
@@ -197,18 +217,18 @@ class RecipeDetailFragment : Fragment() {
     private fun setStars(difficulty: String) {
         when (difficulty) {
             "초보환영" -> {
-//                binding.ivStar1.visibility = View.VISIBLE
+                binding.ivStarEmpty1.setImageResource(R.drawable.ic_star_fill)
             }
 
             "보통" -> {
-//                binding.ivStar1.visibility = View.VISIBLE
-//                binding.ivStar2.visibility = View.VISIBLE
+                binding.ivStarEmpty1.setImageResource(R.drawable.ic_star_fill)
+                binding.ivStarEmpty2.setImageResource(R.drawable.ic_star_fill)
             }
 
             "어려움" -> {
-//                binding.ivStar1.visibility = View.VISIBLE
-//                binding.ivStar2.visibility = View.VISIBLE
-//                binding.ivStar3.visibility = View.VISIBLE
+                binding.ivStarEmpty1.setImageResource(R.drawable.ic_star_fill)
+                binding.ivStarEmpty2.setImageResource(R.drawable.ic_star_fill)
+                binding.ivStarEmpty3.setImageResource(R.drawable.ic_star_fill)
             }
         }
     }
