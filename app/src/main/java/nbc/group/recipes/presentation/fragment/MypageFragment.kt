@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import nbc.group.recipes.GlideApp
 import nbc.group.recipes.R
@@ -43,11 +44,9 @@ class MypageFragment : Fragment(){
     private var _adapter: MyPageRecipeAdapter? = null
     private val adapter get() = _adapter!!
 
-    private lateinit var recipeEntity: RecipeEntity
-
     private val viewModel: MainViewModel by activityViewModels()
 
-    private lateinit var recipe: Recipe
+    private val recipeEntities = mutableListOf<RecipeEntity>()
 
     private val pickMedia = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -74,19 +73,20 @@ class MypageFragment : Fragment(){
 
         _adapter = MyPageRecipeAdapter(this,
             onClick = {item, position ->
-                recipeEntity = item
-
-                val recipeEntity = RecipeEntity(
-                    id = recipeEntity.id,
-                    recipeImg = recipeEntity.recipeImg,
-                    recipeName = recipeEntity.recipeName,
-                    explain = recipeEntity.explain,
-                    step = recipeEntity.step,
-                    ingredient = recipeEntity.ingredient,
-                    difficulty = recipeEntity.difficulty,
-                    time = recipeEntity.time
-                )
-                navigateToRecipeDetail(recipeEntity)
+//                recipeEntity = item
+//
+//                val recipeEntity = RecipeEntity(
+//                    id = recipeEntity.id,
+//                    recipeImg = recipeEntity.recipeImg,
+//                    recipeName = recipeEntity.recipeName,
+//                    explain = recipeEntity.explain,
+//                    step = recipeEntity.step,
+//                    ingredient = recipeEntity.ingredient,
+//                    difficulty = recipeEntity.difficulty,
+//                    time = recipeEntity.time
+//                )
+//                navigateToRecipeDetail(recipeEntity)
+                navigateToRecipeDetail(item)
             }
         )
 
@@ -139,6 +139,15 @@ class MypageFragment : Fragment(){
                     when (nonNull) {
                         is NetworkResult.Success -> {
                             Log.e(TAG, "onViewCreated: get recipeIds: Success")
+                            val recipeIds = nonNull.result.recipeIds
+                            recipeIds.forEach { recipeId ->
+                                val temp = viewModel.getRecipeFromFirebaseById(recipeId)
+                                if(temp is NetworkResult.Success) {
+                                    recipeEntities.add(temp.result)
+                                    adapter.submitList(recipeEntities)
+                                    adapter.notifyItemInserted(adapter.itemCount - 1)
+                                }
+                            }
                             // 수정필요
 //                            adapter.submitList(nonNull.result.recipeIds)
                         }

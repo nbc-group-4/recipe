@@ -193,4 +193,31 @@ class FirebaseRepositoryImpl @Inject constructor(
             NetworkResult.Failure(e)
         }
     }
+
+    override suspend fun getRecipeByDocumentId(
+        id: String
+    ): NetworkResult<RecipeEntity> {
+        return try {
+            val temp = firestore.collection("recipes").document(id).get().await()
+            temp.data!!.let { map ->
+                val temp1 = RecipeEntity(
+                    id = -1,
+                    recipeImg = getRecipeStoragePath(id),
+                    recipeName = map["recipeName"] as String,
+                    explain = map["summary"] as String,
+                    step = map["summary"] as String,
+                    ingredient = map["ingredientCode"] as String,
+                    difficulty = map["levelName"] as String,
+                    time = map["cookingTime"] as String,
+                    from = FROM_FIREBASE,
+                    firebaseId = id,
+                    writerName = map["typeCode"] as String,
+                    writerId = map["typeName"] as String
+                )
+                NetworkResult.Success(temp1)
+            }
+        } catch(e: Exception) {
+            NetworkResult.Failure(e)
+        }
+    }
 }

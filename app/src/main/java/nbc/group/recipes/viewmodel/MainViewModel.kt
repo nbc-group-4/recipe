@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nbc.group.recipes.data.model.dto.Recipe
+import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.data.model.firebase.UserMetaData
 import nbc.group.recipes.data.network.NetworkResult
 import nbc.group.recipes.data.repository.AuthRepository
@@ -132,6 +133,10 @@ class MainViewModel @Inject constructor(
         val result = firebaseRepository.getUserMeta(uid)
         _userMetaData.emit(result)
     }
+
+    suspend fun getRecipeFromFirebaseById(id: String) =
+        firebaseRepository.getRecipeByDocumentId(id)
+
 
     fun putImage(
         inputStream: InputStream

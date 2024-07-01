@@ -22,4 +22,6 @@ interface FirebaseRepository {
 
     suspend fun getRecipeForTest(ingredient: String): NetworkResult<List<Recipe>>
     suspend fun getRecipeForTestV2(ingredient: String): NetworkResult<List<RecipeEntity>>
+
+    suspend fun getRecipeByDocumentId(id: String): NetworkResult<RecipeEntity>
 }
