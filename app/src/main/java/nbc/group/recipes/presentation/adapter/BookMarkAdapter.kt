@@ -12,13 +12,14 @@ import com.google.firebase.storage.ktx.storage
 import nbc.group.recipes.GlideApp
 import nbc.group.recipes.R
 import nbc.group.recipes.data.model.dto.Recipe
+import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.databinding.BookmarkItemBinding
 import nbc.group.recipes.presentation.fragment.FROM_FIREBASE
 
 class BookMarkAdapter(
-    private val onClick : (Recipe, Int) -> Unit,
-    private val onLongClick : (Recipe, Int) -> Unit
-): ListAdapter<Recipe, BookMarkAdapter.BookMarkViewHolder>(BookMarkDiffUtil){
+    private val onClick : (RecipeEntity, Int) -> Unit,
+    private val onLongClick : (RecipeEntity, Int) -> Unit
+): ListAdapter<RecipeEntity, BookMarkAdapter.BookMarkViewHolder>(BookMarkDiffUtil){
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -46,28 +47,28 @@ class BookMarkAdapter(
         private var binding : BookmarkItemBinding
     ) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(recipe : Recipe){
+        fun bind(recipeEntity : RecipeEntity){
 
-//            Glide.with(itemView.context)
-//                .load()
-//                .placeholder(R.drawable.ic_launcher_foreground)
-//                .into(binding.recipeImage)
+            Glide.with(itemView.context)
+                .load(recipeEntity.recipeImg)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(binding.recipeImage)
 
-            binding.recipeName.text = recipe.recipeName
-            binding.recipeDescription.text = recipe.summary
-            binding.recipeLevel.text = recipe.levelName
-            binding.recipeTime.text = recipe.cookingTime
+            binding.recipeName.text = recipeEntity.recipeName
+            binding.recipeDescription.text = recipeEntity.explain
+            binding.recipeLevel.text = recipeEntity.difficulty
+            binding.recipeTime.text = recipeEntity.time
 
         }
     }
 
 
-    object BookMarkDiffUtil : DiffUtil.ItemCallback<Recipe>(){
-        override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
+    object BookMarkDiffUtil : DiffUtil.ItemCallback<RecipeEntity>(){
+        override fun areItemsTheSame(oldItem: RecipeEntity, newItem: RecipeEntity): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
+        override fun areContentsTheSame(oldItem: RecipeEntity, newItem: RecipeEntity): Boolean {
             return oldItem == newItem
         }
 

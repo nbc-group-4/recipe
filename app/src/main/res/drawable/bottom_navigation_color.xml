@@ -3,5 +3,5 @@
     <!-- 클릭했을 경우 -->
     <item android:state_checked="true" android:color="@color/green1" />
     <!-- 클릭하지 않은 경우 -->
-    <item android:state_checked="false" android:color="@color/black" />
+    <item android:state_checked="false" android:color="@color/grey2" />
 </selector>

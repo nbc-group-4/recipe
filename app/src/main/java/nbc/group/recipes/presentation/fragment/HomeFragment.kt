@@ -123,7 +123,7 @@ class HomeFragment : Fragment() {
             homeBanner.setPageTransformer(MarginPageTransformer(30))
         }
 
-        handler.postDelayed(bannerScroll, 2000)
+        handler.postDelayed(bannerScroll, 3000)
     }
 
     private fun showDialog() {
@@ -141,7 +141,7 @@ class HomeFragment : Fragment() {
     private fun autoBannerScroll() = object  : Runnable{
             override fun run() {
                 binding.homeBanner.currentItem = (binding.homeBanner.currentItem + 1) % (binding.homeBanner.adapter?.itemCount ?: 1)
-                handler.postDelayed(this, 2000)
+                handler.postDelayed(this, 3000)
             }
     }
 
