@@ -22,6 +22,8 @@ data class RecipeEntity(
     val writerName: String = "",
     val writerId: String = ""
 ): Parcelable, Comparable<RecipeEntity> {
+
+    constructor(): this("", "", -1, "", "", "", "", "")
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
         parcel.readString().toString(),

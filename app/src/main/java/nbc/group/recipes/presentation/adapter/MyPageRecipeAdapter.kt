@@ -28,7 +28,7 @@ class MyPageRecipeAdapter(
     override fun onBindViewHolder(holder: MyRecipeViewHolder, position: Int) {
         val current = getItem(position)
         GlideApp.with(fragment)
-            .load(Firebase.storage.reference.child("recipeImage/$current/0.jpg"))
+            .load(Firebase.storage.reference.child(current.recipeImg))
             .into(holder.binding.ivRecipe)
 
         holder.itemView.setOnClickListener {
