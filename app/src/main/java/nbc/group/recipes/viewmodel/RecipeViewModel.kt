@@ -47,6 +47,9 @@ class RecipeViewModel @Inject constructor(
     private val _userBan = MutableStateFlow<List<UserBanEntity>>(listOf())
     val userBan = _userBan.asStateFlow()
 
+    private val _recipeProcedure = MutableStateFlow("")
+    val recipeProcedure = _recipeProcedure.asStateFlow()
+
     init {
         viewModelScope.launch {
             launch {
@@ -77,6 +80,22 @@ class RecipeViewModel @Inject constructor(
             }
         }
     }
+
+    fun getRecipeProcedure(
+        recipeEntity: RecipeEntity
+    ) = viewModelScope.launch {
+        val temp = recipeRepository.getRecipeProceduresV2(recipeEntity.id)
+        Log.e("URGENT_TAG", "getRecipeProcedure: $temp", )
+        val temp1 = temp.recipeProcedure
+        var result = ""
+        temp1.row.forEach {
+            result += it.cookingDescription
+        }
+        _recipeProcedure.emit(result)
+    }
+
+    suspend fun getRecipeStep(recipeEntity: RecipeEntity)
+        = recipeRepository.getRecipeProceduresV2(recipeEntity.id)
 
     fun recipeUpdate(recipes: List<RecipeEntity>) {
         viewModelScope.launch {

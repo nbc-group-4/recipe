@@ -1,12 +1,17 @@
 package nbc.group.recipes.data.repository
 
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 import nbc.group.recipes.data.model.dto.Recipe
+import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.data.model.firebase.UserMetaData
 import nbc.group.recipes.data.network.NetworkResult
+import nbc.group.recipes.data.utils.getRecipeStoragePath
+import nbc.group.recipes.getRecipeImageUrl
+import nbc.group.recipes.presentation.fragment.FROM_FIREBASE
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -14,6 +19,10 @@ class FirebaseRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val storage: FirebaseStorage,
 ) : FirebaseRepository {
+
+    private var currentIngredient: String? = null
+    private var lastDocumentSnapshot: DocumentSnapshot? = null
+
     override suspend fun putImage(
         storagePath: String,
         inputStream: InputStream,
@@ -70,6 +79,59 @@ class FirebaseRepositoryImpl @Inject constructor(
                             ingredientCode = map["ingredientCode"] as String,
                         )
                     )
+                }
+            }
+            NetworkResult.Success(temp)
+        } catch (e: Exception) {
+            NetworkResult.Failure(e)
+        }
+    }
+
+    override suspend fun getRecipeForTestV2(
+        ingredient: String,
+    ): NetworkResult<List<RecipeEntity>> {
+        return try {
+            val result = if(ingredient == currentIngredient) { // normal mode
+                lastDocumentSnapshot?.let {
+                    firestore.collection("recipes")
+                        .whereEqualTo("ingredientCode", ingredient)
+                        .startAfter(it)
+                        .limit(10)
+                        .get().await()
+                }
+            } else { // virgin mode
+                currentIngredient = ingredient
+                firestore.collection("recipes")
+                    .whereEqualTo("ingredientCode", ingredient)
+                    .limit(10)
+                    .get().await()
+            }
+
+//            val result = firestore.collection("recipes")
+//                .whereEqualTo("ingredientCode", ingredient)
+//                .startAfter()
+//                .get().await()
+
+            val temp = mutableListOf<RecipeEntity>()
+            result!!.documents.forEach {
+                it.data?.let { map ->
+                    temp.add(
+                        RecipeEntity(
+                            id = -1,
+                            recipeImg = getRecipeStoragePath(it.id),
+                            recipeName = map["recipeName"] as String,
+                            explain = map["summary"] as String,
+                            step = map["summary"] as String,
+                            ingredient = map["ingredientCode"] as String,
+                            difficulty = map["levelName"] as String,
+                            time = map["cookingTime"] as String,
+                            from = FROM_FIREBASE,
+                            firebaseId = it.id,
+                            writerName = map["typeCode"] as String,
+                            writerId = map["typeName"] as String
+                        )
+                    )
+                    lastDocumentSnapshot = it
                 }
             }
             NetworkResult.Success(temp)

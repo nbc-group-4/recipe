@@ -18,11 +18,15 @@ import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import nbc.group.recipes.GlideApp
 import nbc.group.recipes.R
 import nbc.group.recipes.data.model.dto.Item
 import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.getRecipeImageUrl
+import nbc.group.recipes.presentation.fragment.FROM_FIREBASE
 import kotlin.math.sin
 import kotlin.random.Random
 import kotlin.system.measureTimeMillis
@@ -90,9 +94,23 @@ class GraphView : View {
         nodes: List<Node<Any>>,
         edges: List<Edge>,
     ) {
+        this.nodes.clear()
+        this.edges.clear()
         this.nodes.addAll(nodes)
         this.edges.addAll(edges)
     }
+
+    fun getNodes() = nodes
+    fun getEdges() = edges
+    fun setNodes(nodes: List<Node<Any>>) {
+        this.nodes.clear()
+        this.nodes.addAll(nodes)
+    }
+    fun setEdges(edges: List<Edge>) {
+        this.edges.clear()
+        this.edges.addAll(edges)
+    }
+
 
     suspend fun addNode(data: Any, connectedIndex: Int?) {
 
@@ -117,26 +135,84 @@ class GraphView : View {
             )
         }
 
-        Glide.with(this)
-            .asBitmap()
-            .load(
-                when(data) {
-                    is Item -> data.imgUrl
-                    is RecipeEntity -> data.recipeImg
-                    else -> throw Exception()
-                }
-            )
-            .into(object: CustomTarget<Bitmap>() {
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    nodes[currentIndex] = nodes[currentIndex].copy(
-                        bitmap = adjustImage(resource, nodeSize, nodeSize)
-                    )
-                }
+        // todo: 해당 부분 함수로 작성
+        if(data is RecipeEntity) {
+            if(data.from == FROM_FIREBASE) {
+                val ralph = Firebase.storage.reference.child(data.recipeImg)
+                Log.e("URGENT_TAG", "onResourceReady: $ralph", )
+                GlideApp.with(this)
+                    .asBitmap()
+                    .load(Firebase.storage.reference.child(data.recipeImg))
+                    .into(object: CustomTarget<Bitmap>() {
+                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
 
-                override fun onLoadCleared(placeholder: Drawable?) {
+                            nodes[currentIndex] = nodes[currentIndex].copy(
+                                bitmap = adjustImage(resource, nodeSize, nodeSize)
+                            )
+                        }
 
-                }
-            })
+                        override fun onLoadCleared(placeholder: Drawable?) {
+
+                        }
+                    })
+            } else {
+                Glide.with(this)
+                    .asBitmap()
+                    .load(data.recipeImg)
+                    .into(object: CustomTarget<Bitmap>() {
+                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                            nodes[currentIndex] = nodes[currentIndex].copy(
+                                bitmap = adjustImage(resource, nodeSize, nodeSize)
+                            )
+                        }
+
+                        override fun onLoadCleared(placeholder: Drawable?) {
+
+                        }
+                    })
+            }
+        } else {
+            Glide.with(this)
+                .asBitmap()
+                .load(
+                    when(data) {
+                        is Item -> data.imgUrl
+                        else -> throw Exception()
+                    }
+                )
+                .into(object: CustomTarget<Bitmap>() {
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                        nodes[currentIndex] = nodes[currentIndex].copy(
+                            bitmap = adjustImage(resource, nodeSize, nodeSize)
+                        )
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+
+                    }
+                })
+        }
+//
+//        Glide.with(this)
+//            .asBitmap()
+//            .load(
+//                when(data) {
+//                    is Item -> data.imgUrl
+//                    is RecipeEntity -> data.recipeImg
+//                    else -> throw Exception()
+//                }
+//            )
+//            .into(object: CustomTarget<Bitmap>() {
+//                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+//                    nodes[currentIndex] = nodes[currentIndex].copy(
+//                        bitmap = adjustImage(resource, nodeSize, nodeSize)
+//                    )
+//                }
+//
+//                override fun onLoadCleared(placeholder: Drawable?) {
+//
+//                }
+//            })
 
 //        Glide.with(this)
 //            .asBitmap()

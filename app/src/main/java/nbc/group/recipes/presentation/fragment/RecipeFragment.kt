@@ -58,6 +58,8 @@ class RecipeFragment : Fragment() {
         mainViewModel.resetMakeRecipeFlow()
         // initChipGroup()
 
+
+
         initializer()
         viewModelObserverVersionRalph()
     }

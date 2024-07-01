@@ -137,6 +137,14 @@
                 android:text="@string/make_recipe_fragment_recipe_ingredient_indic"
                 style="@style/content_text_style_high_light_small"/>
 
+
+            <TextView
+                android:id="@+id/tv_ingredient"
+                android:layout_marginTop="@dimen/default_margin_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/top_banner_text_style"/>
+            <!--
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
@@ -147,7 +155,7 @@
                     android:layout_height="match_parent"
                     android:hint="@string/make_recipe_fragment_recipe_ingredient_hint"/>
             </com.google.android.material.textfield.TextInputLayout>
-
+            -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
