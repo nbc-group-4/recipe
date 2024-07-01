@@ -37,6 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -70,6 +71,8 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -96,14 +99,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardview"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="20dp"
-                app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_banner_specialty">
@@ -112,26 +113,34 @@
                     android:id="@+id/home_banner"
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:scaleType="centerCrop"
-                    app:layout_constraintEnd_toEndOf="@+id/parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/home_banner_specialty" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <me.relex.circleindicator.CircleIndicator3
                 android:id="@+id/home_banner_indicator"
                 android:layout_width="match_parent"
+                android:layout_marginTop="15dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
                 android:layout_marginEnd="20dp"
-                app:ci_animator="@animator/scale_with_alpha"
-                app:ci_drawable="@drawable/indicator_select_radius"
                 app:ci_drawable_unselected="@drawable/indicator_radius"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:ci_drawable="@drawable/indicator_select_radius"
+                app:ci_animator="@animator/scale_with_alpha"
+                app:layout_constraintTop_toBottomOf="@id/constraintLayout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardview" />
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
 
             <TextView
                 android:id="@+id/tvHomeKind"
@@ -139,28 +148,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="64dp"
-                android:text="@string/home_fragment_specialty_kind"
+                android:text="우리나라 특산물의 종류"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_banner_indicator" />
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewHomeKind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvHomeKind"
-                app:spanCount="3"
-                tools:listitem="@layout/item_home_kind" />
+                tools:listitem="@layout/item_home_kind"
+                app:spanCount="2"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

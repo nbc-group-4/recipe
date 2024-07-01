@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import nbc.group.recipes.R
 import nbc.group.recipes.presentation.adapter.BookMarkAdapter
 import nbc.group.recipes.viewmodel.BookMarkViewModel
 import nbc.group.recipes.VisibilityView
@@ -22,6 +23,7 @@ import nbc.group.recipes.data.model.dto.toRecipe
 import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.databinding.CustomDialogBinding
 import nbc.group.recipes.databinding.FragmentBookmarkBinding
+import nbc.group.recipes.presentation.MainActivity
 
 @AndroidEntryPoint
 class BookmarkFragment : Fragment() {
@@ -36,6 +38,17 @@ class BookmarkFragment : Fragment() {
         BookMarkAdapter(
             onClick = { item, position ->
                 recipe = item
+                val recipeEntity = RecipeEntity(
+                    id = recipe.recipeId,
+                    recipeImg = recipe.calorie,
+                    recipeName = recipe.recipeName,
+                    explain = recipe.summary,
+                    step = "",
+                    ingredient = "",
+                    difficulty = recipe.levelName,
+                    time = recipe.cookingTime
+                )
+                navigateToRecipeDetail(recipeEntity)
             },
             onLongClick = { item, position ->
                 recipe = item
@@ -90,6 +103,8 @@ class BookmarkFragment : Fragment() {
                 }
                 bookMarkAdapter.submitList(recipeList)
                 bookMarkViewModel.checkVisiblityView()
+
+                binding.tvBookmarkCount.text = "총 ${recipeEntityList.size}개"
             }
         }
 
@@ -132,6 +147,13 @@ class BookmarkFragment : Fragment() {
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun navigateToRecipeDetail(recipeEntity: RecipeEntity) {
+        val bundle = Bundle().apply {
+            putParcelable("recipe", recipeEntity)
+        }
+        (activity as? MainActivity)?.moveToRecipeDetailFragment(bundle)
     }
 
 

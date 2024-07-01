@@ -20,10 +20,12 @@ import kotlinx.coroutines.launch
 import nbc.group.recipes.BuildConfig
 import nbc.group.recipes.GlideApp
 import nbc.group.recipes.R
+import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.databinding.FragmentBottomSheetRecipeDetailBinding
 import nbc.group.recipes.databinding.FragmentRecipeDetailBinding
 import nbc.group.recipes.presentation.MainActivity
+import nbc.group.recipes.viewmodel.BookMarkViewModel
 import nbc.group.recipes.viewmodel.MainViewModel
 import nbc.group.recipes.viewmodel.MypageSharedViewModel
 import nbc.group.recipes.viewmodel.RecipeViewModel
@@ -36,13 +38,15 @@ class RecipeDetailFragment : Fragment() {
 
     private val recipeViewModel: RecipeViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
- //   private val sharedViewModel: MypageSharedViewModel by activityViewModels() //
+    private val bookMarkViewModel : BookMarkViewModel by viewModels()
+    //   private val sharedViewModel: MypageSharedViewModel by activityViewModels() //
 
     private var _binding: FragmentRecipeDetailBinding? = null
     private val binding: FragmentRecipeDetailBinding
         get() = _binding!!
 
     private var recipeDetail: RecipeEntity? = null
+    private var bookmarkClick = false
     private val modalBottomSheet = ModalBottomSheet(
         contentBanClickListener = {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
@@ -109,6 +113,8 @@ class RecipeDetailFragment : Fragment() {
 //        observeDifficulty()
         recipeDetail?.let { bindRecipeDetail(it) }
         setClickListeners()
+
+        bookMarked()
     }
 
     private fun setClickListeners() {
@@ -119,10 +125,33 @@ class RecipeDetailFragment : Fragment() {
         // 북마크 상태 검사에 따른 UI 업데이트
         // val src = if (북마크 상태 true) R.drawable.ic_bookmark_fill else R.drawable.ic_bookmark_empty
         binding.ivBookmark.setOnClickListener {
-            if (recipeDetail != null) {
+
+            bookmarkClick = !bookmarkClick
+
+            if (recipeDetail != null && bookmarkClick) {
                 recipeViewModel.putRecipeEntity(recipeDetail!!)
+                binding.ivBookmark.setImageResource(R.drawable.ic_fill_bookmark)
+            }else{
+                bookMarkViewModel.deleteData(recipeDetail!!)
+                binding.ivBookmark.setImageResource(R.drawable.ic_empty_bookmark)
             }
-            // setResource(src)
+        }
+    }
+
+    private fun bookMarked(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            bookMarkViewModel.recipeEntity.collect { bookmarkedRecipe ->
+                // id가 일치하는지 확인(id로 북마크 여부확인)
+                val isBookmarked = bookmarkedRecipe.any { it.id == recipeDetail?.id }
+                binding.ivBookmark.setImageResource(
+                    if (isBookmarked) {
+                        R.drawable.ic_fill_bookmark
+                    } else {
+                        R.drawable.ic_empty_bookmark
+                    }
+                )
+                bookmarkClick = isBookmarked
+            }
         }
     }
 
