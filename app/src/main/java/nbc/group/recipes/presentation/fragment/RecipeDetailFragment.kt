@@ -176,6 +176,7 @@ class RecipeDetailFragment : Fragment() {
             ivMoreButton.setOnClickListener {
                 modalBottomSheet.show(parentFragmentManager, "")
             }
+            tvSimpleDescription.text = recipeDetail.explain
 
             if (recipeDetail.from != FROM_FIREBASE) {
                 ivMoreButton.visibility = View.GONE
