@@ -24,7 +24,6 @@ import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.model.entity.RecipeEntity
 import nbc.group.recipes.data.network.NetworkResult
 import nbc.group.recipes.databinding.CustomDialogBinding
-import nbc.group.recipes.databinding.FragmentMakeRecipeBinding
 import nbc.group.recipes.databinding.FragmentMypageBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.MyPageRecipeAdapter
@@ -48,7 +47,8 @@ class MypageFragment : Fragment(){
     private lateinit var recipeEntity: RecipeEntity
 
     private val viewModel: MainViewModel by activityViewModels()
-    private val sharedViewModel: MypageSharedViewModel by activityViewModels() // 레시피 디테일 전달
+
+    private lateinit var recipe: Recipe
 
     private val pickMedia = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -177,10 +177,19 @@ class MypageFragment : Fragment(){
     }
 
     // 작성한 레시피 클릭
-    private fun navigateToRecipeDetail(recipeEntity: RecipeEntity) {
-        val bundle = Bundle().apply {
-            putParcelable("recipeDetail", recipeEntity)
-        }
+    override fun onClick(recipe: String) {
+        val recipeEntity = RecipeEntity(
+            id = this.recipe.recipeId,
+            recipeImg = this.recipe.calorie,
+            recipeName = this.recipe.recipeName,
+            explain = this.recipe.summary,
+            step = "",
+            ingredient = "",
+            difficulty = this.recipe.levelName,
+            time = this.recipe.cookingTime
+        )
+        // val bundle = Bundle().apply { putParcelable("recipeDetail", )}
+        val bundle = Bundle().apply { putParcelable("recipe", recipeEntity) }
         (activity as? MainActivity)?.moveToRecipeDetailFragment(bundle)
     }
 
