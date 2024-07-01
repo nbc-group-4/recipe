@@ -29,7 +29,6 @@ import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.MyPageRecipeAdapter
 import nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import nbc.group.recipes.viewmodel.MainViewModel
-import nbc.group.recipes.viewmodel.MypageSharedViewModel
 
 @AndroidEntryPoint
 class MypageFragment : Fragment(){
@@ -177,19 +176,10 @@ class MypageFragment : Fragment(){
     }
 
     // 작성한 레시피 클릭
-    override fun onClick(recipe: String) {
-        val recipeEntity = RecipeEntity(
-            id = this.recipe.recipeId,
-            recipeImg = this.recipe.calorie,
-            recipeName = this.recipe.recipeName,
-            explain = this.recipe.summary,
-            step = "",
-            ingredient = "",
-            difficulty = this.recipe.levelName,
-            time = this.recipe.cookingTime
-        )
-        // val bundle = Bundle().apply { putParcelable("recipeDetail", )}
-        val bundle = Bundle().apply { putParcelable("recipe", recipeEntity) }
+    private fun navigateToRecipeDetail(recipeEntity: RecipeEntity) {
+        val bundle = Bundle().apply {
+            putParcelable("recipeDetail", recipeEntity)
+        }
         (activity as? MainActivity)?.moveToRecipeDetailFragment(bundle)
     }
 
