@@ -357,6 +357,14 @@ class GraphView : View {
         }
 
         nodes.forEachIndexed { index, node ->
+
+            val tempData = node.data
+            val name = when (tempData) {
+                is Item -> tempData.cntntsSj
+                is RecipeEntity -> tempData.recipeName
+                else -> ""
+            }?: ""
+
             canvas.drawCircle(node.x, node.y, 60f, nodePaint)
             canvas.drawRect(
                 node.x - 62f,
@@ -369,7 +377,12 @@ class GraphView : View {
                 canvas.drawBitmap(it, node.x - 60f, node.y - 60f, nodePaint)
             }
 
-            canvas.drawText("맛고", node.x - 60f, node.y + 60f + 20f, textPaint)
+            canvas.drawText(
+                name,
+                node.x - 60f,
+                node.y + 60f + 20f,
+                textPaint
+            )
 
             if(index == targetNode) {
                 canvas.drawCircle(node.x, node.y, 120f, indicatorPaint)

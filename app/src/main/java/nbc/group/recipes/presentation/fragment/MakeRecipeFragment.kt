@@ -97,7 +97,7 @@ class MakeRecipeFragment : Fragment() {
 
             etRecipeName.addTextChangedListener(textWatcher)
             etRecipeDescription.addTextChangedListener(textWatcher)
-            etIngredient.addTextChangedListener(textWatcher)
+            tvIngredient.addTextChangedListener(textWatcher)
             etCookingProcess.addTextChangedListener(textWatcher)
 
             setupSpinner(spinnerCookingTime)
@@ -238,7 +238,7 @@ class MakeRecipeFragment : Fragment() {
         with(binding) {
             val isRecipeName = etRecipeName.text.toString().isNotEmpty()
             val isRecipeDescription = etRecipeDescription.text.toString().isNotEmpty()
-            val isIngredient = etIngredient.text.toString().isNotEmpty()
+            val isIngredient = tvIngredient.text.toString().isNotEmpty()
             val isCookingProcess = etCookingProcess.text.toString().isNotEmpty()
 
             val allFieldsValid = isRecipeName && isRecipeDescription && isIngredient && isCookingProcess
