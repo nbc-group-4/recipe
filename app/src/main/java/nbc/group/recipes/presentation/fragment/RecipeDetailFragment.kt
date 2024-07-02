@@ -33,7 +33,7 @@ import nbc.group.recipes.viewmodel.RecipeViewModel
 private const val ARG_PARAM1 = "param1"
 
 @AndroidEntryPoint
-class RecipeDetailFragment : Fragment() {
+class   RecipeDetailFragment : Fragment() {
 
     private val recipeViewModel: RecipeViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()

@@ -1,6 +1,7 @@
 package nbc.group.recipes.presentation.graph
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -62,8 +63,8 @@ class GraphView : View {
 
     private val nodeSize = 120
 
-    private val centerX = 500f
-    private val centerY = 800f
+    private val centerX = Resources.getSystem().displayMetrics.widthPixels / 2f
+    private val centerY = Resources.getSystem().displayMetrics.heightPixels / 2f
 
     private val nodePaint = Paint()
     private val edgePaint = Paint()
@@ -366,6 +367,7 @@ class GraphView : View {
             }?: ""
 
             canvas.drawCircle(node.x, node.y, 60f, nodePaint)
+
             canvas.drawRect(
                 node.x - 62f,
                 node.y - 62f,

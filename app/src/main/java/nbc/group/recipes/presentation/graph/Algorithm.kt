@@ -1,5 +1,6 @@
 package nbc.group.recipes.presentation.graph
 
+import android.content.res.Resources
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -9,6 +10,9 @@ const val DISTANCE = 3200f //3200f
 const val GRAVITY = 0.04f
 const val BOUNCE = 0.06f
 const val ATTENUATION = 0.4f
+
+val CENTER_X = Resources.getSystem().displayMetrics.widthPixels / 2f
+val CENTER_Y = Resources.getSystem().displayMetrics.heightPixels / 2f
 
 fun operate(
     nodes: MutableList<Node<Any>>,
@@ -38,8 +42,8 @@ fun operate(
             }
         }
 
-        val distXC = -1 * (ithNode.x + ithNode.size / 2) + 500
-        val distYC = -1 * (ithNode.y + ithNode.size / 2) + 500
+        val distXC = -1 * (ithNode.x + ithNode.size / 2) + CENTER_X
+        val distYC = -1 * (ithNode.y + ithNode.size / 2) + CENTER_Y
         fx += GRAVITY * distXC
         fy += GRAVITY * distYC
 
