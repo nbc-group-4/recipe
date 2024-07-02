@@ -1,5 +1,6 @@
 package nbc.group.recipes.data.repository
 
+import android.util.Log
 import com.google.gson.Gson
 import nbc.group.recipes.data.local.dao.RecipeDao
 import nbc.group.recipes.data.model.dto.Recipe
@@ -156,6 +157,7 @@ class RecipeRepositoryImpl @Inject constructor(
                 temp.result.forEach {
 
                     try {
+                        Log.e("URGENT_TAG", "getRecipesV4: ${it.ingredientCapacity}", )
                         val temp3 = recipeDataSource.getRecipeV2(it.recipeId)
                         // val temp4 = recipeDataSource.getRecipeProcedureV2(it.recipeId)
                         val recipe = temp3.recipe.row[0]
