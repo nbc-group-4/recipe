@@ -48,8 +48,167 @@
 |:---:|:---:|
 |![recipe_my_page](https://github.com/nbc-group-4/recipe/assets/50291395/fb760fdb-9464-4159-84cf-e687de525ab6)|![recipe_user](https://github.com/nbc-group-4/recipe/assets/50291395/36a0bd71-dea3-444f-ac1f-0f98f9d3901a)|
 
+## 그래프 시각화
+- [Graph Visualizing Algorithm](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679) 참고하여 알고리즘 작성.
+
+~~~kotlin
+fun operate(
+    nodes: MutableList<Node<Any>>,
+    edges: MutableList<Edge>,
+    inInteraction: Int,
+) {
+    for(i in 0 until nodes.size) {
+        if(inInteraction == i) continue
+        val ithNode = nodes[i]
+        var fx = 0f
+        var fy = 0f
+
+        for(j in 0 until nodes.size) {
+            val jthNode = nodes[j]
+
+            val distX = ithNode.x - jthNode.x
+            val distY = ithNode.y - jthNode.y
+
+            val rsq = distX.pow(2) + distY.pow(2)
+
+            val coulombDistX = COULOMB * distX
+            val coulombDistY = COULOMB * distY
+
+            if(rsq >= 0.01f && sqrt(rsq) < DISTANCE) {
+                fx += coulombDistX / rsq
+                fy += coulombDistY / rsq
+            }
+        }
+
+        val distXC = -1 * (ithNode.x + ithNode.size / 2) + CENTER_X
+        val distYC = -1 * (ithNode.y + ithNode.size / 2) + CENTER_Y
+        fx += GRAVITY * distXC
+        fy += GRAVITY * distYC
+
+        for(j in 0 until edges.size) {
+            val jthEdge = edges[j]
+
+            var distX = 0f
+            var distY = 0f
+
+            if(i == jthEdge.to) {
+                val targetNode = nodes[jthEdge.from]
+                distX = targetNode.x - ithNode.x
+                distY = targetNode.y - ithNode.y
+            } else if(i == jthEdge.from) {
+                val targetNode = nodes[jthEdge.to]
+                distX = targetNode.x - ithNode.x
+                distY = targetNode.y - ithNode.y
+            }
+
+            fx += BOUNCE * distX
+            fy += BOUNCE * distY
+        }
+
+        val dx = (ithNode.dx + fx) * ATTENUATION
+        val dy = (ithNode.dy + fy) * ATTENUATION
+
+        val x = ithNode.x + dx
+        val y = ithNode.y + dy
+
+        nodes[i] = ithNode.copy(
+            x = x,
+            y = y,
+            dx = dx,
+            dy = dy
+        )
+    }
+}
+~~~
+
+- View lifecycle
+  - 성능을 고려한 코드 작성
+
+<table>
+<tr>
+<td> Lifecycle </td> <td> dispatchDraw </td>
+</tr>
+<tr>
+<td> 
+<img width="200" alt="스크린샷 2024-07-03 오후 6 07 32" src="https://github.com/nbc-group-4/recipe/assets/50291395/c4fdf9f2-1727-452d-850b-8e3d26b075da">
+</td>
+<td>
+  
+~~~kotlin
+override fun dispatchDraw(canvas: Canvas) {
+    super.dispatchDraw(canvas)
+    /** 중략 **/
+    operate(nodes, edges, targetNode)
+    edges.forEach { edge ->
+        /** 중략 **/
+    }
+    nodes.forEachIndexed { index, node ->
+        /** 중략 **/
+     }
+    invalidate()
+}
+~~~
+</td>
+</tr>
+</table>
+
+- Motion Event Handling
+  - Motion Event Action Mask를 통한 이벤트 처리
+  - GestureDetector를 통한 이벤트 처리
+
+<table>
+<tr>
+<td> Lifecycle </td> <td> dispatchDraw </td>
+</tr>
+<tr>
+<td> 
+
+~~~kotlin
+override fun onTouchEvent(event: MotionEvent): Boolean {
+        
+        when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    /** 중략 **/
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    /** 중략 **/
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    /** 중략 **/
+                }
+
+                MotionEvent.ACTION_POINTER_UP -> {
+                    /** 중략 **/
+                }
+
+                MotionEvent.ACTION_POINTER_DOWN -> {
+                    /** 중략 **/
+                }
+    
+                MotionEvent.ACTION_CANCEL -> {
+                    /** 중략 **/
+                }
+        }
+        /** 중략 **/
+    }
+~~~
 
 
-
-
-
+</td>
+<td>
+  
+~~~kotlin
+private inner class LongClickListener: GestureDetector.SimpleOnGestureListener() {
+        override fun onSingleTapUp(e: MotionEvent): Boolean {
+                /** 중략 **/
+        }
+        override fun onLongPress(e: MotionEvent) {
+                /** 중략 **/
+        }
+}
+~~~
+</td>
+</tr>
+</table>
