@@ -13,7 +13,7 @@
 # 팀 소개
 |이준영|배기정|전주원|변예진|
 |:---:|:---:|:---:|:---:|
-|https://github.com/treeralph|https://github.com/koreabgj|https://github.com/wndnjs00|https://github.com/Yejin-Byun|
+|[Github](https://github.com/treeralph)|[Github](https://github.com/koreabgj)|[Github](https://github.com/wndnjs00)|[Github](https://github.com/Yejin-Byun)|
 
 # 스택
 |분류|이름|
@@ -28,6 +28,11 @@
 |Database|<img src="https://img.shields.io/badge/room-221E68?style=for-the-badge&logoColor=white"><img src="https://img.shields.io/badge/firebase-DD2C00?style=for-the-badge&logo=firebase&logoColor=white">
 |UI|<img src="https://img.shields.io/badge/xml-221E68?style=for-the-badge&logoColor=white"><img src="https://img.shields.io/badge/navigation-221E68?style=for-the-badge&logoColor=white">
 |협업|<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"><img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+
+# 기능
+|홈 및 특산물 검색|지도|레시피|
+|:---:|:---:|:---:|
+|![recipe_home](https://github.com/nbc-group-4/recipe/assets/50291395/07283720-21e3-4b96-93d1-cfe7efe5e4d8)|||
 
 
 
