@@ -1,4 +1,4 @@
-![Component 36](https://github.com/nbc-group-4/recipe/assets/50291395/e3c3cdca-e5e9-454e-9f37-3910bdd8db78)
+![image 483](https://github.com/nbc-group-4/recipe/assets/50291395/5b91b181-7afa-43a2-b68c-73ffb2ab64cd)
 
 # 프로젝트 소개
 - **맛고**는 대한민국의 지역별 특산물을 앱 내에 구현된 지도를 통해 확인할 수 있습니다. 
@@ -47,6 +47,7 @@
 |내 페이지|회원|
 |:---:|:---:|
 |![recipe_my_page](https://github.com/nbc-group-4/recipe/assets/50291395/fb760fdb-9464-4159-84cf-e687de525ab6)|![recipe_user](https://github.com/nbc-group-4/recipe/assets/50291395/36a0bd71-dea3-444f-ac1f-0f98f9d3901a)|
+
 
 
 
