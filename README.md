@@ -20,10 +20,11 @@
 |:---:|:---:|
 |언어|<img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=Kotlin&logoColor=white">
 |개발 환경|<img src="https://img.shields.io/badge/android studio-3DDC84?style=for-the-badge&logo=androidstudio&logoColor=white">
-|Architecture|<img src="https://img.shields.io/badge/mvvm-221E68?style=for-the-badge&logoColor=white">
+|Architecture|<img src="https://img.shields.io/badge/mvvm-221E68?style=for-the-badge&logoColor=white"><img src="https://img.shields.io/badge/repository pattern-221E68?style=for-the-badge&logoColor=white">
 |DI|<img src="https://img.shields.io/badge/hilt-221E68?style=for-the-badge&logoColor=white">
 |비동기 처리|<img src="https://img.shields.io/badge/flow-221E68?style=for-the-badge&logoColor=white"><img src="https://img.shields.io/badge/coroutine-221E68?style=for-the-badge&logoColor=white">
-|Networking Tool|<img src="https://img.shields.io/badge/jsoup-221E68?style=for-the-badge&logoColor=white"><img src="https://img.shields.io/badge/retrofit-221E68?style=for-the-badge&logoColor=white"><img src="https://img.shields.io/badge/glide-221E68?style=for-the-badge&logoColor=white">
+|Networking Tool|<img src="https://img.shields.io/badge/jsoup-221E68?style=for-the-badge&logoColor=white"><img src="https://img.shields.io/badge/retrofit-221E68?style=for-the-badge&logoColor=white"><img src="https://img.shields.io/badge/okhttp-221E68?style=for-the-badge&logoColor=white">
+|이미지 로더|<img src="https://img.shields.io/badge/glide-221E68?style=for-the-badge&logoColor=white">
 |지도|<img src="https://img.shields.io/badge/kakao map-FFCD00?style=for-the-badge&logoColor=white">
 |Database|<img src="https://img.shields.io/badge/room-221E68?style=for-the-badge&logoColor=white"><img src="https://img.shields.io/badge/firebase-DD2C00?style=for-the-badge&logo=firebase&logoColor=white">
 |UI|<img src="https://img.shields.io/badge/xml-221E68?style=for-the-badge&logoColor=white"><img src="https://img.shields.io/badge/navigation-221E68?style=for-the-badge&logoColor=white">
