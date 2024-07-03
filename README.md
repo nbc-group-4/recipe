@@ -29,6 +29,10 @@
 |UI|<img src="https://img.shields.io/badge/xml-221E68?style=for-the-badge&logoColor=white"><img src="https://img.shields.io/badge/navigation-221E68?style=for-the-badge&logoColor=white">
 |협업|<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"><img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 
+# 앱 디자인
+<img width="870" alt="image" src="https://github.com/nbc-group-4/recipe/assets/50291395/61a0c8f1-7a7d-4435-bf23-48ede9069b14">
+
+
 # 기능
 |홈 및 특산물 검색|지도|레시피|
 |:---:|:---:|:---:|
