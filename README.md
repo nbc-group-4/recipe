@@ -32,7 +32,15 @@
 # 기능
 |홈 및 특산물 검색|지도|레시피|
 |:---:|:---:|:---:|
-|![recipe_home](https://github.com/nbc-group-4/recipe/assets/50291395/07283720-21e3-4b96-93d1-cfe7efe5e4d8)|||
+|![recipe_home](https://github.com/nbc-group-4/recipe/assets/50291395/07283720-21e3-4b96-93d1-cfe7efe5e4d8)|![recipe_map_small](https://github.com/nbc-group-4/recipe/assets/50291395/03e03cda-c349-4495-8613-7c7a0a1f6e8b)|![recipe_recipe_small](https://github.com/nbc-group-4/recipe/assets/50291395/f2b16bc2-6374-44fe-a9f8-47cffe81eea1)|
+
+|레시피 상세|레시피 작성|북마크|
+|:---:|:---:|:---:|
+|![recipe_recipe_detail_small](https://github.com/nbc-group-4/recipe/assets/50291395/e8620f3b-dd6a-428f-883b-a74c6fcbc8fa)|![recipe_make_recipe](https://github.com/nbc-group-4/recipe/assets/50291395/ed366e4d-2950-446e-8682-4a5439261779)|![recipe_bookmark](https://github.com/nbc-group-4/recipe/assets/50291395/212e6498-ab68-49e6-9056-a0600f75cd53)|
+
+|내 페이지|회원|
+|:---:|:---:|
+|![recipe_my_page](https://github.com/nbc-group-4/recipe/assets/50291395/fb760fdb-9464-4159-84cf-e687de525ab6)|![recipe_user](https://github.com/nbc-group-4/recipe/assets/50291395/36a0bd71-dea3-444f-ac1f-0f98f9d3901a)|
 
 
 
