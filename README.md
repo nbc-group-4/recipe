@@ -48,6 +48,58 @@
 |:---:|:---:|
 |![recipe_my_page](https://github.com/nbc-group-4/recipe/assets/50291395/fb760fdb-9464-4159-84cf-e687de525ab6)|![recipe_user](https://github.com/nbc-group-4/recipe/assets/50291395/36a0bd71-dea3-444f-ac1f-0f98f9d3901a)|
 
+
+## Flow
+
+#### Room Dao
+
+~~~kotlin
+@Dao
+interface RecipeDao {
+    @Query("SELECT * FROM RecipeEntity")
+    fun getAllData(): Flow<List<RecipeEntity>>
+    /** 중략 **/
+}
+~~~
+
+#### Bookmark ViewModel
+
+- Flow -> StateFlow
+
+~~~kotlin
+@HiltViewModel
+class BookMarkViewModel @Inject constructor(
+    private val recipeDao : RecipeDao
+) : ViewModel(){
+
+    // Room으로 모든 데이터가져옴
+    private val _recipeEntity = MutableStateFlow<List<RecipeEntity>>(emptyList())
+    val recipeEntity : StateFlow<List<RecipeEntity>> = _recipeEntity.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            recipeDao.getAllData().collect{
+                _recipeEntity.value = it
+                checkVisiblityView()
+            }
+        }
+    }
+    /** 중략 **/
+}
+~~~
+
+#### Bookmark Fragment 
+
+~~~kotlin
+// BookmarkFragment
+viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        bookMarkViewModel.recipeEntity.collect { recipeEntityList ->
+        /** 중략 **/
+    }
+}
+~~~
+
 ## 그래프 시각화
 - [Graph Visualizing Algorithm](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679) 참고하여 알고리즘 작성.
 
