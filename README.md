@@ -49,6 +49,66 @@
 |![recipe_my_page](https://github.com/nbc-group-4/recipe/assets/50291395/fb760fdb-9464-4159-84cf-e687de525ab6)|![recipe_user](https://github.com/nbc-group-4/recipe/assets/50291395/36a0bd71-dea3-444f-ac1f-0f98f9d3901a)|
 
 
+## Dependency Injection with Hilt
+
+#### Retrofit Example
+
+~~~kotlin
+@Module
+@InstallIn(SingletonComponent::class)
+object RetrofitModule {
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(): OkHttpClient {
+        /** 중략 **/
+    }
+
+    @Singleton
+    @Provides
+    @Named("Specialty")
+    fun provideRetrofitSpecialty(okHttpClient: OkHttpClient): Retrofit {
+        /** 중략 **/
+    }
+
+    @Singleton
+    @Provides
+    @Named("Recipe")
+    fun provideRetrofitRecipe(okHttpClient: OkHttpClient): Retrofit {
+        /** 중략 **/
+    }
+
+    @Singleton
+    @Provides
+    @Named("SpecialtyService")
+    fun provideApiServiceSpecialty(
+        @Named("Specialty") retrofit: Retrofit
+    ): SpecialtyService {
+        return retrofit.create(SpecialtyService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    @Named("RecipeService")
+    fun provideApiServiceRecipe(
+        @Named("Recipe") retrofit: Retrofit
+    ): RecipeService {
+        return retrofit.create(RecipeService::class.java)
+    }
+}
+
+~~~
+
+~~~kotlin
+
+class RecipeDataSource @Inject constructor(
+    @Named("RecipeService") private val service: RecipeService
+) {
+    /** 중략 **/
+}
+
+~~~
+
+
 ## Flow
 
 #### Room Dao
