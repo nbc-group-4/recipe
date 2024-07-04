@@ -270,7 +270,7 @@ override fun dispatchDraw(canvas: Canvas) {
 
 <table>
 <tr>
-<td> Lifecycle </td> <td> dispatchDraw </td>
+<td> Motion Event Action Mask </td> <td> GestureDetector </td>
 </tr>
 <tr>
 <td> 
