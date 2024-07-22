@@ -2,20 +2,16 @@ package nbc.group.recipes.presentation.fragment
 
 import nbc.group.recipes.presentation.adapter.decoration.GridSpacingItemDecoration
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import nbc.group.recipes.R
+import nbc.group.recipes.data.model.dto.Item
 import nbc.group.recipes.databinding.FragmentSpecialtyDetailBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.SpecialtyDetailAdapter
@@ -40,7 +36,9 @@ class SpecialtyDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        specialtyDetailAdapter = SpecialtyDetailAdapter()
+        specialtyDetailAdapter = SpecialtyDetailAdapter { item ->
+            onItemClicked(item)
+        }
 
         setRecyclerView()
         setUpListener()
@@ -62,6 +60,10 @@ class SpecialtyDetailFragment : Fragment() {
         }
     }
 
+    private fun onItemClicked(item: Item) {
+
+    }
+
     private fun setUpListener() = with(binding) {
         backArrow.setOnClickListener {
             (activity as MainActivity).moveToBack()
@@ -75,12 +77,6 @@ class SpecialtyDetailFragment : Fragment() {
                     binding.recyclerViewSpecialtyDetail.visibility = View.GONE
                     binding.ivSpecialtyDetailEmpty.visibility = View.VISIBLE
                     binding.tvSpecialtyDetailEmpty.visibility = View.VISIBLE
-
-//                    val toast =
-//                        Toast.makeText(requireContext(), "검색 결과가 없습니다", Toast.LENGTH_SHORT)
-//                    toast.setGravity(Gravity.CENTER, 0, 0)
-//                    toast.show()
-
                 } else {
                     binding.recyclerViewSpecialtyDetail.visibility = View.VISIBLE
                     binding.ivSpecialtyDetailEmpty.visibility = View.GONE

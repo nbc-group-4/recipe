@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import nbc.group.recipes.KindItem
+import nbc.group.recipes.R
 import nbc.group.recipes.databinding.ItemSpecialtyBinding
 
 val diffCallbackSpecialty = object : DiffUtil.ItemCallback<KindItem>() {
@@ -18,15 +19,21 @@ val diffCallbackSpecialty = object : DiffUtil.ItemCallback<KindItem>() {
     }
 }
 
-class SpecialtyAdapter :
-    ListAdapter<KindItem, SpecialtyAdapter.ItemViewHolder>(diffCallbackSpecialty) {
+class SpecialtyAdapter(
+    private val onItemClick: (KindItem) -> Unit
+) : ListAdapter<KindItem, SpecialtyAdapter.ItemViewHolder>(diffCallbackSpecialty) {
 
     class ItemViewHolder(
         private val binding: ItemSpecialtyBinding,
+        private val onItemClick: (KindItem) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(items: KindItem) {
+        fun bind(item: KindItem) {
             binding.apply {
-                tvSpecialty.text = items.item
+                ivSpecialty.setImageResource(R.drawable.specialty_button)
+                tvSpecialty.text = item.item
+                root.setOnClickListener {
+                    onItemClick(item)
+                }
             }
         }
     }
@@ -34,7 +41,7 @@ class SpecialtyAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val binding =
             ItemSpecialtyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ItemViewHolder(binding)
+        return ItemViewHolder(binding, onItemClick)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
