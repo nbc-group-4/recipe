@@ -104,7 +104,6 @@
 
     <!-- RecipeFragment -->
     <string name="recipe_fragment_top_banner_text">레시피</string>
-    <string name="recipe_fragment_community_button_text">자유게시판</string>
     <string name="recipe_fragment_make_button_text">레시피 작성</string>
     <string name="recipe_fragment_notice_text">해당 서비스는 추후에 업데이트 될 예정입니다</string>
 
@@ -113,7 +112,7 @@
     <string name="bookmark_fragment_count">총 0개</string>
     <string name="bookmark_fragment_empty">북마크한 레시피가 없어요</string>
 
-    <!-- region_alram_dialog -->
+    <!-- region_alarm_dialog -->
     <string name="region_dialog_title">특산물 데이터가 존재하는 지역</string>
     <string name="region_dialog_content">해당하는 지역에만 특산물 데이터가 존재합니다</string>
 
@@ -160,8 +159,5 @@
     <string name="banner_text_5">여름의 풍성함,\n제철 새꼬막으로!</string>
     <string name="banner_text_6">제철수박으로 즐기는,\n시원한 여름휴가!</string>
     <string name="banner_text_7">여름의 달콤한 감동,\n제철 밤호박을 만나보세요!</string>
-
-    <!-- CommunityFragment -->
-    <string name="community">자유게시판 - 레시피 공유</string>
 
 </resources>
