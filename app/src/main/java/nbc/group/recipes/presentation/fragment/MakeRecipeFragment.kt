@@ -101,6 +101,7 @@ class MakeRecipeFragment : Fragment() {
             etCookingProcess.addTextChangedListener(textWatcher)
 
             setupSpinner(spinnerCookingTime)
+            setupLevelSpinner(spinnerCookingLevel)
         }
 
         observeViewModel()
@@ -160,7 +161,7 @@ class MakeRecipeFragment : Fragment() {
             cookingTime = binding.spinnerCookingTime.selectedItem.toString(),
             typeCode = "user",
             typeName = viewModel.currentUser!!.uid,
-            levelName = "",
+            levelName = binding.spinnerCookingLevel.selectedItem.toString(),
             ingredientCode = binding.tvIngredient.text.toString(),
         )
     }
@@ -225,6 +226,32 @@ class MakeRecipeFragment : Fragment() {
         }
     }
 
+    private fun setupLevelSpinner(spinner: Spinner) {
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.cooking_level_options,
+            R.layout.spinner_make_recipe
+        ).also { adapter ->
+            adapter.setDropDownViewResource(R.layout.spinner_drop_down)
+            spinner.adapter = adapter
+        }
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+    }
+
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -238,10 +265,10 @@ class MakeRecipeFragment : Fragment() {
         with(binding) {
             val isRecipeName = etRecipeName.text.toString().isNotEmpty()
             val isRecipeDescription = etRecipeDescription.text.toString().isNotEmpty()
-            val isIngredient = tvIngredient.text.toString().isNotEmpty()
             val isCookingProcess = etCookingProcess.text.toString().isNotEmpty()
+            // 사진도 무조건 들어가야 버튼 활성화되도록 / 사진,소요시간,난이도,주요재료
 
-            val allFieldsValid = isRecipeName && isRecipeDescription && isIngredient && isCookingProcess
+            val allFieldsValid = isRecipeName && isRecipeDescription && isCookingProcess
 
             if(allFieldsValid){
                 btMakeRecipe.isEnabled = true

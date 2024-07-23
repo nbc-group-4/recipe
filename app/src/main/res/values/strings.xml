@@ -87,6 +87,7 @@
     <string name="make_recipe_fragment_recipe_description_hint">레시피를 간단하게 소개해 주세요.</string>
     <string name="make_recipe_fragment_recipe_level_indic">레시피 난이도</string>
     <string name="make_recipe_fragment_recipe_cooking_time_indic">예상 소요 시간</string>
+    <string name="make_recipe_fragment_recipe_cooking_level">난이도</string>
     <string name="make_recipe_fragment_recipe_cooking_time_hint">예상 소요 시간을 입력해 주세요.</string>
     <string name="make_recipe_fragment_recipe_ingredient_indic">주요 재료</string>
     <string name="make_recipe_fragment_recipe_ingredient_hint">재료를 선택해 주세요.</string>
@@ -100,6 +101,13 @@
         <item>1시간</item>
         <item>1시간 ~ 2시간</item>
         <item>2시간 이상</item>
+    </string-array>
+
+    <string-array name="cooking_level_options">
+        <item>레시피 난이도를 선택해주세요.</item>
+        <item>초보환영</item>
+        <item>보통</item>
+        <item>어려움</item>
     </string-array>
 
     <!-- RecipeFragment -->

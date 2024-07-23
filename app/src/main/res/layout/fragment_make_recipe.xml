@@ -143,6 +143,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin_20"
+                android:text="@string/make_recipe_fragment_recipe_cooking_level"
+                style="@style/content_text_style_high_light_small"/>
+
+            <Spinner
+                android:id="@+id/spinner_cooking_level"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginTop="@dimen/default_padding"
+                android:dropDownWidth="230dp"
+                android:background="@color/background_edittext"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin_20"
                 android:text="@string/make_recipe_fragment_recipe_ingredient_indic"
                 style="@style/content_text_style_high_light_small"/>
 
