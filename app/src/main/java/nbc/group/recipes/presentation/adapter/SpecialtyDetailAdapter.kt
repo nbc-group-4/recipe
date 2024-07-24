@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import nbc.group.recipes.KindItem
 import nbc.group.recipes.data.model.dto.Item
 import nbc.group.recipes.databinding.ItemSpecialtyDetailBinding
 
@@ -19,21 +20,26 @@ val diffCallbackSpecialtyDetail = object : DiffUtil.ItemCallback<Item>() {
     }
 }
 
-class SpecialtyDetailAdapter :
-    ListAdapter<Item, SpecialtyDetailAdapter.ItemViewHolder>(diffCallbackSpecialtyDetail) {
+class SpecialtyDetailAdapter(
+    private val onItemClick: (Item) -> Unit
+) : ListAdapter<Item, SpecialtyDetailAdapter.ItemViewHolder>(diffCallbackSpecialtyDetail) {
 
     class ItemViewHolder(
         private val binding: ItemSpecialtyDetailBinding,
+        private val onItemClick: (Item) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(items: Item) {
+        fun bind(item: Item) {
             binding.apply {
                 Glide.with(root.context)
-                    .load(items.imgUrl)
+                    .load(item.imgUrl)
                     .into(ivSpecialty)
-
-                binding.tvSpecialtyName.text = items.cntntsSj
-                binding.tvSpecialtyRegion.text = items.areaName
+                tvSpecialtyName.text = item.cntntsSj
+                tvSpecialtyRegion.text = item.areaName
                 // 검색된 특산품 이미지, 명칭, 지역
+
+                root.setOnClickListener {
+                    onItemClick(item)
+                }
             }
         }
     }
@@ -41,7 +47,7 @@ class SpecialtyDetailAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val binding =
             ItemSpecialtyDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ItemViewHolder(binding)
+        return ItemViewHolder(binding, onItemClick)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
