@@ -3,11 +3,11 @@
 
     <!-- HomeFragment -->
     <string name="home_fragment_app_name">맛고</string>
+    <string name="home_fragment_search">특산품을 검색하세요</string>
     <string name="home_fragment_season_specialty">추천 제철 특산물</string>
     <string name="home_fragment_specialty_kind">우리나라 특산물의 종류</string>
 
     <!-- SpecialtyFragment -->
-    <string name="specialty_fragment_kind_search">아래 특산품 종류 중에서 검색해주세요</string>
     <string name="specialty_fragment_kind">종류</string>
 
     <!-- SpecialtyDetailFragment -->
@@ -112,7 +112,7 @@
     <string name="bookmark_fragment_count">총 0개</string>
     <string name="bookmark_fragment_empty">북마크한 레시피가 없어요</string>
 
-    <!-- region_alram_dialog -->
+    <!-- region_alarm_dialog -->
     <string name="region_dialog_title">특산물 데이터가 존재하는 지역</string>
     <string name="region_dialog_content">해당하는 지역에만 특산물 데이터가 존재합니다</string>
 
@@ -148,7 +148,7 @@
     <string name="item_bookmark_recipe_difficulty">초보</string>
     <string name="item_bookmark_recipe_time">30분</string>
 
-    <!--BannerFragment-->
+    <!-- BannerFragment -->
     <string name="banner_fragment_link_confirm">외부 브라우저로 연결됩니다.\n연결하시겠습니까?</string>
     <string name="banner_fragment_dialog_stay">머무르기</string>
     <string name="banner_fragment_dialog_move">이동하기</string>

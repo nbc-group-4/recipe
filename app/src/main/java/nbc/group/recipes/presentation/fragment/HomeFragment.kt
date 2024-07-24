@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -22,6 +24,12 @@ import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.presentation.adapter.BannerAdapter
 import nbc.group.recipes.presentation.adapter.HomeKindAdapter
 import nbc.group.recipes.presentation.adapter.HomeQuizAdapter
+import nbc.group.recipes.specialties1
+import nbc.group.recipes.specialties2
+import nbc.group.recipes.specialties3
+import nbc.group.recipes.specialties4
+import nbc.group.recipes.specialties5
+import nbc.group.recipes.specialties6
 import nbc.group.recipes.specialtyKind
 import nbc.group.recipes.viewmodel.MainViewModel
 import nbc.group.recipes.viewmodel.SpecialtyViewModel
@@ -34,6 +42,7 @@ class HomeFragment : Fragment() {
         get() = _binding!!
     private var homeQuizAdapter: HomeQuizAdapter? = null
     private var homeKindAdapter: HomeKindAdapter? = null
+    private val sharedViewModel: SpecialtyViewModel by activityViewModels()
     private val specialtyViewModel: SpecialtyViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
 
@@ -59,12 +68,13 @@ class HomeFragment : Fragment() {
             }
         })
 
+        setUpListener()
+        setUpAutoComplete()
         setupRecyclerViewKind()
-
 
         // Splash 종료
         mainViewModel.homeFragmentStatusChange()
-        if(!isInternetConnection()) {
+        if (!isInternetConnection()) {
             showDialog()
         }
         banner()
@@ -77,6 +87,39 @@ class HomeFragment : Fragment() {
                 GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
         }
         homeKindAdapter?.submitList(specialtyKind)
+    }
+
+    private fun setUpListener() = with(binding) {
+        etSearch.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                performSearch()
+                (activity as MainActivity).moveToSpecialtyDetailFragmentHome()
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
+    }
+
+    private fun performSearch() {
+        val searchQuery = binding.etSearch.text.toString()
+        sharedViewModel.searchItem(searchQuery)
+    }
+
+    private fun setUpAutoComplete() {
+        val specialties = listOf(
+            specialties1, specialties2, specialties3, specialties4, specialties5, specialties6
+        ).flatten()
+
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            specialties
+        )
+
+        binding.etSearch.apply {
+            setAdapter(adapter)
+            threshold = 1
+        }
     }
 
     private fun navigateToSpecialty(item: KindItem) {
@@ -103,19 +146,54 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun banner(){
+    private fun banner() {
 
         val bannerAdapter = BannerAdapter(this)
-        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner1, "https://terms.naver.com/search.naver?query=%EC%98%A5%EC%88%98%EC%88%98&searchType=&dicType=&subject="))
-        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner2, "https://terms.naver.com/search.naver?query=%EA%B0%90%EC%9E%90&searchType=text&dicType=&subject="))
-        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner3, "https://terms.naver.com/search.naver?query=%EA%B0%80%EB%A6%AC%EB%B9%84&searchType=text&dicType=&subject="))
-        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner4, "https://terms.naver.com/search.naver?query=%ED%99%8D%EA%B2%8C&searchType=text&dicType=&subject="))
-        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner5, "https://terms.naver.com/search.naver?query=%EC%83%88%EA%BC%AC%EB%A7%89&searchType=text&dicType=&subject="))
-        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner6, "https://terms.naver.com/search.naver?query=%EC%88%98%EB%B0%95&searchType=text&dicType=&subject="))
-        bannerAdapter.addImg(BannerFragment(R.drawable.img_banner7, "https://terms.naver.com/search.naver?query=%EB%B0%A4%ED%98%B8%EB%B0%95&searchType=text&dicType=&subject="))
+        bannerAdapter.addImg(
+            BannerFragment(
+                R.drawable.img_banner1,
+                "https://terms.naver.com/search.naver?query=%EC%98%A5%EC%88%98%EC%88%98&searchType=&dicType=&subject="
+            )
+        )
+        bannerAdapter.addImg(
+            BannerFragment(
+                R.drawable.img_banner2,
+                "https://terms.naver.com/search.naver?query=%EA%B0%90%EC%9E%90&searchType=text&dicType=&subject="
+            )
+        )
+        bannerAdapter.addImg(
+            BannerFragment(
+                R.drawable.img_banner3,
+                "https://terms.naver.com/search.naver?query=%EA%B0%80%EB%A6%AC%EB%B9%84&searchType=text&dicType=&subject="
+            )
+        )
+        bannerAdapter.addImg(
+            BannerFragment(
+                R.drawable.img_banner4,
+                "https://terms.naver.com/search.naver?query=%ED%99%8D%EA%B2%8C&searchType=text&dicType=&subject="
+            )
+        )
+        bannerAdapter.addImg(
+            BannerFragment(
+                R.drawable.img_banner5,
+                "https://terms.naver.com/search.naver?query=%EC%83%88%EA%BC%AC%EB%A7%89&searchType=text&dicType=&subject="
+            )
+        )
+        bannerAdapter.addImg(
+            BannerFragment(
+                R.drawable.img_banner6,
+                "https://terms.naver.com/search.naver?query=%EC%88%98%EB%B0%95&searchType=text&dicType=&subject="
+            )
+        )
+        bannerAdapter.addImg(
+            BannerFragment(
+                R.drawable.img_banner7,
+                "https://terms.naver.com/search.naver?query=%EB%B0%A4%ED%98%B8%EB%B0%95&searchType=text&dicType=&subject="
+            )
+        )
 
 
-        with(binding){
+        with(binding) {
             homeBanner.adapter = bannerAdapter
             homeBanner.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             homeBannerIndicator.setViewPager(homeBanner)
@@ -138,11 +216,12 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
-    private fun autoBannerScroll() = object  : Runnable{
-            override fun run() {
-                binding.homeBanner.currentItem = (binding.homeBanner.currentItem + 1) % (binding.homeBanner.adapter?.itemCount ?: 1)
-                handler.postDelayed(this, 3000)
-            }
+    private fun autoBannerScroll() = object : Runnable {
+        override fun run() {
+            binding.homeBanner.currentItem =
+                (binding.homeBanner.currentItem + 1) % (binding.homeBanner.adapter?.itemCount ?: 1)
+            handler.postDelayed(this, 3000)
+        }
     }
 
 }
