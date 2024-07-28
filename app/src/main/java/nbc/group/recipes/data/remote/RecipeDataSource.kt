@@ -13,7 +13,7 @@ import javax.inject.Named
  *  완전히 겹침 -> source 삭제
  *
  * */
-class RecipeDataSource @Inject constructor(
+class RecipeDataSource @Inject constructor( // ->  Hilt(Dagger)가 해당 클래스의 인스턴스를 생성할 때 사용할 생성자임을 의미
     @Named("RecipeService") private val service: RecipeService
 ) {
     suspend fun getRecipe(

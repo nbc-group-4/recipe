@@ -21,12 +21,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
+@Module // -> Hilt 에게 해당 클래스가 모듈임을 알려줌, 의존성 제공
+@InstallIn(SingletonComponent::class) // -> 모듈이 설치될 컴포넌트 지정, SingletonComponent에 설치 (앱 전체에서 싱글톤 스코프 가짐)
 object RetrofitModule {
 
-    @Singleton
-    @Provides
+    @Singleton // -> 의존성이 싱글톤 형식임 = 하나의 인스턴스만 생성됨
+    @Provides // -> 의존성을 제공하는 메서드 표시
     fun provideOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -37,7 +37,7 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    @Named("Specialty")
+    @Named("Specialty") // -> Hilt가 여러 구현체 중 어떤 것을 주입해야 하는지 지정할 때 사용
     fun provideRetrofitSpecialty(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(

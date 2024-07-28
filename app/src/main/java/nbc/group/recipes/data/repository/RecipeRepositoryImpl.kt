@@ -89,7 +89,24 @@ class RecipeRepositoryImpl @Inject constructor(
         recipeId: Int
     ) = recipeDataSource.getRecipeV2(recipeId)
 
+    override suspend fun getRecipesV3(
+        startIndex: Int,
+        endIndex: Int,
+        recipeId: Int
+    ): NetworkResult<List<Recipe>> {
+        TODO("Not yet implemented")
+    }
 
+//    override suspend fun getRecipesV3(
+//        recipeId: Int
+//    ): NetworkResult<List<Recipe>> {
+//        return try {
+//            val temp = recipeDataSource.getRecipeV2(recipeId)
+//            NetworkResult.Success(temp.recipe.row)
+//        } catch(e: Exception) {
+//            NetworkResult.Failure(e)
+//        }
+//    }
 
     override suspend fun getRecipeProceduresV2(
         recipeId: Int
@@ -134,16 +151,6 @@ class RecipeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getRecipesV3(
-        recipeId: Int
-    ): NetworkResult<List<Recipe>> {
-        return try {
-            val temp = recipeDataSource.getRecipeV2(recipeId)
-            NetworkResult.Success(temp.recipe.row)
-        } catch(e: Exception) {
-            NetworkResult.Failure(e)
-        }
-    }
 
     override suspend fun getRecipesV4(
         startIndex: Int,

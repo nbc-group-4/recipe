@@ -22,7 +22,8 @@ import nbc.group.recipes.databinding.FragmentSignUpBinding
 import nbc.group.recipes.presentation.MainActivity
 import nbc.group.recipes.viewmodel.MainViewModel
 
-@AndroidEntryPoint
+@AndroidEntryPoint // -> 프래그먼트에 Hilt 설정, 생명 주기 동안 의존성 주입 및 관리 가능
+// Hilt를 통해 ViewModel 주입 : by activityViewModels()
 class SignUpFragment : Fragment() {
 
     private var _binding: FragmentSignUpBinding? = null

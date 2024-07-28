@@ -27,12 +27,14 @@ import java.nio.charset.StandardCharsets
 import javax.inject.Inject
 
 
-@HiltViewModel
+@HiltViewModel // -> 해당 ViewModel에 의존성을 주입하여 ViewModel이 필요한 Repository나 다른 클래스의 인스턴스를 Hilt가 자동으로 주입함
+// -> Hilt는 ViewModel의 생명주기를 관리하기 때문에 viewModelScope를 사용하여 코루틴을 안전하게 사용 가능
 class RecipeViewModel @Inject constructor(
+    // @inject -> 필요한 의존성을 ViewModel의 생성자에 주입함
     private val recipeRepository: RecipeRepository,
     private val firebaseRepository: FirebaseRepository,
     private val naverSearchRepository: NaverSearchRepository,
-    private val banRepository: BanRepository,
+    private val banRepository: BanRepository, // <- 자동으로 주입되는 Repository
 ) : ViewModel() {
 
     private val _recipes = MutableStateFlow<List<RecipeEntity>?>(null)
@@ -49,6 +51,9 @@ class RecipeViewModel @Inject constructor(
 
     private val _recipeProcedure = MutableStateFlow("")
     val recipeProcedure = _recipeProcedure.asStateFlow()
+
+    private val _ingredients = MutableStateFlow<List<String>>(emptyList())
+    val ingredients = _ingredients.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -85,7 +90,7 @@ class RecipeViewModel @Inject constructor(
         recipeEntity: RecipeEntity
     ) = viewModelScope.launch {
         val temp = recipeRepository.getRecipeProceduresV2(recipeEntity.id)
-        Log.e("URGENT_TAG", "getRecipeProcedure: $temp", )
+        Log.e("URGENT_TAG", "getRecipeProcedure: $temp")
         val temp1 = temp.recipeProcedure
         var result = ""
         temp1.row.forEach {
@@ -94,8 +99,8 @@ class RecipeViewModel @Inject constructor(
         _recipeProcedure.emit(result)
     }
 
-    suspend fun getRecipeStep(recipeEntity: RecipeEntity)
-        = recipeRepository.getRecipeProceduresV2(recipeEntity.id)
+    suspend fun getRecipeStep(recipeEntity: RecipeEntity) =
+        recipeRepository.getRecipeProceduresV2(recipeEntity.id)
 
     fun recipeUpdate(recipes: List<RecipeEntity>) {
         viewModelScope.launch {
@@ -170,6 +175,20 @@ class RecipeViewModel @Inject constructor(
 
         _recipes.emit(temp6)
     }
+
+//    suspend fun fetchRecipeIngredients(recipeId: Int) {
+//        viewModelScope.launch {
+//            try {
+//                val response = recipeRepository.getRecipesV3(1, 30, recipeId)
+//
+//                val ingredientsList = response.row.map {
+//
+//                }
+//            } catch (e: Exception) {
+//                // 에러 처리
+//            }
+//        }
+//    }
 
     suspend fun fetchRecipeFromFirebase(ingredientName: String) = viewModelScope.launch {
         _firebaseRecipes.emit(

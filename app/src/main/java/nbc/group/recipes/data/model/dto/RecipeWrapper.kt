@@ -17,3 +17,11 @@ data class RecipeProcedureWrapper(
     val recipeProcedure: RecipeResponse<RecipeProcedure>
 )
 
+data class RecipeIngredientWrapperV2(
+    @SerializedName("row") val ingredients: List<Ingredient>
+)
+
+data class Ingredient(
+    @SerializedName("IRDNT_NM") val name: String,
+    @SerializedName("IRNDT_CPCTY") val capacity: String
+)

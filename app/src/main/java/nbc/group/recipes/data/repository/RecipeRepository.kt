@@ -13,7 +13,7 @@ import nbc.group.recipes.data.network.NetworkResult
 interface RecipeRepository {
     suspend fun getRecipes(startIndex: Int, endIndex: Int, recipeName: String, recipeId: Int): RecipeResponse<Recipe>
     suspend fun getRecipesV2(recipeId: Int): RecipeWrapper
-    suspend fun getRecipesV3(recipeId: Int): NetworkResult<List<Recipe>>
+    suspend fun getRecipesV3(startIndex: Int, endIndex: Int, recipeId: Int): NetworkResult<List<Recipe>>
     suspend fun getRecipesV4(startIndex: Int, endIndex: Int, ingredientName: String): NetworkResult<List<RecipeEntity>>
     suspend fun getRecipeIngredients(startIndex: Int, endIndex: Int, ingredientName: String, recipeId: Int): RecipeResponse<RecipeIngredient>
     suspend fun getRecipeIngredients(startIndex: Int, endIndex: Int, ingredientName: String): RecipeResponse<RecipeIngredient>

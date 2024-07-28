@@ -3,6 +3,7 @@ package nbc.group.recipes.data.network
 import nbc.group.recipes.data.model.dto.Recipe
 import nbc.group.recipes.data.model.dto.RecipeIngredient
 import nbc.group.recipes.data.model.dto.RecipeIngredientWrapper
+import nbc.group.recipes.data.model.dto.RecipeIngredientWrapperV2
 import nbc.group.recipes.data.model.dto.RecipeProcedure
 import nbc.group.recipes.data.model.dto.RecipeProcedureWrapper
 import nbc.group.recipes.data.model.dto.RecipeResponse
@@ -35,12 +36,12 @@ interface RecipeService {
         @Query("RECIPE_ID") recipeId: Int,
     ): RecipeResponse<RecipeIngredient>
 
-    @GET("Grid_20150827000000000226_1/{START_INDEX}/{END_INDEX}")
+    @GET("Grid_20150827000000000226_1/{START_INDEX}/{END_INDEX}/{RECIPE_ID}")
     suspend fun getRecipeV3(
         @Path("START_INDEX") startIndex: Int,
         @Path("END_INDEX") endIndex: Int,
         @Query("RECIPE_ID") recipeId: Int,
-    ): RecipeWrapper
+    ): RecipeIngredientWrapperV2
 
     @GET(RECIPE_API)
     suspend fun getRecipeV2(
@@ -52,7 +53,7 @@ interface RecipeService {
         @Query("IRDNT_NM") ingredientName: String,
     ): RecipeIngredientWrapper
 
-    @GET("Grid_20150827000000000227_1/{START_INDEX}/{END_INDEX}")
+    @GET("Grid_20150827000000000227_1/{START_INDEX}/{END_INDEX}/{RECIPE_ID}")
     suspend fun getRecipeIngredientV3(
         @Path("START_INDEX") startIndex: Int,
         @Path("END_INDEX") endIndex: Int,
