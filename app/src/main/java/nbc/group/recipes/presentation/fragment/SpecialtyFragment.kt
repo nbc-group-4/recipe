@@ -6,9 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -36,7 +34,6 @@ class SpecialtyFragment : Fragment() {
         get() = _binding!!
     private var specialtyAdapter: SpecialtyAdapter? = null
     private val sharedViewModel: SpecialtyViewModel by activityViewModels()
-    // private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,11 +45,12 @@ class SpecialtyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        specialtyAdapter = SpecialtyAdapter()
+        specialtyAdapter = SpecialtyAdapter { item ->
+            onItemClicked(item)
+        }
 
         setRecyclerView()
         setUpListener()
-        setUpAutoComplete()
         observeSelectedItem()
     }
 
@@ -64,51 +62,19 @@ class SpecialtyFragment : Fragment() {
     }
 
     private fun setUpListener() = with(binding) {
-        etSpecialtySearch.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                performSearch()
-                hideKeyboard()
-                (activity as MainActivity).moveToSpecialtyDetailFragment()
-                return@setOnEditorActionListener true
-            }
-            return@setOnEditorActionListener false
-        }
-
         backArrow.setOnClickListener {
             (activity as MainActivity).moveToBack()
         }
     }
 
-    private fun performSearch() {
-        val searchQuery = binding.etSpecialtySearch.text.toString()
-        val selectedKind = binding.tvSpecialtyKind.text.toString()
-        val specialties = when (selectedKind) {
-            StringsSpecialty.KIND1 -> specialties1
-            StringsSpecialty.KIND2 -> specialties2
-            StringsSpecialty.KIND3 -> specialties3
-            StringsSpecialty.KIND4 -> specialties4
-            StringsSpecialty.KIND5 -> specialties5
-            StringsSpecialty.KIND6 -> specialties6
-            else -> specialties6
-        }
-        sharedViewModel.searchItem(searchQuery, specialties)
+    private fun onItemClicked(item: KindItem) {
+        performSearch(item.item)
+        hideKeyboard()
+        (activity as MainActivity).moveToSpecialtyDetailFragment()
     }
 
-    private fun setUpAutoComplete() {
-        val specialties = listOf(
-            specialties1, specialties2, specialties3, specialties4, specialties5, specialties6
-        ).flatten()
-
-        val adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_dropdown_item_1line,
-            specialties
-        )
-
-        binding.etSpecialtySearch.apply {
-            setAdapter(adapter)
-            threshold = 1
-        }
+    private fun performSearch(selectedItem: String) {
+        sharedViewModel.searchItem(selectedItem)
     }
 
     private fun hideKeyboard() {
@@ -117,7 +83,6 @@ class SpecialtyFragment : Fragment() {
         imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
-    // 홈 프래그먼트에서 클릭시 특산물 종류 수신
     private fun observeSelectedItem() {
         viewLifecycleOwner.lifecycleScope.launch {
             sharedViewModel.selectedKindItem.collect { item ->

@@ -8,34 +8,36 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nbc.group.recipes.KindItem
 import nbc.group.recipes.StringsSearch
+import nbc.group.recipes.convertToOfficial
 import nbc.group.recipes.data.model.dto.Item
-import nbc.group.recipes.data.repository.RecipeSpecialtyRepository
+import nbc.group.recipes.data.repository.SpecialtyRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class SpecialtyViewModel @Inject constructor(
-    private val repository: RecipeSpecialtyRepository
+    private val repository: SpecialtyRepository
 ) : ViewModel() {
 
-    private val _selectedKindItem = MutableStateFlow<KindItem?>(null)
-    val selectedKindItem = _selectedKindItem.asStateFlow()
-
+    // 특산물 검색
     private val _searchResult = MutableStateFlow<List<Item>>(emptyList())
     val searchResult = _searchResult.asStateFlow()
 
-    fun setSelectedKindItem(kindItem: KindItem) {
-        _selectedKindItem.value = kindItem
-    }
+    // 홈에서 특산물 종류 클릭
+    private val _selectedKindItem = MutableStateFlow<KindItem?>(null)
+    val selectedKindItem = _selectedKindItem.asStateFlow()
 
     private fun setSearchResult(result: List<Item>) {
         _searchResult.value = result
     }
 
-    fun searchItem(cntntsSj: String, specialties: List<String>) {
+    fun setSelectedKindItem(kindItem: KindItem) {
+        _selectedKindItem.value = kindItem
+    }
+
+    fun searchItem(cntntsSj: String) {
         viewModelScope.launch {
             val specialtyResponse = repository.getSpecialty(null, cntntsSj)
             val filteredItems = specialtyResponse.body.items.item?.filter { item ->
-                // Log.e("URGENT_TAG", "searchItem: ${item.areaName}: ${item.cntntsSj}")
                 item.cntntsSj?.contains(cntntsSj, ignoreCase = true) == true
                         && item.cntntsSj?.contains(StringsSearch.ITEM1) != true
                         && item.cntntsSj?.contains(StringsSearch.ITEM2) != true
@@ -53,7 +55,6 @@ class SpecialtyViewModel @Inject constructor(
                         && item.cntntsSj?.contains(StringsSearch.ITEM14) != true
                         && item.cntntsSj?.contains(StringsSearch.ITEM15) != true
                         && item.cntntsSj?.contains(StringsSearch.ITEM16) != true
-                        && specialties.contains(cntntsSj)
             }
             if (filteredItems.isNullOrEmpty()) {
                 setSearchResult(emptyList())

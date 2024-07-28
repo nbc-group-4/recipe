@@ -16,7 +16,6 @@ import nbc.group.recipes.databinding.ActivityMainBinding
 import nbc.group.recipes.viewmodel.MainViewModel
 
 
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -52,6 +51,9 @@ class MainActivity : AppCompatActivity() {
     fun moveToSpecialtyFragment() = navController
         .navigate(R.id.action_mainFragment_to_specialtyFragment)
 
+    fun moveToSpecialtyDetailFragmentHome() = navController
+        .navigate(R.id.action_mainFragment_to_specialtyDetailFragment)
+
     fun moveToSpecialtyDetailFragment() = navController
         .navigate(R.id.action_specialtyFragment_to_specialtyDetailFragment)
 
@@ -63,6 +65,4 @@ class MainActivity : AppCompatActivity() {
     fun moveToPrivacyPolicyFragment() = navController
         .navigate(R.id.action_signUpFragment_to_privacyPolicyFragment)
 
-    fun moveToRecipeDetailFragment() = navController
-        .navigate(R.id.action_mypageFragment_to_recipeDetailFragment)
 }
