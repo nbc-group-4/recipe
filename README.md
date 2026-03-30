@@ -324,3 +324,12 @@ private inner class LongClickListener: GestureDetector.SimpleOnGestureListener()
 </td>
 </tr>
 </table>
+
+
+
+---
+
+### 서비스 구조 도식화
+
+<img src="https://github.com/user-attachments/assets/4e87072e-57b7-48da-9caa-27ab612a196f" />
+
